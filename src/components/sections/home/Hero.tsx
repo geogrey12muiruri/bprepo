@@ -92,4 +92,3 @@ export function Hero() {
     </section>
   );
 }
-鼓
