@@ -21,9 +21,9 @@ export function Services() {
                     </p>
                 </div>
 
-                <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 overflow-x-auto md:overflow-x-visible pb-8 -mx-6 px-6 md:mx-0 md:px-0 snap-x snap-mandatory no-scrollbar">
+                <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 overflow-x-auto md:overflow-x-visible pb-12 -mx-6 px-6 md:mx-0 md:px-0 snap-x snap-mandatory no-scrollbar scroll-smooth">
                     {services.map((service) => (
-                        <div key={service.id} className="min-w-[85vw] sm:min-w-[45vw] md:min-w-0 snap-start">
+                        <div key={service.id} className="min-w-[80vw] sm:min-w-[45vw] md:min-w-0 snap-center md:snap-start">
                             <ServiceCard service={service} />
                         </div>
                     ))}
