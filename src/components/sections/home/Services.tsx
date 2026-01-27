@@ -8,7 +8,7 @@ import { services } from "@/data/services";
 
 export function Services() {
     return (
-        <section className="py-16 md:py-32 bg-white" id="featured-experiences">
+        <section className="py-16 md:py-32 bg-white overflow-hidden" id="featured-experiences">
             <Container>
                 <div className="mb-12 md:mb-20 text-center max-w-3xl mx-auto">
                     <p className="text-[10px] font-black text-teal-600 uppercase tracking-[0.4em] mb-4">Discovery Awaits</p>
@@ -21,12 +21,24 @@ export function Services() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+                <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 overflow-x-auto md:overflow-x-visible pb-8 -mx-6 px-6 md:mx-0 md:px-0 snap-x snap-mandatory no-scrollbar">
                     {services.map((service) => (
-                        <ServiceCard key={service.id} service={service} />
+                        <div key={service.id} className="min-w-[85vw] sm:min-w-[45vw] md:min-w-0 snap-start">
+                            <ServiceCard service={service} />
+                        </div>
                     ))}
                 </div>
             </Container>
+
+            <style jsx global>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
         </section>
     );
 }
