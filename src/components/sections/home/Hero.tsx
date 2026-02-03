@@ -53,7 +53,7 @@ export function Hero() {
               <span className="block overflow-hidden py-1 md:py-2">
                 <span className="block animate-[slide-up_1s_ease-out_0.4s_forwards] text-4xl sm:text-5xl md:text-7xl">
                   Magic of <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal-100 to-blue-400 font-black animate-[shimmer_3s_infinite_linear] bg-[length:200%_auto]">
-                    BluePineapple
+                    Blue Pineapple
                   </span>
                 </span>
               </span>

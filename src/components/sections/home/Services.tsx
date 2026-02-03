@@ -17,7 +17,7 @@ export function Services() {
                     </Heading>
                     <p className="text-lg md:text-xl text-neutral-600 leading-relaxed font-medium">
                         From serene creek safaris to historical voyages. Choose your perfect
-                        coastal adventure with BluePineapple.
+                        coastal adventure with Blue Pineapple.
                     </p>
                 </div>
 

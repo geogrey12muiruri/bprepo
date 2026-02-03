@@ -44,17 +44,20 @@ export function Header() {
     { label: "Contact", href: ROUTES.contact },
   ];
 
+  const isHome = pathname === ROUTES.home;
+  const showScrolledStyle = isScrolled || !isHome;
+
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${isScrolled
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${showScrolledStyle
           ? "bg-white/80 backdrop-blur-xl shadow-lg py-3"
           : "bg-transparent py-6"
           }`}
       >
         <Container className="flex items-center justify-between">
           <Link href={ROUTES.home} className="flex items-center gap-3 group">
-            <div className={`relative w-16 h-16 transition-all duration-500 group-hover:scale-110 ${!isScrolled && "brightness-0 invert"}`}>
+            <div className={`relative w-16 h-16 transition-all duration-500 group-hover:scale-110 ${!showScrolledStyle && "brightness-0 invert"}`}>
               <Image
                 src="/images/logo.png"
                 alt="BluePineapple Logo"
@@ -62,9 +65,9 @@ export function Header() {
                 className="object-contain"
               />
             </div>
-            <span className={`text-2xl font-black tracking-tighter transition-colors duration-500 ${isScrolled ? "text-neutral-900" : "text-white"
+            <span className={`text-2xl font-black tracking-tighter transition-colors duration-500 ${showScrolledStyle ? "text-neutral-900" : "text-white"
               }`}>
-              BluePineapple
+              Blue Pineapple
             </span>
           </Link>
 
@@ -74,7 +77,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-black uppercase tracking-widest transition-all duration-300 hover:text-teal-500 relative group ${isScrolled ? "text-neutral-600" : "text-white/80"
+                className={`text-sm font-black uppercase tracking-widest transition-all duration-300 hover:text-teal-500 relative group ${showScrolledStyle ? "text-neutral-600" : "text-white/80"
                   }`}
               >
                 {link.label}
@@ -83,7 +86,7 @@ export function Header() {
             ))}
             <Link href={ROUTES.contact}>
               <button
-                className={`px-8 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-300 active:scale-95 ${isScrolled
+                className={`px-8 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-300 active:scale-95 ${showScrolledStyle
                   ? "bg-teal-600 text-white hover:bg-teal-700 shadow-lg shadow-teal-600/20"
                   : "bg-white text-teal-900 hover:bg-neutral-100 shadow-xl"
                   }`}
@@ -102,11 +105,11 @@ export function Header() {
           >
             <div className="w-6 h-5 relative flex flex-col justify-between overflow-hidden">
               <span className={`w-full h-0.5 transition-all duration-500 ${isOpen ? "rotate-45 translate-y-2" : ""
-                } ${isScrolled || isOpen ? "bg-neutral-900" : "bg-white"}`} />
+                } ${showScrolledStyle || isOpen ? "bg-neutral-900" : "bg-white"}`} />
               <span className={`w-full h-0.5 transition-all duration-500 ${isOpen ? "opacity-0 translate-x-4" : ""
-                } ${isScrolled || isOpen ? "bg-neutral-900" : "bg-white"}`} />
+                } ${showScrolledStyle || isOpen ? "bg-neutral-900" : "bg-white"}`} />
               <span className={`w-full h-0.5 transition-all duration-500 ${isOpen ? "-rotate-45 -translate-y-2.5" : ""
-                } ${isScrolled || isOpen ? "bg-neutral-900" : "bg-white"}`} />
+                } ${showScrolledStyle || isOpen ? "bg-neutral-900" : "bg-white"}`} />
             </div>
           </button>
         </Container>

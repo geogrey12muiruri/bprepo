@@ -35,10 +35,10 @@ export default function ContactPage() {
               For general inquiries and support
             </p>
             <a
-              href="mailto:info@bluepineapple.com"
+              href="mailto:bluepinappleholdings@gmail.com"
               className="text-teal-600 font-semibold hover:text-teal-700"
             >
-              info@bluepineapple.com
+              bluepinappleholdings@gmail.com
             </a>
           </Card>
 
@@ -52,10 +52,10 @@ export default function ContactPage() {
               Call us during business hours
             </p>
             <a
-              href="tel:+254712345678"
+              href="tel:+254708485978"
               className="text-teal-600 font-semibold hover:text-teal-700"
             >
-              +254 712 345 678
+              +254 708 485 978
             </a>
           </Card>
 
@@ -124,7 +124,7 @@ export default function ContactPage() {
                 id="phone"
                 type="tel"
                 className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="+254 712 345 678"
+                placeholder="+254 708 485 978"
               />
             </div>
 

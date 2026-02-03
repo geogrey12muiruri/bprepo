@@ -23,7 +23,7 @@ export function Footer() {
                 />
               </div>
               <span className="text-xl font-bold text-white tracking-tight">
-                BluePineapple
+                Blue Pineapple
               </span>
             </div>
             <p className="text-sm leading-relaxed">
@@ -68,18 +68,28 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="mailto:info@bluepineapple.com"
+                  href="mailto:bluepinappleholdings@gmail.com"
                   className="hover:text-teal-400 transition-colors"
                 >
-                  info@bluepineapple.com
+                  bluepinappleholdings@gmail.com
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+254712345678"
+                  href="tel:+254708485978"
                   className="hover:text-teal-400 transition-colors"
                 >
-                  +254 712 345 678
+                  +254 708 485 978
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://wa.me/254708485978"
+                  className="hover:text-teal-400 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp Us
                 </a>
               </li>
             </ul>
@@ -106,7 +116,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 border-t border-neutral-800 pt-8 text-center text-sm">
           <p>
-            &copy; {currentYear} BluePineapple. All rights reserved. | Made with ❤️ for Kenya
+            &copy; {currentYear} Blue Pineapple Coastal Services. All rights reserved. | Made with ❤️ for Kenya
           </p>
         </div>
       </Container>
