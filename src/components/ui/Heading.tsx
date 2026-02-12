@@ -16,9 +16,9 @@ const sizeStyles: Record<HeadingSize, string> = {
   sm: "text-sm font-semibold",
   md: "text-base font-bold",
   lg: "text-lg font-bold",
-  xl: "text-2xl font-bold",
-  "2xl": "text-3xl font-bold",
-  "3xl": "text-4xl font-bold",
+  xl: "text-xl md:text-2xl font-bold",
+  "2xl": "text-2xl md:text-3xl font-bold",
+  "3xl": "text-3xl md:text-4xl font-bold",
 };
 
 export function Heading({

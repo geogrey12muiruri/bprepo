@@ -47,6 +47,10 @@ export function generateMetadataBase(): Metadata {
       "max-snippet": -1,
       "max-video-preview": -1,
     },
+    icons: {
+      icon: "/images/logo.png",
+      apple: "/images/logo.png",
+    },
   };
 }
 
