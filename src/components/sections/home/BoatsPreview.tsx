@@ -19,7 +19,7 @@ import { formatPrice } from "@/lib/format";
 
 export function BoatsPreview() {
   return (
-    <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-white via-neutral-50/50 to-white overflow-hidden" id="fleet">
+    <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white overflow-hidden" id="fleet">
       <Container>
         <div className="mb-12 sm:mb-14 md:mb-16 lg:mb-20 text-center">
           <div className="inline-block mb-4">
@@ -44,7 +44,7 @@ export function BoatsPreview() {
             >
               {/* Image Side */}
               <div className="w-full md:w-1/2 relative group">
-                <div className={`absolute inset-0 bg-gradient-to-br from-teal-50 to-blue-50 rounded-3xl transform transition-transform duration-500 ${index % 2 === 1 ? "rotate-3 group-hover:rotate-2" : "-rotate-3 group-hover:-rotate-2"
+                <div className={`absolute inset-0 bg-teal-50 rounded-3xl transform transition-transform duration-500 ${index % 2 === 1 ? "rotate-3 group-hover:rotate-2" : "-rotate-3 group-hover:-rotate-2"
                   }`} />
                 <div className="relative h-[350px] sm:h-[400px] md:h-[500px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-neutral-900/10 border-4 border-white">
                   <Image
@@ -85,9 +85,9 @@ export function BoatsPreview() {
                     {boat.features.slice(0, 4).map((feature, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-neutral-50 rounded-xl border border-neutral-100 hover:border-teal-200 hover:bg-teal-50/50 transition-all duration-300 group"
+                        className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-neutral-50 rounded-xl border border-neutral-100 hover:border-teal-200 hover:bg-teal-50 transition-all duration-300 group"
                       >
-                        <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-teal-500 to-blue-500 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                        <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-teal-600 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:bg-teal-700 transition-all">
                           {feature.includes("GPS") && <Navigation className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
                           {feature.includes("Surveillance") && <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
                           {feature.includes("Insured") && <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
@@ -105,7 +105,7 @@ export function BoatsPreview() {
 
                   {/* Charter Pricing */}
                   {(boat.hourlyRate || boat.dailyRate) && (
-                    <div className="p-4 sm:p-5 md:p-6 bg-gradient-to-br from-teal-50 to-blue-50 rounded-2xl border border-teal-100">
+                    <div className="p-4 sm:p-5 md:p-6 bg-teal-50 rounded-2xl border border-teal-100">
                       <p className="text-xs font-bold text-teal-700 uppercase tracking-widest mb-3 sm:mb-4 flex items-center gap-2">
                         <Calendar className="w-3 h-3" />
                         Charter Rates

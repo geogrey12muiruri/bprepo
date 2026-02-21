@@ -53,11 +53,11 @@ export function WhyChooseUs() {
   ];
 
   return (
-    <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-neutral-50 via-white to-neutral-50 overflow-hidden" id="why-choose-us">
-      {/* Decorative background elements */}
+    <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-teal-50 overflow-hidden" id="why-choose-us">
+      {/* Decorative background elements - solid colors */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-100/30 rounded-full blur-3xl -translate-y-1/2" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl translate-y-1/2" />
+        <div className="absolute top-0 left-0 w-1/2 h-full bg-teal-50" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-50" />
       </div>
 
       <Container className="relative">
@@ -87,12 +87,12 @@ export function WhyChooseUs() {
                 }}
               >
                 <div className="relative h-full p-6 sm:p-7 md:p-8 bg-white rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-neutral-100 hover:border-transparent overflow-hidden">
-                  {/* Gradient overlay on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                  {/* Solid color overlay on hover */}
+                  <div className={`absolute inset-0 bg-teal-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                   
                   {/* Icon container */}
                   <div className="relative mb-5 sm:mb-6">
-                    <div className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-2xl bg-gradient-to-br ${feature.gradient} shadow-lg group-hover:shadow-xl transform group-hover:scale-110 transition-all duration-500`}>
+                    <div className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-2xl bg-teal-600 shadow-lg group-hover:shadow-xl group-hover:bg-teal-700 transform group-hover:scale-110 transition-all duration-500`}>
                       <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 text-white" strokeWidth={2.5} />
                     </div>
                   </div>
@@ -106,7 +106,7 @@ export function WhyChooseUs() {
                   </p>
 
                   {/* Decorative accent */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-teal-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
                 </div>
               </div>
             );

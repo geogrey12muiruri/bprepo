@@ -8,7 +8,7 @@ import { services } from "@/data/services";
 
 export function Services() {
     return (
-        <section className="py-16 md:py-32 bg-white overflow-hidden" id="featured-experiences">
+        <section className="py-16 md:py-32 bg-neutral-50 overflow-hidden" id="featured-experiences">
             <Container>
                 <div className="mb-12 md:mb-20 text-center max-w-3xl mx-auto">
                     <p className="text-[10px] font-black text-teal-600 uppercase tracking-[0.4em] mb-4">Discovery Awaits</p>

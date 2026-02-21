@@ -13,7 +13,7 @@ export function PopularTrips() {
     const featuredTrips = trips.slice(0, 6);
 
     return (
-        <section className="bg-neutral-50 py-12 sm:py-16 md:py-20 lg:py-24" id="experiences">
+        <section className="bg-white py-12 sm:py-16 md:py-20 lg:py-24" id="experiences">
             <Container>
                 <div className="mb-10 sm:mb-12 md:mb-16 text-center">
                     <Heading level="h2" size="2xl" className="mb-3 sm:mb-4">

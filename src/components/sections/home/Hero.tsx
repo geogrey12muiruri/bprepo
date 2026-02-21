@@ -30,7 +30,7 @@ export function Hero() {
       </div>
 
       {/* 3. Content Layer */}
-      <Container className="relative z-20">
+      <Container className="relative z-20 pt-20 sm:pt-24 md:pt-28">
         <div className="max-w-4xl text-white">
           {/* Subtle contrast backdrop for text */}
           <div className="absolute -inset-10 bg-teal-500/5 blur-[120px] rounded-full pointer-events-none" />
