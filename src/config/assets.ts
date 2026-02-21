@@ -39,12 +39,14 @@ export const ASSETS = {
     },
     fleet: {
         settingSons: {
-            main: "/assets/fleet/setting-sons/high-res.jpg",
+            main: "/assets/fleet/settinssons2.jpeg",
             video: "/assets/fleet/setting-sons/showcase.mp4",
+            poster: "/assets/fleet/settinssons2.jpeg",
         },
         hunkyDory: {
             main: "/assets/fleet/hunky-dory/hunkey.jpeg",
             video: "/assets/fleet/hunky-dory/showcase.mp4",
+            poster: "/assets/fleet/hunky-dory/hunkey.jpeg",
         },
     },
     gallery: {

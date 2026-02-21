@@ -11,7 +11,16 @@ export const boats: Boat[] = [
         dailyRate: 32000,
         image: ASSETS.fleet.settingSons.main,
         video: ASSETS.fleet.settingSons.video,
+        poster: ASSETS.fleet.settingSons.poster,
         features: ["Fully Insured", "Life Jackets", "GPS System", "360° Surveillance Camera", "Protection Rails"],
+        gallery: [
+            "/assets/fleet/settinssons2.jpeg",
+            "/assets/fleet/settingsons1.jpeg",
+            "/assets/fleet/setting-sons/main.jpg",
+            "/assets/fleet/WhatsApp Image 2026-02-12 at 5.51.54 PM.jpeg",
+            "/assets/fleet/WhatsApp Image 2026-02-12 at 5.51.55 PM (1).jpeg",
+            "/assets/fleet/WhatsApp Image 2026-02-12 at 5.51.55 PM (2).jpeg",
+        ],
     },
     {
         id: "hunky-dory",
@@ -22,6 +31,14 @@ export const boats: Boat[] = [
         dailyRate: 20000,
         image: ASSETS.fleet.hunkyDory.main,
         video: ASSETS.fleet.hunkyDory.video,
+        poster: ASSETS.fleet.hunkyDory.poster,
         features: ["Fully Insured", "Life Jackets", "Glass Bottom", "360° Surveillance Camera", "Snorkeling Gear"],
+        gallery: [
+            "/assets/fleet/hunky-dory/hunkey.jpeg",
+            "/assets/fleet/hunky-dory/high-res.jpg",
+            "/assets/fleet/hunky-dory/main.jpg",
+            "/assets/fleet/WhatsApp Image 2026-02-12 at 5.52.08 PM.jpeg",
+            "/assets/fleet/WhatsApp Image 2026-02-12 at 5.52.09 PM.jpeg",
+        ],
     },
 ];
