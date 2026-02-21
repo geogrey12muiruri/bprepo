@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { MobileCTA } from "@/components/layout/MobileCTA";
 import { generateMetadataBase } from "@/lib/seo";
 import "./globals.css";
 import "@/styles/tokens.css";
@@ -19,7 +18,6 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
-        <MobileCTA />
       </body>
     </html>
   );

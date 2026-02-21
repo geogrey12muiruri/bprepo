@@ -25,7 +25,7 @@ export function Footer() {
                     style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(2878%) hue-rotate(194deg) brightness(104%) contrast(101%)' }}
                   />
                 </div>
-                <span className="text-xl sm:text-2xl font-bold text-white tracking-tight bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                <span className="text-xl sm:text-2xl font-bold text-brand-blue tracking-tight">
                   Blue Pineapple
                 </span>
               </div>

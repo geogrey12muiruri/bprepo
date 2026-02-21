@@ -14,7 +14,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
     const { id, title, description, href, image, video, poster, isDisabled, statusMessage } = service;
 
     const content = (
-        <article className={`group relative h-[500px] sm:h-[550px] md:h-[500px] lg:h-[450px] overflow-hidden rounded-[2.5rem] bg-neutral-900 shadow-2xl transition-all duration-700 ${!isDisabled && "hover:shadow-teal-500/30 hover:-translate-y-2 cursor-pointer"}`}>
+        <article className={`group relative w-full aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/3] overflow-hidden rounded-xl sm:rounded-2xl bg-neutral-900 shadow-md hover:shadow-lg transition-all duration-300 ${!isDisabled && "hover:shadow-teal-500/20 hover:-translate-y-0.5 cursor-pointer"}`}>
             {/* Background Media */}
             <div className="absolute inset-0">
                 {video ? (
@@ -54,40 +54,40 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
             {/* Interactive Border Effect */}
             {!isDisabled && (
-                <div className="absolute inset-0 border-2 border-white/0 transition-all duration-700 group-hover:border-white/20 rounded-[2.5rem] pointer-events-none" />
+                <div className="absolute inset-0 border border-white/0 transition-all duration-300 group-hover:border-white/20 rounded-xl sm:rounded-2xl pointer-events-none" />
             )}
 
             {/* Text Content */}
-            <div className="absolute inset-x-0 bottom-0 p-8 md:p-12 flex flex-col justify-end h-full text-left">
+            <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 md:p-5 flex flex-col justify-end h-full text-left">
                 {isDisabled && statusMessage && (
-                    <div className="mb-6 inline-block self-start">
-                        <span className="bg-amber-500 text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl backdrop-blur-md">
+                    <div className="mb-2 sm:mb-2.5 inline-block self-start">
+                        <span className="bg-amber-500 text-white px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] shadow-md backdrop-blur-sm">
                             Coming Soon
                         </span>
                     </div>
                 )}
 
                 <div className="relative z-10">
-                    <Heading level="h3" size="xl" className={`text-white mb-2 md:mb-4 tracking-tighter !leading-none text-2xl md:text-3xl transition-transform duration-500 ${!isDisabled && "group-hover:-translate-y-1"}`}>
+                    <Heading level="h3" size="xl" className={`text-white mb-1 sm:mb-1.5 tracking-tight !leading-tight text-sm sm:text-base md:text-lg transition-transform duration-300 ${!isDisabled && "group-hover:-translate-y-0.5"}`}>
                         {title}
                     </Heading>
-                    <p className="text-neutral-200/90 text-sm md:text-base leading-relaxed mb-6 md:mb-8 line-clamp-3 max-w-[280px] md:max-w-none transition-all duration-500 group-hover:text-white">
+                    <p className="text-neutral-200/90 text-[10px] sm:text-xs md:text-sm leading-snug mb-2 sm:mb-2.5 line-clamp-2 transition-all duration-300 group-hover:text-white">
                         {description}
                     </p>
 
                     {isDisabled ? (
-                        <div className="mt-auto px-6 py-5 rounded-[1.5rem] bg-white/5 border border-white/10 text-center backdrop-blur-md">
-                            <p className="text-[10px] md:text-xs font-black text-white/50 uppercase tracking-[0.2em] leading-relaxed">
+                        <div className="mt-auto px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-lg bg-white/5 border border-white/10 text-center backdrop-blur-sm">
+                            <p className="text-[8px] sm:text-[9px] font-black text-white/50 uppercase tracking-[0.15em] leading-tight">
                                 {statusMessage}
                             </p>
                         </div>
                     ) : (
-                        <div className="flex items-center gap-4">
-                            <div className="h-12 w-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-500 group-hover:bg-teal-500 group-hover:border-teal-400 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-teal-500/20">
-                                <span className="text-white text-xl transition-transform duration-500 group-hover:translate-x-1">→</span>
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                            <div className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:bg-teal-500 group-hover:border-teal-400 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-teal-500/20">
+                                <span className="text-white text-xs sm:text-sm md:text-base transition-transform duration-300 group-hover:translate-x-0.5">→</span>
                             </div>
-                            <span className="text-[10px] md:text-xs font-black text-white uppercase tracking-[0.3em] opacity-60 group-hover:opacity-100 transition-opacity">
-                                {id === "private-charter" ? "Book Private Charter" : "See All Trips"}
+                            <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black text-white uppercase tracking-[0.15em] opacity-60 group-hover:opacity-100 transition-opacity">
+                                {id === "private-charter" ? "Book Charter" : "See Trips"}
                             </span>
                         </div>
                     )}
