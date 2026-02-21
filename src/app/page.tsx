@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/home/Hero";
-import { HeroCards } from "@/components/sections/home/HeroCards";
+// Keeping import for now if needed, but removing from view
 import { Services } from "@/components/sections/home/Services";
 import { PopularTrips } from "@/components/sections/home/PopularTrips";
 import { BoatsPreview } from "@/components/sections/home/BoatsPreview";
-import { VideoShowcase } from "@/components/sections/home/VideoShowcase";
-import { GalleryPreview } from "@/components/sections/home/GalleryPreview";
+import { WhyChooseUs } from "@/components/sections/home/WhyChooseUs";
+import { CoastalLife } from "@/components/sections/home/CoastalLife";
 import { generateJsonLD } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -54,12 +54,11 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
       />
       <Hero />
+      <WhyChooseUs />
       <Services />
-      <HeroCards />
       <PopularTrips />
       <BoatsPreview />
-      <VideoShowcase />
-      <GalleryPreview />
+      <CoastalLife />
     </>
   );
 }

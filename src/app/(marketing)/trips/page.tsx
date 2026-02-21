@@ -14,11 +14,11 @@ export default function TripsPage() {
   return (
     <div className="py-16 md:py-24 bg-neutral-50 min-h-screen">
       <Container>
-        <div className="mb-16">
-          <Heading level="h1" size="3xl" className="mb-4 text-neutral-900">
+        <div className="mb-12 sm:mb-14 md:mb-16">
+          <Heading level="h1" size="2xl" className="mb-3 sm:mb-4 text-neutral-900">
             Unforgettable Coastal Experiences
           </Heading>
-          <p className="text-xl text-neutral-600 max-w-3xl leading-relaxed">
+          <p className="text-base sm:text-lg text-neutral-600 max-w-3xl leading-relaxed">
             From historic tours to private charters and sunset sailings.
             Discover the magic of the Kenyan coast with BluePineapple.
           </p>

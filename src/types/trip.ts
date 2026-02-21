@@ -7,6 +7,7 @@ export type Trip = {
   readonly durationHours: number;
   readonly boatType: "Small Boat" | "Big Boat" | "Small & Big Boat";
   readonly pricePerPerson: number;
+  readonly departureTimes?: string; // e.g., "11.00 am and 2.00 pm" or "9.00am" or "all day Upon request"
   readonly status?: "available" | "coming-soon";
   readonly image: string;
   readonly video?: string;

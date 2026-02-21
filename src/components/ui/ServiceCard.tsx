@@ -68,10 +68,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
                 )}
 
                 <div className="relative z-10">
-                    <Heading level="h3" size="xl" className={`text-white mb-2 md:mb-4 tracking-tighter !leading-none text-3xl md:text-4xl transition-transform duration-500 ${!isDisabled && "group-hover:-translate-y-1"}`}>
+                    <Heading level="h3" size="xl" className={`text-white mb-2 md:mb-4 tracking-tighter !leading-none text-2xl md:text-3xl transition-transform duration-500 ${!isDisabled && "group-hover:-translate-y-1"}`}>
                         {title}
                     </Heading>
-                    <p className="text-neutral-200/90 text-sm md:text-base leading-relaxed mb-8 md:mb-10 line-clamp-3 max-w-[280px] md:max-w-none transition-all duration-500 group-hover:text-white">
+                    <p className="text-neutral-200/90 text-sm md:text-base leading-relaxed mb-6 md:mb-8 line-clamp-3 max-w-[280px] md:max-w-none transition-all duration-500 group-hover:text-white">
                         {description}
                     </p>
 

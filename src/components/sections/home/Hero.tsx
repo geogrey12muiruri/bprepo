@@ -3,12 +3,11 @@
 import React from "react";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
-import { Button } from "@/components/ui/Button";
-import { ROUTES } from "@/lib/routes";
+import { HeroInfoCards } from "./HeroInfoCards";
 
 export function Hero() {
   return (
-    <section className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center bg-black">
+    <section className="relative h-screen min-h-[600px] sm:min-h-[700px] w-full overflow-hidden flex items-center bg-black">
       {/* 1. Background Video Layer */}
       <div className="absolute inset-0 z-0">
         <video
@@ -37,21 +36,21 @@ export function Hero() {
           <div className="absolute -inset-10 bg-teal-500/5 blur-[120px] rounded-full pointer-events-none" />
 
           <div className="relative">
-            <div className="mb-6 flex items-center gap-3 animate-[fade-in-right_1.2s_ease-out_forwards]">
-              <div className="h-px w-8 md:w-12 bg-teal-500" />
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-teal-400">
+            <div className="mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3 animate-[fade-in-right_1.2s_ease-out_forwards]">
+              <div className="h-px w-6 sm:w-8 md:w-12 bg-teal-500" />
+              <span className="text-[9px] sm:text-[10px] md:text-xs font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-teal-400">
                 Exclusive Maritime Journeys
               </span>
             </div>
 
-            <Heading level="h1" size="3xl" className="mb-8 text-white !leading-[1.1] tracking-tight md:tracking-tighter">
+            <Heading level="h1" size="3xl" className="mb-6 sm:mb-8 text-white !leading-[1.1] tracking-tight md:tracking-tighter">
               <span className="block overflow-hidden">
-                <span className="block animate-[slide-up_1s_ease-out_0.2s_forwards] text-4xl sm:text-5xl md:text-7xl">
+                <span className="block animate-[slide-up_1s_ease-out_0.2s_forwards] text-3xl sm:text-4xl md:text-5xl">
                   Discover the <span className="italic font-light text-neutral-400">Hidden</span>
                 </span>
               </span>
-              <span className="block overflow-hidden py-1 md:py-2">
-                <span className="block animate-[slide-up_1s_ease-out_0.4s_forwards] text-4xl sm:text-5xl md:text-7xl">
+              <span className="block overflow-hidden py-1 sm:py-1 md:py-2">
+                <span className="block animate-[slide-up_1s_ease-out_0.4s_forwards] text-3xl sm:text-4xl md:text-5xl">
                   Magic of <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal-100 to-blue-400 font-black animate-[shimmer_3s_infinite_linear] bg-[length:200%_auto]">
                     Blue Pineapple
                   </span>
@@ -59,35 +58,19 @@ export function Hero() {
               </span>
             </Heading>
 
-            <p className="mb-10 text-lg md:text-2xl text-neutral-300/80 leading-relaxed max-w-xl animate-[fade-in_1.5s_ease-out_0.8s_forwards] opacity-0">
+            <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl text-neutral-300/80 leading-relaxed max-w-xl animate-[fade-in_1.5s_ease-out_0.8s_forwards] opacity-0 px-2 sm:px-0">
               The Indian Ocean, defined by your <span className="text-white border-b border-teal-500/30">curiosity</span>.
               Historic explorations and premium charters combined.
             </p>
 
-            <div className="flex flex-col gap-4 sm:flex-row items-stretch sm:items-center animate-[fade-in_1s_ease-out_1.2s_forwards] opacity-0">
-              <Button
-                size="lg"
-                className="px-10 h-14 md:h-16 text-base md:text-lg rounded-2xl font-black shadow-2xl shadow-teal-500/10 active:scale-95 transition-all"
-                onClick={() => window.location.href = ROUTES.trips}
-              >
-                Start Exploring
-              </Button>
-              <Button
-                variant="secondary"
-                size="lg"
-                className="px-10 h-14 md:h-16 text-base md:text-lg bg-white/5 hover:bg-white/10 border-white/10 text-white backdrop-blur-md rounded-2xl font-bold transition-all"
-                onClick={() => window.location.href = ROUTES.contact}
-              >
-                Charter A Vessel
-              </Button>
-            </div>
+            <HeroInfoCards />
           </div>
         </div>
       </Container>
 
       {/* 4. Interactive Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3 animate-[fade-in_1s_ease-out_2s_forwards] opacity-0">
-        <div className="w-[1px] h-12 bg-gradient-to-b from-teal-500/50 to-transparent animate-[scroll-line_2s_infinite]" />
+      <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3 animate-[fade-in_1s_ease-out_2s_forwards] opacity-0">
+        <div className="w-[1px] h-8 sm:h-12 bg-gradient-to-b from-teal-500/50 to-transparent animate-[scroll-line_2s_infinite]" />
       </div>
     </section>
   );

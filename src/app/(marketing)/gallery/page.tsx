@@ -3,55 +3,41 @@ import React from "react";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
+import { ASSETS } from "@/config/assets";
 
 const galleryItems = [
   {
     type: "image",
-    src: "/images/gallery/WhatsApp Image 2026-01-17 at 1.36.13 PM (2).jpeg",
-    alt: "Pristine coastal views in Mombasa",
+    src: ASSETS.gallery.images.fleetShowcase, // New high-quality image
+    alt: "BluePineapple Fleet Ready for Adventure",
   },
   {
     type: "video",
-    src: "/videos/services/IMG_6078.mp4",
-    poster: "/images/services/IMG_6078-poster.jpg",
+    src: ASSETS.marketing.hero.video,
+    poster: ASSETS.marketing.hero.poster,
     alt: "Coastal vibes cinematic highlight",
   },
   {
     type: "image",
-    src: "/images/gallery/WhatsApp Image 2026-01-17 at 1.36.13 PM.jpeg",
+    src: ASSETS.gallery.images.boatFleet,
     alt: "BluePineapple boat fleet",
   },
   {
     type: "video",
-    src: "/videos/services/IMG_6079.mp4",
-    poster: "/images/services/IMG_6079-poster.jpg",
+    src: ASSETS.marketing.services.privateCharter.video,
+    poster: ASSETS.marketing.services.privateCharter.poster,
     alt: "Underwater highlights",
   },
   {
     type: "image",
-    src: "/images/gallery/hero.jpeg",
+    src: ASSETS.gallery.images.luxuryMarine,
     alt: "Luxury marine experience",
   },
   {
     type: "video",
-    src: "/videos/services/IMG_6080.mp4",
-    poster: "/images/services/IMG_6080-poster.jpg",
+    src: ASSETS.marketing.services.sunsetSailing.video,
+    poster: ASSETS.marketing.services.sunsetSailing.poster,
     alt: "Golden hour sailing",
-  },
-  {
-    type: "image",
-    src: "/images/services/WhatsApp Image 2026-01-17 at 1.36.13 PM (1).jpeg",
-    alt: "Marina operations at sunset",
-  },
-  {
-    type: "image",
-    src: "/images/services/WhatsApp Image 2026-01-17 at 1.36.13 PM.jpeg",
-    alt: "Creek safari boat",
-  },
-  {
-    type: "image",
-    src: "/images/services/IMG_6071-poster.jpg",
-    alt: "Historic tours nearby",
   },
 ];
 

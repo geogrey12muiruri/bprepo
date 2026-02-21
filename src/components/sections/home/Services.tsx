@@ -15,7 +15,7 @@ export function Services() {
                     <Heading level="h2" size="2xl" className="mb-4 md:mb-6 tracking-tight">
                         Curated Experiences
                     </Heading>
-                    <p className="text-lg md:text-xl text-neutral-600 leading-relaxed font-medium">
+                    <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-medium">
                         From serene creek safaris to historical voyages. Choose your perfect
                         coastal adventure with Blue Pineapple.
                     </p>

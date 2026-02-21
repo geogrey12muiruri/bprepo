@@ -12,13 +12,13 @@ type HeadingProps = {
 };
 
 const sizeStyles: Record<HeadingSize, string> = {
-  xs: "text-xs font-semibold",
-  sm: "text-sm font-semibold",
-  md: "text-base font-bold",
-  lg: "text-lg font-bold",
-  xl: "text-xl md:text-2xl font-bold",
-  "2xl": "text-2xl md:text-3xl font-bold",
-  "3xl": "text-3xl md:text-4xl font-bold",
+  xs: "text-xs sm:text-sm font-semibold",
+  sm: "text-sm sm:text-base font-semibold",
+  md: "text-base sm:text-lg font-bold",
+  lg: "text-lg sm:text-xl font-bold",
+  xl: "text-xl sm:text-2xl font-bold",
+  "2xl": "text-2xl sm:text-3xl md:text-4xl font-bold",
+  "3xl": "text-3xl sm:text-4xl md:text-5xl font-bold",
 };
 
 export function Heading({

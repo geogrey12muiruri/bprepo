@@ -149,3 +149,30 @@ img {
     transform: translateY(0);
   }
 }
+
+@theme {
+  --color-brand-blue: #0B3D91;
+  --color-brand-teal: #40E0D0;
+  --color-brand-sand: #F5F5F0;
+  --color-brand-ink: #0F172A;
+}
+
+/* Custom Utilities for glassmorphism and safe areas */
+@utility glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@utility glass-panel-dark {
+  background: rgba(11, 61, 145, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile drawer utilities */
+@utility drawer-content {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
