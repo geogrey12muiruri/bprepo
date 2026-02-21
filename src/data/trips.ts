@@ -57,7 +57,7 @@ export const trips: ReadonlyArray<Trip> = [
     boatType: "Small & Big Boat",
     pricePerPerson: 4000,
     departureTimes: "10.00 am",
-    status: "coming-soon",
+    status: "available",
     image: "/images/fortjesus.png",
     video: "/videos/services/IMG_6071.mp4",
     poster: "/images/fortjesus.png",
