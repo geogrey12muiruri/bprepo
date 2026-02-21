@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -54,70 +54,86 @@ export function Header() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-in-out ${showSolidHeader
-          ? "bg-white/95 backdrop-blur-md shadow-sm py-3"
-          : "bg-transparent py-5 lg:py-6"
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-neutral-100/50 py-2.5 sm:py-3"
+          : "bg-transparent py-3 sm:py-4"
           }`}
       >
         <Container className="flex items-center justify-between">
           {/* Logo */}
-          <Link href={ROUTES.home} className="relative z-[110] flex items-center gap-3 group">
-            <div className="relative w-10 h-10 lg:w-12 lg:h-12 transition-all duration-300">
+          <Link href={ROUTES.home} className="relative z-[110] flex items-center gap-2 sm:gap-2.5 group">
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 transition-all duration-300">
               <Image
                 src="/images/logo.png"
                 alt="Blue Pineapple Logo"
                 fill
                 className="object-contain"
-                sizes="(max-width: 768px) 40px, 48px"
+                sizes="(max-width: 640px) 32px, (max-width: 1024px) 36px, 40px"
                 priority
               />
             </div>
             <span
-              className={`font-black tracking-tight text-lg lg:text-xl uppercase transition-opacity duration-300 ${isHome && !isScrolled ? "opacity-95" : "opacity-100"
-                } bg-gradient-to-r from-brand-blue to-teal-500 bg-clip-text text-transparent drop-shadow-sm`}
+              className={`font-bold tracking-tight text-sm sm:text-base lg:text-lg transition-opacity duration-300 ${isHome && !isScrolled ? "opacity-95" : "opacity-100"
+                } bg-gradient-to-r from-brand-blue to-teal-500 bg-clip-text text-transparent`}
             >
               Blue Pineapple
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-bold uppercase tracking-widest transition-colors duration-200 hover:text-brand-teal ${isHome && !isScrolled ? "text-white/90" : "text-brand-ink/80"
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-xs xl:text-sm font-semibold tracking-wide transition-all duration-200 relative group ${
+                    isActive
+                      ? isHome && !isScrolled
+                        ? "text-white"
+                        : "text-teal-600"
+                      : isHome && !isScrolled
+                        ? "text-white/85 hover:text-white"
+                        : "text-neutral-700 hover:text-teal-600"
                   }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span className={`absolute -bottom-1 left-0 right-0 h-0.5 rounded-full transition-all duration-200 ${
+                      isHome && !isScrolled ? "bg-white" : "bg-teal-600"
+                    }`} />
+                  )}
+                </Link>
+              );
+            })}
             <Button
               href={ROUTES.contact}
               variant="primary"
-              size="md"
-              className={isHome && !isScrolled ? "bg-white text-brand-blue hover:bg-white/90 shadow-none" : ""}
+              size="sm"
+              className={`text-xs xl:text-sm px-4 xl:px-5 py-2 ${
+                isHome && !isScrolled 
+                  ? "bg-white text-brand-blue hover:bg-white hover:text-brand-blue shadow-lg" 
+                  : "bg-brand-blue text-white hover:bg-blue-700"
+              }`}
             >
               Book via WhatsApp
             </Button>
           </nav>
 
           {/* Mobile Actions */}
-          <div className="flex items-center gap-4 lg:hidden">
-            {/* Optional: Compact CTA for mobile if needed, or just keep it in menu */}
-            {/* <Button href={ROUTES.contact} size="sm" className="hidden sm:inline-flex">Book</Button> */}
-
+          <div className="flex items-center gap-3 lg:hidden">
             {/* Hamburger Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className={`p-2 rounded-lg transition-colors ${isHome && !isScrolled
+              className={`p-1.5 sm:p-2 rounded-lg transition-colors ${isHome && !isScrolled
                 ? "text-white hover:bg-white/10"
-                : "text-brand-ink hover:bg-brand-ink/5"
+                : "text-neutral-700 hover:bg-neutral-100"
                 }`}
               aria-label="Open menu"
             >
               <svg
-                width="28"
-                height="28"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -138,22 +154,22 @@ export function Header() {
       <Sheet isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} side="right">
         <div className="flex flex-col h-full bg-gradient-to-b from-white to-neutral-50 relative">
           {/* Drawer Header - Modern with Logo */}
-          <div className="flex items-center justify-between p-5 sm:p-6 border-b border-neutral-100">
+          <div className="flex items-center justify-between p-4 sm:p-5 border-b border-neutral-100">
             <Link 
               href={ROUTES.home} 
-              className="flex items-center gap-2.5 group"
+              className="flex items-center gap-2 sm:gap-2.5 group"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <div className="relative w-10 h-10">
+              <div className="relative w-8 h-8 sm:w-9 sm:h-9">
                 <Image
                   src="/images/logo.png"
                   alt="Blue Pineapple Logo"
                   fill
                   className="object-contain"
-                  sizes="40px"
+                  sizes="(max-width: 640px) 32px, 36px"
                 />
               </div>
-              <span className="font-black tracking-tight text-base uppercase bg-gradient-to-r from-blue-500 to-teal-500 bg-clip-text text-transparent">
+              <span className="font-bold tracking-tight text-sm sm:text-base bg-gradient-to-r from-blue-500 to-teal-500 bg-clip-text text-transparent">
                 Blue Pineapple
               </span>
             </Link>
@@ -178,7 +194,7 @@ export function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-4 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 flex items-center justify-between group ${
+                    className={`px-4 py-3 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 flex items-center justify-between group ${
                       isActive
                         ? "bg-teal-50 text-teal-700 border border-teal-100"
                         : "text-neutral-700 hover:bg-neutral-50 hover:text-teal-600"
@@ -187,7 +203,7 @@ export function Header() {
                   >
                     <span>{link.label}</span>
                     <svg 
-                      className={`w-5 h-5 transition-transform duration-300 ${isActive ? "text-teal-600" : "text-neutral-300 group-hover:text-teal-500 group-hover:translate-x-1"}`}
+                      className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${isActive ? "text-teal-600" : "text-neutral-300 group-hover:text-teal-500 group-hover:translate-x-1"}`}
                       fill="none" 
                       viewBox="0 0 24 24" 
                       stroke="currentColor"

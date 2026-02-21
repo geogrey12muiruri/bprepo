@@ -147,12 +147,9 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-8 sm:mt-10 pt-8 sm:pt-10 border-t border-neutral-800">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-neutral-500">
             <p>
               &copy; {currentYear} Blue Pineapple Coastal Services. All rights reserved.
-            </p>
-            <p className="text-neutral-600">
-              Made with <span className="text-red-500">❤️</span> for Kenya
             </p>
           </div>
         </div>
