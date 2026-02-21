@@ -3,13 +3,15 @@ import React from "react";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
+import { Play } from "lucide-react";
 import { ASSETS } from "@/config/assets";
 
 const galleryItems = [
   {
     type: "image",
-    src: ASSETS.gallery.images.fleetShowcase, // New high-quality image
+    src: ASSETS.gallery.images.fleetShowcase,
     alt: "BluePineapple Fleet Ready for Adventure",
+    featured: true,
   },
   {
     type: "video",
@@ -48,53 +50,75 @@ export const metadata: Metadata = {
 
 export default function GalleryPage() {
   return (
-    <div className="py-16 md:py-32 bg-neutral-50">
-      <Container>
-        <div className="mb-16 md:mb-24 text-center max-w-3xl mx-auto">
-          <Heading level="h1" size="3xl" className="mb-6">
+    <div className="min-h-screen bg-gradient-to-b from-white via-neutral-50/30 to-white">
+      <Container className="py-12 sm:py-16 md:py-20 lg:py-24">
+        {/* Enhanced Header */}
+        <div className="mb-12 sm:mb-14 md:mb-16 lg:mb-20 text-center">
+          <div className="inline-block mb-4">
+            <span className="text-[10px] sm:text-xs font-black text-teal-600 uppercase tracking-[0.3em] sm:tracking-[0.4em]">
+              Visual Journey
+            </span>
+          </div>
+          <Heading level="h1" size="2xl" className="mb-4 sm:mb-5 md:mb-6 text-neutral-900">
             Moments Captured at Sea
           </Heading>
-          <p className="text-xl text-neutral-600 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
             A visual journey through the turquoise waters of Mombasa and Diani.
             Discover the magic that awaits you with BluePineapple.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {galleryItems.map((item, idx) => (
-            <div
-              key={idx}
-              className={`relative overflow-hidden rounded-3xl bg-white shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${item.type === "video" ? "aspect-[9/16] md:row-span-2" : "aspect-square md:aspect-auto md:h-80"
+        {/* Modern Gallery Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+          {galleryItems.map((item, idx) => {
+            const isFeatured = item.featured;
+            
+            return (
+              <div
+                key={idx}
+                className={`group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-100 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 ${
+                  isFeatured ? "sm:col-span-2 lg:col-span-2 sm:row-span-2" : ""
+                } ${item.type === "video" ? "aspect-[9/16] sm:aspect-auto sm:h-[400px]" : isFeatured ? "aspect-square sm:aspect-auto sm:h-[500px]" : "aspect-square sm:aspect-auto sm:h-[400px]"
                 }`}
-            >
-              {item.type === "video" ? (
-                <div className="h-full w-full">
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    poster={item.poster}
-                    className="h-full w-full object-cover"
-                  >
-                    <source src={item.src} type="video/mp4" />
-                  </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
-                </div>
-              ) : (
-                <div className="h-full w-full relative">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-black/5 hover:bg-transparent transition-colors duration-500" />
-                </div>
-              )}
-            </div>
-          ))}
+              >
+                {item.type === "video" ? (
+                  <div className="h-full w-full relative">
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      poster={item.poster}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    >
+                      <source src={item.src} type="video/mp4" />
+                    </video>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-16 h-16 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-xl">
+                        <Play className="w-6 h-6 text-teal-600 ml-1" fill="currentColor" />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="h-full w-full relative">
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes={isFeatured ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
+                      quality={90}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
+                )}
+                
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-teal-500/0 group-hover:bg-teal-500/5 transition-colors duration-500 pointer-events-none" />
+              </div>
+            );
+          })}
         </div>
       </Container>
     </div>
