@@ -162,7 +162,7 @@ export default async function BoatDetailPage({ params }: Props) {
               </div>
 
               <Link
-                href={ROUTES.contact}
+                href={`https://wa.me/254708485978?text=Hi%20Blue%20Pineapple,%20I'd%20like%20to%20book%20the%20${boat.name}`}
                 className="block w-full py-3 bg-teal-500 hover:bg-teal-400 text-white text-center rounded-lg font-semibold text-sm transition-colors"
               >
                 Book This Vessel

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import Link from "next/link";
 import { 
   Star, Clock, Anchor, Ship, MapPin, Users, Ticket, Percent,
   Waves, Landmark, Sun, Compass, Info, CheckCircle2, ArrowRight
@@ -282,9 +282,9 @@ function PricingCard({ trip, isComingSoon }: { trip: Trip; isComingSoon: boolean
               Coming Soon
             </div>
           ) : (
-            <Button className="px-8 py-3 text-base font-bold rounded-xl shadow-lg">
+            <Link href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple,%20I'd%20like%20to%20book%20the%20{trip.name}" className="px-8 py-3 bg-teal-500 hover:bg-teal-400 text-white text-base font-bold rounded-xl shadow-lg text-center">
               Book Now
-            </Button>
+            </Link>
           )}
         </div>
       </div>
@@ -361,13 +361,13 @@ function PricingCard({ trip, isComingSoon }: { trip: Trip; isComingSoon: boolean
               <p className="font-bold text-neutral-600">Coming Soon</p>
             </div>
           ) : (
-            <Button className="w-full h-14 text-base font-bold rounded-xl shadow-lg shadow-teal-700/20">
+            <Link href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple,%20I'd%20like%20to%20book%20the%20{trip.name}" className="flex items-center justify-center w-full h-14 bg-teal-500 hover:bg-teal-400 text-white text-base font-bold rounded-xl shadow-lg shadow-teal-700/20">
               Book Now
-            </Button>
+            </Link>
           )}
-          <button className="w-full h-12 border-2 border-neutral-200 text-neutral-600 rounded-xl font-semibold hover:bg-neutral-50 transition-colors text-sm">
+          <Link href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple,%20I%20have%20a%20question%20about%20{trip.name}" className="w-full h-12 border-2 border-neutral-200 text-neutral-600 rounded-xl font-semibold hover:bg-neutral-50 transition-colors text-sm flex items-center justify-center">
             Ask a Question
-          </button>
+          </Link>
         </div>
       </Card>
     </div>
