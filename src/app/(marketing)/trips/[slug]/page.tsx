@@ -4,10 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
-import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { 
-  Star, Clock, Anchor, Ship, MapPin, Users, Ticket, Percent,
+  Star, Clock, Anchor, Ship, MapPin, Users, Ticket,
   Waves, Landmark, Sun, Compass, Info, CheckCircle2, ArrowRight
 } from "lucide-react";
 import { trips } from "@/data/trips";
@@ -16,6 +15,8 @@ import { formatPrice, formatDuration } from "@/lib/format";
 import { generateJsonLD } from "@/lib/seo";
 import { ROUTES } from "@/lib/routes";
 import { TripCard } from "@/components/ui/TripCard";
+import { PricingCard } from "@/components/trips/PricingCard";
+import { TripJourneyTimeline } from "@/components/sections/TripJourneyTimeline";
 
 type TripDetailPageProps = {
   readonly params: Promise<{ readonly slug: string }>;
@@ -67,18 +68,18 @@ export async function generateStaticParams(): Promise<Array<{ readonly slug: str
 
 function QuickFactsStrip({ trip }: { trip: Trip }) {
   const departureTimes = trip.departureTimes ? trip.departureTimes.split(",").map(t => t.trim()) : [];
+  const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : null;
   
   const facts = [
     { icon: Clock, label: "Duration", value: formatDuration(trip.durationHours) },
-    { icon: Ship, label: "Vessel", value: trip.boatType },
   ];
   
   if (trip.rating) {
     facts.unshift({ icon: Star, label: "Rating", value: `${trip.rating} (${trip.reviewCount || "new"})` });
   }
-
+  
   return (
-    <div className="bg-white border-b border-neutral-100 py-5 sm:py-6">
+    <div className="bg-neutral-800/50 border-b border-white/5 py-5 sm:py-6">
       <Container>
         {/* Mobile: Stack facts vertically, desktop: horizontal */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 sm:gap-6 md:gap-10">
@@ -93,6 +94,23 @@ function QuickFactsStrip({ trip }: { trip: Trip }) {
               </div>
             </div>
           ))}
+          
+          {/* Vessel as link */}
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0">
+              <Ship className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600" strokeWidth={1.5} />
+            </div>
+            <div>
+              <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Vessel</p>
+              {vesselSlug ? (
+                <Link href={`${ROUTES.boats}/${vesselSlug}`} className="text-sm font-bold text-teal-600 hover:text-teal-500 transition-colors">
+                  {trip.boatType}
+                </Link>
+              ) : (
+                <p className="text-sm font-bold text-neutral-900">{trip.boatType}</p>
+              )}
+            </div>
+          </div>
           
           {/* Departure Times as interactive chips */}
           {departureTimes.length > 0 && (
@@ -236,146 +254,64 @@ function SafetyFeatures({ trip }: { trip: Trip }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {features.map((feature) => (
-        <div key={feature} className="flex items-center gap-3 p-3 rounded-lg bg-neutral-50">
-          <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0" strokeWidth={2} />
-          <span className="text-sm font-medium text-neutral-700">{feature}</span>
+        <div key={feature} className="flex items-center gap-3 p-3 rounded-lg bg-white/5">
+          <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0" strokeWidth={2} />
+          <span className="text-sm font-medium text-neutral-200">{feature}</span>
         </div>
       ))}
     </div>
   );
 }
 
-function PricingCard({ trip, isComingSoon }: { trip: Trip; isComingSoon: boolean }) {
-  return (
-    <div className="relative">
-      {/* Mobile: Fixed bottom bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 p-4 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <p className="text-xs text-neutral-500">From</p>
-            <p className="text-xl font-black text-teal-600">
-              {trip.priceReturn ? formatPrice(trip.priceReturn) : formatPrice(trip.pricePerPerson)}
-            </p>
-          </div>
-          {isComingSoon ? (
-            <div className="px-6 py-3 bg-neutral-100 text-neutral-400 rounded-xl font-bold">
-              Coming Soon
-            </div>
-          ) : (
-            <Link href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple,%20I'd%20like%20to%20book%20the%20{trip.name}" className="px-8 py-3 bg-teal-500 hover:bg-teal-400 text-white text-base font-bold rounded-xl shadow-lg text-center">
-              Book Now
-            </Link>
-          )}
-        </div>
-      </div>
-
-      {/* Desktop Card */}
-      <Card className="hidden lg:block p-6 xl:p-8 shadow-xl border-none rounded-2xl bg-white">
-        <div className="mb-6">
-          <p className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">Select Package</p>
-          
-          {trip.priceOneWay && trip.priceReturn ? (
-            <div className="space-y-3">
-              <div className={`p-4 rounded-xl border-2 transition-all cursor-pointer ${
-                true ? "border-teal-500 bg-teal-50/50" : "border-neutral-200 hover:border-neutral-300"
-              }`}>
-                <div className="flex items-center justify-between mb-1">
-                  <div className="flex items-center gap-2">
-                    <Ship className="w-4 h-4 text-teal-600" />
-                    <span className="font-bold text-neutral-900">Return Trip</span>
-                  </div>
-                  <span className="text-xl font-black text-teal-600">{formatPrice(trip.priceReturn)}</span>
-                </div>
-                <p className="text-xs text-neutral-500">Full experience with time at Fort Jesus</p>
-              </div>
-              
-              <div className="p-4 rounded-xl border-2 border-neutral-200 hover:border-neutral-300 transition-all cursor-pointer">
-                <div className="flex items-center justify-between mb-1">
-                  <div className="flex items-center gap-2">
-                    <ArrowRight className="w-4 h-4 text-neutral-400" />
-                    <span className="font-bold text-neutral-700">One Way</span>
-                  </div>
-                  <span className="text-xl font-black text-neutral-600">{formatPrice(trip.priceOneWay)}</span>
-                </div>
-                <p className="text-xs text-neutral-500">To Fort Jesus only</p>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-4">
-              <p className="text-xs text-neutral-500 mb-1">From</p>
-              <p className="text-3xl font-black text-teal-600">{formatPrice(trip.pricePerPerson)}</p>
-              <p className="text-xs text-neutral-500">per person</p>
-            </div>
-          )}
-        </div>
-
-        {trip.discounts && (
-          <div className="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-100">
-            <div className="flex items-center gap-2 mb-3">
-              <Percent className="w-4 h-4 text-amber-600" />
-              <p className="text-xs font-black text-amber-700 uppercase tracking-widest">Available Offers</p>
-            </div>
-            <ul className="space-y-2">
-              {trip.discounts.kenyansPercent && (
-                <li className="text-xs text-amber-800 font-medium">
-                  <span className="font-bold">{trip.discounts.kenyansPercent}% OFF</span> Kenyan residents
-                </li>
-              )}
-              {trip.discounts.childrenPercent && (
-                <li className="text-xs text-amber-800 font-medium">
-                  <span className="font-bold">{trip.discounts.childrenPercent}% OFF</span> children {trip.discounts.childrenMinAge}-{trip.discounts.childrenMaxAge}
-                </li>
-              )}
-              {trip.discounts.underFiveFree && (
-                <li className="text-xs text-amber-800 font-medium">
-                  <span className="font-bold">FREE</span> under 5 years
-                </li>
-              )}
-            </ul>
-          </div>
-        )}
-
-        <div className="space-y-3">
-          {isComingSoon ? (
-            <div className="p-4 rounded-xl bg-neutral-100 text-center">
-              <p className="font-bold text-neutral-600">Coming Soon</p>
-            </div>
-          ) : (
-            <Link href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple,%20I'd%20like%20to%20book%20the%20{trip.name}" className="flex items-center justify-center w-full h-14 bg-teal-500 hover:bg-teal-400 text-white text-base font-bold rounded-xl shadow-lg shadow-teal-700/20">
-              Book Now
-            </Link>
-          )}
-          <Link href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple,%20I%20have%20a%20question%20about%20{trip.name}" className="w-full h-12 border-2 border-neutral-200 text-neutral-600 rounded-xl font-semibold hover:bg-neutral-50 transition-colors text-sm flex items-center justify-center">
-            Ask a Question
-          </Link>
-        </div>
-      </Card>
-    </div>
-  );
-}
-
 function DepartureDetails({ trip }: { trip: Trip }) {
+  // Parse departure times into array for pill rendering
+  const departureTimesArray = trip.departureTimes 
+    ? trip.departureTimes.split(",").map(t => t.trim()).filter(Boolean)
+    : [];
+  
+  const returnTimesArray = trip.returnTimes
+    ? trip.returnTimes.split(",").map(t => t.trim()).filter(Boolean)
+    : [];
+
   const details = [
-    ...(trip.departurePoints ? [{ icon: MapPin, label: "Departure Point", value: trip.departurePoints }] : []),
-    ...(trip.departureTimes ? [{ icon: Clock, label: "Departure Times", value: trip.departureTimes }] : []),
-    ...(trip.returnTimes ? [{ icon: Clock, label: "Return Times", value: trip.returnTimes }] : []),
-    ...(trip.stops ? [{ icon: Anchor, label: "Stops", value: trip.stops }] : []),
-    { icon: Ship, label: "Vessel", value: trip.boatType },
+    ...(trip.departurePoints ? [{ icon: MapPin, label: "Departure Point", value: trip.departurePoints, isArray: false }] : []),
+    ...(trip.departureTimes ? [{ icon: Clock, label: "Departure Times", value: trip.departureTimes, isArray: true, times: departureTimesArray }] : []),
+    ...(trip.returnTimes ? [{ icon: Clock, label: "Return Times", value: trip.returnTimes, isArray: true, times: returnTimesArray }] : []),
+    ...(trip.stops ? [{ icon: Anchor, label: "Stops", value: trip.stops, isArray: false }] : []),
+    { icon: Ship, label: "Vessel", value: trip.boatType, isArray: false },
   ];
 
   return (
-    <Card className="p-6 rounded-2xl bg-neutral-50/50 border border-neutral-100">
-      <Heading level="h3" size="md" className="mb-5 !font-bold">Trip Details</Heading>
+    <Card className="p-6 rounded-2xl bg-white/5 border border-white/10">
+      <Heading level="h3" size="md" className="mb-5 !font-bold text-white">Trip Details</Heading>
       <div className="space-y-4">
         {details.map((detail) => (
           <div key={detail.label} className="flex items-start gap-3">
-            <detail.icon className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
+            <detail.icon className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
             <div>
               <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{detail.label}</p>
-              <p className="text-sm font-medium text-neutral-800">{detail.value}</p>
+              {/* Render times as pills if it's an array with values, otherwise as plain text */}
+              {(detail.isArray && detail.times && detail.times.length > 0) ? (
+                <div className="flex flex-wrap gap-1.5 mt-1">
+                  {detail.times.map((time, idx) => (
+                    <span key={idx} className="px-2 py-1 bg-white/10 text-neutral-200 text-xs font-medium rounded font-mono">
+                      {time}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm font-medium text-neutral-300">{detail.value}</p>
+              )}
             </div>
           </div>
         ))}
+        {/* Minimum booking info - Enhancement 4 */}
+        <div className="pt-3 border-t border-white/10">
+          <p className="text-xs text-neutral-500 flex items-center gap-1.5">
+            <Info className="w-3 h-3" />
+            Minimum booking: 6 passengers
+          </p>
+        </div>
       </div>
     </Card>
   );
@@ -412,7 +348,7 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }} />
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-neutral-900">
         {/* Hero Section */}
         <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden">
           <Image src={trip.image} alt={trip.name} fill className="object-cover" priority sizes="100vw" />
@@ -457,25 +393,34 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
             <div className="lg:col-span-8 order-2 lg:order-1 space-y-12 lg:space-y-16">
               
               {/* Journey Sections */}
-              <section>
-                <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight">Your Experience</Heading>
+              <section className="pb-8 border-b border-white/10">
+                <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">Your Experience</Heading>
                 <JourneySection trip={trip} />
               </section>
 
-              {/* Itinerary Timeline */}
-              <section className="pt-8 border-t border-neutral-200">
-                <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight">Itinerary</Heading>
-                <ItineraryTimeline trip={trip} />
-              </section>
+              {/* Journey Highlights */}
+              {trip.journeyStops && trip.returnNote ? (
+                <section className="pt-8 border-t border-white/10">
+                  <TripJourneyTimeline 
+                    stops={trip.journeyStops} 
+                    returnNote={trip.returnNote} 
+                  />
+                </section>
+              ) : (
+                <section className="pt-8 border-t border-white/10">
+                  <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">Itinerary</Heading>
+                  <ItineraryTimeline trip={trip} />
+                </section>
+              )}
 
               {/* Safety Features */}
-              <section className="pt-8 border-t border-neutral-200">
-                <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight">Safety & Comfort</Heading>
+              <section className="pt-8 border-t border-white/10">
+                <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">Safety & Comfort</Heading>
                 <SafetyFeatures trip={trip} />
               </section>
 
               {/* Departure Details - Moved to main content */}
-              <section className="pt-8 border-t border-neutral-200">
+              <section className="pt-8 border-t border-white/10">
                 <DepartureDetails trip={trip} />
               </section>
 
@@ -492,12 +437,12 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
         </Container>
 
         {/* Related Trips */}
-        <div className="bg-neutral-50 py-16 sm:py-20">
+        <div className="bg-neutral-800/50 py-12 sm:py-16">
           <Container>
-            <Heading level="h2" size="xl" className="mb-10 text-center !font-bold tracking-tight">More Experiences</Heading>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Heading level="h2" size="lg" className="mb-8 text-center !font-bold tracking-tight text-white">More Experiences</Heading>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {trips.filter((t) => t.slug !== slug && t.status !== "coming-soon").slice(0, 3).map((relatedTrip) => (
-                <TripCard key={relatedTrip.id} trip={relatedTrip} />
+                <TripCard key={relatedTrip.id} trip={relatedTrip} variant="dark" />
               ))}
             </div>
           </Container>

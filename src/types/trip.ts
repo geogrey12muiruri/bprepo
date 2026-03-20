@@ -1,3 +1,20 @@
+export type JourneyStopIcon = 
+  | "depart" 
+  | "scenic" 
+  | "landmark" 
+  | "marine" 
+  | "heritage" 
+  | "explore";
+
+export interface JourneyStop {
+  readonly id: string;
+  readonly label: string;
+  readonly detail: string;
+  readonly tags: ReadonlyArray<string>;
+  readonly icon: JourneyStopIcon;
+  readonly variant?: "default" | "highlight" | "final";
+}
+
 export type Trip = {
   readonly id: string;
   readonly slug: string;
@@ -33,4 +50,6 @@ export type Trip = {
   readonly rating?: number;
   readonly reviewCount?: number;
   readonly highlights?: ReadonlyArray<string>;
+  readonly journeyStops?: ReadonlyArray<JourneyStop>;
+  readonly returnNote?: string;
 };

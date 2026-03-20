@@ -7,7 +7,7 @@ import { Heading } from "@/components/ui/Heading";
 import { boats } from "@/data/boats";
 import { formatPrice } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
-import { ArrowLeft, Users, Shield, Clock, Calendar, CheckCircle2, Navigation, Camera, Anchor } from "lucide-react";
+import { ArrowLeft, Users, Shield, Clock, Calendar, CheckCircle2, Navigation, Camera, Anchor, Info } from "lucide-react";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -65,7 +65,7 @@ export default async function BoatDetailPage({ params }: Props) {
               className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white text-xs font-medium transition-colors"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              Back
+              Back to Fleet
             </Link>
             <span className="text-[10px] font-black text-teal-400 uppercase tracking-[0.2em]">
               Premium Vessel
@@ -164,15 +164,25 @@ export default async function BoatDetailPage({ params }: Props) {
                 )}
               </div>
 
+              {/* Minimum charter info */}
+              <div className="mb-4 p-3 bg-white/5 rounded-lg border border-white/10">
+                <p className="text-neutral-400 text-xs flex items-center gap-1.5">
+                  <Info className="w-3 h-3" />
+                  Minimum charter: 2 hours
+                </p>
+              </div>
+
               <Link
-                href={`https://wa.me/254708485978?text=Hi%20Blue%20Pineapple,%20I'd%20like%20to%20book%20the%20${boat.name}`}
+                href={`https://wa.me/254708485978?text=${encodeURIComponent(`Hi Blue Pineapple, I'd like to book the ${boat.name}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block w-full py-3 bg-teal-500 hover:bg-teal-400 text-white text-center rounded-lg font-semibold text-sm transition-colors"
               >
                 Book This Vessel
               </Link>
               
               <p className="text-neutral-500 text-[10px] text-center mt-3">
-                Reservations should be made in advance
+                Book at least 24 hours in advance to secure your preferred slot.
               </p>
             </div>
           </div>

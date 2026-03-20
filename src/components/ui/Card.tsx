@@ -14,7 +14,7 @@ export function Card({
   href,
 }: CardProps) {
   const baseStyles =
-    "rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 bg-white";
+    "rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200";
 
   if (asLink && href) {
     return (

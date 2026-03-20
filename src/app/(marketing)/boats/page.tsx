@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
+import { Button } from "@/components/ui/Button";
 import { boats } from "@/data/boats";
 import { formatPrice } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
-import { ArrowRight, Users, Clock, Calendar } from "lucide-react";
+import { ArrowRight, Users, Clock, Calendar, Check } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Meet Our Fleet | BluePineapple",
@@ -22,6 +23,9 @@ export const metadata: Metadata = {
 };
 
 export default function BoatsPage() {
+  const settingSons = boats.find(b => b.id === "setting-sons")!;
+  const hunkyDory = boats.find(b => b.id === "hunky-dory")!;
+
   return (
     <div className="min-h-screen bg-neutral-900">
       {/* Header with proper top spacing */}
@@ -89,6 +93,81 @@ export default function BoatsPage() {
             </Link>
           ))}
         </div>
+
+        {/* Comparison Table - Enhancement 5A */}
+        <section className="mt-16">
+          <Heading level="h2" size="lg" className="mb-6 text-white !font-bold text-center">
+            Which vessel suits you?
+          </Heading>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[500px]">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left py-4 px-4 text-neutral-400 text-xs font-semibold uppercase tracking-wider">Feature</th>
+                  <th className="text-center py-4 px-4 text-teal-400 text-xs font-bold uppercase tracking-wider">Setting Sons</th>
+                  <th className="text-center py-4 px-4 text-teal-400 text-xs font-bold uppercase tracking-wider">Hunky Dory</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5">
+                  <td className="py-4 px-4 text-neutral-300 text-sm">Capacity</td>
+                  <td className="py-4 px-4 text-center text-white font-semibold">{settingSons?.capacity || 35} guests</td>
+                  <td className="py-4 px-4 text-center text-white font-semibold">{hunkyDory?.capacity || 14} guests</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-4 px-4 text-neutral-300 text-sm">Hourly rate</td>
+                  <td className="py-4 px-4 text-center text-teal-400 font-bold">{settingSons.hourlyRate ? formatPrice(settingSons.hourlyRate) : 'Ksh 8,000'}</td>
+                  <td className="py-4 px-4 text-center text-teal-400 font-bold">{hunkyDory.hourlyRate ? formatPrice(hunkyDory.hourlyRate) : 'Ksh 5,000'}</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-4 px-4 text-neutral-300 text-sm">Daily rate</td>
+                  <td className="py-4 px-4 text-center text-white font-semibold">{settingSons.dailyRate ? formatPrice(settingSons.dailyRate) : 'Ksh 32,000'}</td>
+                  <td className="py-4 px-4 text-center text-white font-semibold">{hunkyDory.dailyRate ? formatPrice(hunkyDory.dailyRate) : 'Ksh 20,000'}</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-4 px-4 text-neutral-300 text-sm">Best for</td>
+                  <td className="py-4 px-4 text-center text-neutral-200 text-sm">Large groups, corporate events</td>
+                  <td className="py-4 px-4 text-center text-neutral-200 text-sm">Small groups, families, glass-bottom views</td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-4 text-neutral-300 text-sm">Unique feature</td>
+                  <td className="py-4 px-4 text-center">
+                    <span className="inline-flex items-center gap-1 text-teal-400 text-xs font-medium">
+                      <Check className="w-3 h-3" /> 360° Surveillance
+                    </span>
+                  </td>
+                  <td className="py-4 px-4 text-center">
+                    <span className="inline-flex items-center gap-1 text-teal-400 text-xs font-medium">
+                      <Check className="w-3 h-3" /> Glass Bottom
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Charter Enquiry CTA - Enhancement 5B */}
+        <section className="mt-16 py-12 px-6 sm:px-8 bg-gradient-to-r from-teal-500/20 via-teal-600/10 to-transparent rounded-2xl border border-teal-500/20">
+          <div className="text-center">
+            <Heading level="h2" size="lg" className="mb-4 text-white !font-bold">
+              Ready to charter?
+            </Heading>
+            <p className="text-neutral-400 text-sm mb-6 max-w-md mx-auto">
+              Get in touch to discuss your charter requirements. We'll help you find the perfect vessel for your needs.
+            </p>
+            <Button
+              href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple%2C%20I%27d%20like%20to%20enquire%20about%20chartering%20a%20boat"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="primary"
+              size="lg"
+              className="shadow-lg shadow-teal-500/20"
+            >
+              Enquire Now <ArrowRight className="w-4 h-4 ml-2 inline" />
+            </Button>
+          </div>
+        </section>
       </Container>
     </div>
   );

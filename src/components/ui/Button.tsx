@@ -6,6 +6,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "md" | "lg";
   href?: string;
   fullWidth?: boolean;
+  target?: "_blank" | "_self" | "_parent" | "_top";
+  rel?: string;
 }
 
 export function Button({
@@ -14,6 +16,8 @@ export function Button({
   size = "md",
   href,
   fullWidth = false,
+  target,
+  rel,
   className = "",
   ...props
 }: ButtonProps) {
@@ -41,7 +45,12 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={`${fullWidth ? "block w-full" : "inline-block"}`}>
+      <Link 
+        href={href} 
+        className={`${fullWidth ? "block w-full" : "inline-block"}`}
+        target={target}
+        rel={rel}
+      >
         <button className={combinedClasses} {...props}>
           {children}
         </button>

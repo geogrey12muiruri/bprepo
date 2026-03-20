@@ -86,6 +86,53 @@ export const trips: ReadonlyArray<Trip> = [
     video: "/videos/services/IMG_6071.mp4",
     poster: "/images/fortjesus.png",
     category: "cultural",
+    journeyStops: [
+      {
+        id: "depart",
+        label: "Depart from Mombasa Beach",
+        detail: "Step aboard at Mombasa Beach — your captain and crew will brief you on safety before casting off. Life jackets are distributed and the GPS system is confirmed active.",
+        tags: ["Departure point", "Access via Maasai Bar"],
+        icon: "depart",
+        variant: "default"
+      },
+      {
+        id: "nyali",
+        label: "Cruise past Nyali Beach",
+        detail: "The boat hugs the coastline past Nyali's white-sand shores. A great moment to settle in, take photos, and feel the ocean breeze. Bamburi Beach is a possible stop on request.",
+        tags: ["Scenic"],
+        icon: "scenic"
+      },
+      {
+        id: "marine-park",
+        label: "Pass Mombasa Marine Park",
+        detail: "Glide over the crystal-clear waters of Mombasa Marine Park. Keep an eye out for marine life — turtles and reef fish are commonly spotted here.",
+        tags: ["Protected waters"],
+        icon: "marine"
+      },
+      {
+        id: "likoni",
+        label: "View Likoni & Shelly Beach",
+        detail: "From the water you'll spot the Likoni ferry crossing, Ras Serani Lighthouse, State House, and Mombasa Hospital — a rare perspective of the city most visitors never see.",
+        tags: ["Landmarks"],
+        icon: "landmark"
+      },
+      {
+        id: "harbour",
+        label: "Arrive at Fort Jesus Harbour",
+        detail: "Dock at the historic harbour beneath the imposing walls of Fort Jesus. Built by the Portuguese in 1593, the fort commands panoramic views of the old harbour and Mombasa's ancient skyline.",
+        tags: ["UNESCO World Heritage Site"],
+        icon: "heritage"
+      },
+      {
+        id: "old-town",
+        label: "Explore Old Town",
+        detail: "Step into Old Town's winding streets lined with carved Swahili doorways, antique shops, and the smell of Kenyan coastal spices. A living piece of history that feels entirely apart from modern Mombasa.",
+        tags: ["~1 hr ashore", "Optional"],
+        icon: "explore",
+        variant: "final"
+      }
+    ],
+    returnNote: "Return journey back to Mombasa Beach — same scenic route in reverse.",
   },
   {
     id: "sunset-sailing",

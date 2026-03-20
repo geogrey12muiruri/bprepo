@@ -10,10 +10,7 @@ export const siteConfig = {
 export function generateMetadataBase(): Metadata {
   return {
     metadataBase: new URL(siteConfig.url),
-    title: {
-      default: "BluePineapple | Premium Boat Trips & Coastal Experiences in Kenya",
-      template: "%s | BluePineapple",
-    },
+    title: "BluePineapple | Premium Boat Trips & Coastal Experiences in Kenya",
     description: siteConfig.description,
     keywords: [
       "boat trips Kenya",
