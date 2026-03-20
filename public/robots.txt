@@ -9,4 +9,4 @@ Disallow: /api/
 Disallow: /_next/
 
 # Sitemap location
-Sitemap: https://bluepineappleholdings.com/sitemap.xml
+Sitemap: https://www.bluepineappleholdings.com/sitemap.xml
