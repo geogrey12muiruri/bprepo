@@ -29,7 +29,7 @@ export function QuickFactsStrip({ trip }: { trip: Trip }) {
               </div>
               <div>
                 <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{fact.label}</p>
-                <p className="text-sm font-bold text-neutral-900">{fact.value}</p>
+                <p className="text-sm font-bold text-white">{fact.value}</p>
               </div>
             </div>
           ))}
@@ -46,7 +46,7 @@ export function QuickFactsStrip({ trip }: { trip: Trip }) {
                   {trip.boatType}
                 </Link>
               ) : (
-                <p className="text-sm font-bold text-neutral-900">{trip.boatType}</p>
+                <p className="text-sm font-bold text-white">{trip.boatType}</p>
               )}
             </div>
           </div>
