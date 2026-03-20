@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Ship, ArrowRight, Percent } from "lucide-react";
 import type { Trip } from "@/types/trip";
 import { formatPrice } from "@/lib/format";
+import { buildWhatsAppUrl, buildBookingMessage, buildEnquiryMessage } from "@/lib/whatsapp";
 
 interface PricingCardProps {
   trip: Trip;
@@ -21,13 +22,13 @@ export function PricingCard({ trip, isComingSoon }: PricingCardProps) {
     const price = selectedPackage === "return" ? trip.priceReturn : trip.priceOneWay;
     
     if (type === "book") {
-      return `Hi Blue Pineapple, I'd like to book the ${trip.name} — ${packageText} (Ksh ${price})`;
+      return buildBookingMessage(trip.name, `${packageText} (Ksh ${price})`);
     }
-    return `Hi Blue Pineapple, I have a question about ${trip.name}`;
+    return buildEnquiryMessage(trip.name);
   };
 
   const whatsAppLink = (type: "book" | "question") => 
-    `https://wa.me/254708485978?text=${encodeURIComponent(getWhatsAppMessage(type))}`;
+    buildWhatsAppUrl(getWhatsAppMessage(type));
 
   return (
     <div className="relative">

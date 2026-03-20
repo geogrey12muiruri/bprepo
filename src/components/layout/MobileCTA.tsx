@@ -2,10 +2,11 @@
 
 import React from "react";
 import { Button } from "@/components/ui/Button";
+import { buildWhatsAppUrl, buildGeneralBookingMessage } from "@/lib/whatsapp";
 
 export function MobileCTA() {
   const handleWhatsApp = () => {
-    window.open("https://wa.me/254708485978", "_blank");
+    window.open(buildWhatsAppUrl(buildGeneralBookingMessage()), "_blank");
   };
 
   return (

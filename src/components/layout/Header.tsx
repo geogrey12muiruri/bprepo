@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ROUTES } from "@/lib/routes";
+import { buildWhatsAppUrl, buildGeneralBookingMessage } from "@/lib/whatsapp";
+import { EMAIL, PHONE_TEL } from "@/constants/contacts";
 import { Container } from "@/components/ui/Container";
 import { Sheet } from "@/components/ui/Sheet";
 import { MessageCircle, Mail, Phone, X, Menu } from "lucide-react";
@@ -87,7 +89,7 @@ export function Header() {
             {/* Desktop CTA */}
             <div className="hidden md:block">
               <a
-                href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple%2C%20I%27d%20like%20to%20make%20a%20booking"
+                href={buildWhatsAppUrl(buildGeneralBookingMessage())}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-400 text-white text-sm font-semibold rounded-full transition-all duration-200"
@@ -164,7 +166,7 @@ export function Header() {
             {/* CTA Button */}
             <div className="mt-8 px-4">
               <a
-                href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple%2C%20I%27d%20like%20to%20make%20a%20booking"
+                href={buildWhatsAppUrl(buildGeneralBookingMessage())}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -181,14 +183,14 @@ export function Header() {
             <p className="text-xs font-medium text-neutral-500 uppercase tracking-wider mb-4">Get in touch</p>
             <div className="grid grid-cols-3 gap-3">
               <a
-                href="tel:+254708485978"
+                href={`tel:${PHONE_TEL}`}
                 className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
               >
                 <Phone className="w-5 h-5 text-neutral-400 group-hover:text-teal-400" />
                 <span className="text-xs text-neutral-400 group-hover:text-white">Call</span>
               </a>
               <a
-                href="https://wa.me/254708485978"
+                href={buildWhatsAppUrl(buildGeneralBookingMessage())}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
@@ -197,7 +199,7 @@ export function Header() {
                 <span className="text-xs text-neutral-400 group-hover:text-white">WhatsApp</span>
               </a>
               <a
-                href="mailto:bluepineappleholdings@gmail.com"
+                href={`mailto:${EMAIL}`}
                 className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
               >
                 <Mail className="w-5 h-5 text-neutral-400 group-hover:text-teal-400" />

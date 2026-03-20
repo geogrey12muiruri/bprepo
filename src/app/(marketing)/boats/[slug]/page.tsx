@@ -7,6 +7,8 @@ import { Heading } from "@/components/ui/Heading";
 import { boats } from "@/data/boats";
 import { formatPrice } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
+import { buildWhatsAppUrl, buildCharterMessage } from "@/lib/whatsapp";
+import { MIN_CHARTER_HOURS, MIN_ADVANCE_BOOKING_HOURS } from "@/constants/contacts";
 import { ArrowLeft, Users, Shield, Clock, Calendar, CheckCircle2, Navigation, Camera, Anchor, Info } from "lucide-react";
 
 type Props = {
@@ -22,13 +24,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${boat.name} | BluePineapple Fleet`,
+    title: boat.name,
     description: boat.description,
     alternates: {
       canonical: `https://www.bluepineappleholdings.com/boats/${slug}`,
     },
     openGraph: {
-      title: `${boat.name} | BluePineapple Fleet`,
+      title: boat.name,
       description: boat.description,
       images: [boat.image],
     },
@@ -168,12 +170,12 @@ export default async function BoatDetailPage({ params }: Props) {
               <div className="mb-4 p-3 bg-white/5 rounded-lg border border-white/10">
                 <p className="text-neutral-400 text-xs flex items-center gap-1.5">
                   <Info className="w-3 h-3" />
-                  Minimum charter: 2 hours
+                  Minimum charter: {MIN_CHARTER_HOURS} hours
                 </p>
               </div>
 
               <Link
-                href={`https://wa.me/254708485978?text=${encodeURIComponent(`Hi Blue Pineapple, I'd like to book the ${boat.name}`)}`}
+                href={buildWhatsAppUrl(buildCharterMessage(boat.name))}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full py-3 bg-teal-500 hover:bg-teal-400 text-white text-center rounded-lg font-semibold text-sm transition-colors"
@@ -182,7 +184,7 @@ export default async function BoatDetailPage({ params }: Props) {
               </Link>
               
               <p className="text-neutral-500 text-[10px] text-center mt-3">
-                Book at least 24 hours in advance to secure your preferred slot.
+                Book at least {MIN_ADVANCE_BOOKING_HOURS} hours in advance to secure your preferred slot.
               </p>
             </div>
           </div>

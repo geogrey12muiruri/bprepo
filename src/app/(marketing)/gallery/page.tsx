@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
+import { galleryImages } from "@/data/gallery";
 
 export const metadata: Metadata = {
-  title: "Gallery | BluePineapple",
+  title: "Gallery",
   description: "Explore our gallery of stunning coastal moments. See the beauty of Mombasa marine adventures, Fort Jesus tours, and sunset sailings with BluePineapple.",
   alternates: { canonical: "https://www.bluepineappleholdings.com/gallery" },
   openGraph: {
@@ -14,15 +15,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-const galleryItems = [
-  { src: "/images/gallery/img1.png", alt: "Boat adventure at sunset", featured: true },
-  { src: "/images/gallery/img2.png", alt: "Fort Jesus from the sea", featured: false },
-  { src: "/images/gallery/img3.png", alt: "Crystal clear waters", featured: false },
-  { src: "/images/gallery/img4.png", alt: "Coastal scenery", featured: false },
-  { src: "/images/gallery/img5.png", alt: "Sunset sailing", featured: true },
-  { src: "/images/gallery/img6.png", alt: "Marine life", featured: false },
-];
 
 export default function GalleryPage() {
   return (
@@ -45,7 +37,7 @@ export default function GalleryPage() {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-          {galleryItems.map((item, idx) => {
+          {galleryImages.map((item, idx) => {
             const isFeatured = item.featured;
             
             return (

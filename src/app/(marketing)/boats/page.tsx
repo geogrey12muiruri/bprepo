@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/Button";
 import { boats } from "@/data/boats";
 import { formatPrice } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
-import { ArrowRight, Users, Clock, Calendar, Check } from "lucide-react";
+import { buildWhatsAppUrl, buildGeneralEnquiryMessage } from "@/lib/whatsapp";
+import { ArrowRight, Users, Check } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Meet Our Fleet | BluePineapple",
+  title: "Our Fleet",
   description: "Discover our collection of premium, safe, and certified vessels for coastal adventures in Mombasa. Fully insured boats with GPS, surveillance, and experienced captains.",
   alternates: { canonical: "https://www.bluepineappleholdings.com/boats" },
   openGraph: {
@@ -104,30 +105,30 @@ export default function BoatsPage() {
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="text-left py-4 px-4 text-neutral-400 text-xs font-semibold uppercase tracking-wider">Feature</th>
-                  <th className="text-center py-4 px-4 text-teal-400 text-xs font-bold uppercase tracking-wider">Setting Sons</th>
-                  <th className="text-center py-4 px-4 text-teal-400 text-xs font-bold uppercase tracking-wider">Hunky Dory</th>
+                  <th className="text-center py-4 px-4 text-teal-400 text-xs font-bold uppercase tracking-wider">{settingSons.name}</th>
+                  <th className="text-center py-4 px-4 text-teal-400 text-xs font-bold uppercase tracking-wider">{hunkyDory.name}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-white/5">
                   <td className="py-4 px-4 text-neutral-300 text-sm">Capacity</td>
-                  <td className="py-4 px-4 text-center text-white font-semibold">{settingSons?.capacity || 35} guests</td>
-                  <td className="py-4 px-4 text-center text-white font-semibold">{hunkyDory?.capacity || 14} guests</td>
+                  <td className="py-4 px-4 text-center text-white font-semibold">{settingSons.capacity} guests</td>
+                  <td className="py-4 px-4 text-center text-white font-semibold">{hunkyDory.capacity} guests</td>
                 </tr>
                 <tr className="border-b border-white/5">
                   <td className="py-4 px-4 text-neutral-300 text-sm">Hourly rate</td>
-                  <td className="py-4 px-4 text-center text-teal-400 font-bold">{settingSons.hourlyRate ? formatPrice(settingSons.hourlyRate) : 'Ksh 8,000'}</td>
-                  <td className="py-4 px-4 text-center text-teal-400 font-bold">{hunkyDory.hourlyRate ? formatPrice(hunkyDory.hourlyRate) : 'Ksh 5,000'}</td>
+                  <td className="py-4 px-4 text-center text-teal-400 font-bold">{settingSons.hourlyRate ? formatPrice(settingSons.hourlyRate) : '-'}</td>
+                  <td className="py-4 px-4 text-center text-teal-400 font-bold">{hunkyDory.hourlyRate ? formatPrice(hunkyDory.hourlyRate) : '-'}</td>
                 </tr>
                 <tr className="border-b border-white/5">
                   <td className="py-4 px-4 text-neutral-300 text-sm">Daily rate</td>
-                  <td className="py-4 px-4 text-center text-white font-semibold">{settingSons.dailyRate ? formatPrice(settingSons.dailyRate) : 'Ksh 32,000'}</td>
-                  <td className="py-4 px-4 text-center text-white font-semibold">{hunkyDory.dailyRate ? formatPrice(hunkyDory.dailyRate) : 'Ksh 20,000'}</td>
+                  <td className="py-4 px-4 text-center text-white font-semibold">{settingSons.dailyRate ? formatPrice(settingSons.dailyRate) : '-'}</td>
+                  <td className="py-4 px-4 text-center text-white font-semibold">{hunkyDory.dailyRate ? formatPrice(hunkyDory.dailyRate) : '-'}</td>
                 </tr>
                 <tr className="border-b border-white/5">
                   <td className="py-4 px-4 text-neutral-300 text-sm">Best for</td>
-                  <td className="py-4 px-4 text-center text-neutral-200 text-sm">Large groups, corporate events</td>
-                  <td className="py-4 px-4 text-center text-neutral-200 text-sm">Small groups, families, glass-bottom views</td>
+                  <td className="py-4 px-4 text-center text-neutral-200 text-sm">{settingSons.bestFor || '-'}</td>
+                  <td className="py-4 px-4 text-center text-neutral-200 text-sm">{hunkyDory.bestFor || '-'}</td>
                 </tr>
                 <tr>
                   <td className="py-4 px-4 text-neutral-300 text-sm">Unique feature</td>
@@ -157,7 +158,7 @@ export default function BoatsPage() {
               Get in touch to discuss your charter requirements. We'll help you find the perfect vessel for your needs.
             </p>
             <Button
-              href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple%2C%20I%27d%20like%20to%20enquire%20about%20chartering%20a%20boat"
+              href={buildWhatsAppUrl(buildGeneralEnquiryMessage())}
               target="_blank"
               rel="noopener noreferrer"
               variant="primary"

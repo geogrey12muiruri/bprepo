@@ -1,0 +1,14 @@
+export const WHATSAPP_NUMBER = "254708485978"
+export const WHATSAPP_BASE_URL = `https://wa.me/${WHATSAPP_NUMBER}`
+export const EMAIL = "bluepineappleholdings@gmail.com"
+export const PHONE_DISPLAY = "+254 708 485 978"
+export const PHONE_TEL = "+254708485978"
+export const ADDRESS_LINE_1 = "Mombasa Marina"
+export const ADDRESS_LINE_2 = "Mombasa, Kenya"
+export const ADDRESS_FULL = "Mombasa Marina, Mombasa, Kenya"
+export const BUSINESS_NAME = "Blue Pineapple"
+export const BUSINESS_NAME_FULL = "Blue Pineapple Coastal Services"
+export const SITE_URL = "https://www.bluepineappleholdings.com"
+export const MIN_TRIP_PASSENGERS = 6
+export const MIN_CHARTER_HOURS = 2
+export const MIN_ADVANCE_BOOKING_HOURS = 24

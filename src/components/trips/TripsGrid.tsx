@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { trips } from "@/data/trips";
 import { formatPrice, formatDuration } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
+import { buildWhatsAppUrl, buildGeneralBookingMessage } from "@/lib/whatsapp";
 import { Star, Clock, MapPin, ArrowRight, Waves, Compass, Landmark, Sun } from "lucide-react";
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -199,7 +200,7 @@ export function TripsGrid() {
           Book your perfect coastal experience today.
         </p>
         <Button 
-          href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple%2C%20I%27d%20like%20to%20make%20a%20booking"
+          href={buildWhatsAppUrl(buildGeneralBookingMessage())}
           target="_blank"
           rel="noopener noreferrer"
           className="px-6 py-3 text-sm font-semibold rounded-lg"

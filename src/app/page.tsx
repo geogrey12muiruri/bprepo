@@ -7,9 +7,10 @@ import { BoatsPreview } from "@/components/sections/home/BoatsPreview";
 import { WhyChooseUs } from "@/components/sections/home/WhyChooseUs";
 import { CoastalLife } from "@/components/sections/home/CoastalLife";
 import { generateJsonLD } from "@/lib/seo";
+import { PHONE_TEL, EMAIL, ADDRESS_LINE_2, BUSINESS_NAME_FULL } from "@/constants/contacts";
 
 export const metadata: Metadata = {
-  title: "Blue Pineapple | Premium Boat Trips & Coastal Experiences in Kenya",
+  title: "Coastal Experiences, Mombasa",
   description:
     "Discover unforgettable boat trips and coastal experiences in Kenya with Blue Pineapple Coastal Services. From historic Fort Jesus tours to breathtaking sunset sailings, creek safaris, and private charters. Book your maritime adventure in Mombasa today.",
   alternates: {
@@ -34,14 +35,14 @@ export default function HomePage() {
   const jsonLD = generateJsonLD({
     "@type": "LocalBusiness",
     "@id": "https://bluepineappleholdings.com/#organization",
-    name: "Blue Pineapple Coastal Services",
+    name: BUSINESS_NAME_FULL,
     description: "Premium boat trips and coastal experiences in Kenya. Offering Fort Jesus tours, creek safaris, sunset sailings, and private charters in Mombasa.",
     url: "https://bluepineappleholdings.com",
-    telephone: "+254708485978",
-    email: "bluepineappleholdings@gmail.com",
+    telephone: PHONE_TEL,
+    email: EMAIL,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Mombasa",
+      addressLocality: ADDRESS_LINE_2,
       addressCountry: "KE",
     },
     areaServed: {

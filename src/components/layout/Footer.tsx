@@ -4,6 +4,12 @@ import Image from "next/image";
 import { Mail, Phone, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ROUTES } from "@/lib/routes";
+import {
+  EMAIL,
+  PHONE_TEL,
+  BUSINESS_NAME_FULL
+} from "@/constants/contacts";
+import { buildWhatsAppUrl, buildGeneralBookingMessage } from "@/lib/whatsapp";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -44,21 +50,21 @@ export function Footer() {
         {/* Contact Icons - centered row */}
         <div className="flex justify-center gap-4 mb-8">
           <a
-            href="mailto:bluepineappleholdings@gmail.com"
+            href={`mailto:${EMAIL}`}
             className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-teal-500/20 transition-colors group"
             aria-label="Email"
           >
             <Mail className="w-5 h-5 text-neutral-400 group-hover:text-teal-400" />
           </a>
           <a
-            href="tel:+254708485978"
+            href={`tel:${PHONE_TEL}`}
             className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-teal-500/20 transition-colors group"
             aria-label="Call"
           >
             <Phone className="w-5 h-5 text-neutral-400 group-hover:text-teal-400" />
           </a>
           <a
-            href="https://wa.me/254708485978"
+            href={buildWhatsAppUrl(buildGeneralBookingMessage())}
             className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-teal-500/20 transition-colors group"
             target="_blank"
             rel="noopener noreferrer"
@@ -78,7 +84,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="pt-6 border-t border-white/5">
           <p className="text-xs text-neutral-600 text-center">
-            &copy; {currentYear} Blue Pineapple Coastal Services. All rights reserved.
+            &copy; {currentYear} {BUSINESS_NAME_FULL}. All rights reserved.
           </p>
         </div>
       </Container>

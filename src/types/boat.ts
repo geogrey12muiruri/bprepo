@@ -5,6 +5,7 @@ export type Boat = {
   readonly description: string;
   readonly image: string;
   readonly features: string[];
+  readonly bestFor?: string;
   readonly video?: string;
   readonly poster?: string;
   readonly hourlyRate?: number; // Charter hourly rate in KSH

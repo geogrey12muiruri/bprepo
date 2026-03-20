@@ -5,9 +5,18 @@ import { Heading } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import {
+  EMAIL,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  ADDRESS_FULL,
+  MIN_ADVANCE_BOOKING_HOURS,
+} from "@/constants/contacts";
+import { buildWhatsAppUrl, buildGeneralBookingMessage } from "@/lib/whatsapp";
+import { ContactCard } from "@/components/contact/ContactCard";
 
 export const metadata: Metadata = {
-  title: "Contact Us | BluePineapple",
+  title: "Contact",
   description: "Get in touch with BluePineapple for booking inquiries and support. Located in Mombasa, Kenya.",
   alternates: {
     canonical: "https://www.bluepineappleholdings.com/contact",
@@ -42,7 +51,7 @@ export default function ContactPage() {
         {/* Contact Options - WhatsApp prominent */}
         <div className="flex justify-center mb-10">
           <a
-            href="https://wa.me/254708485978?text=Hi%20Blue%20Pineapple%2C%20I%27d%20like%20to%20make%20a%20booking"
+            href={buildWhatsAppUrl(buildGeneralBookingMessage())}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-6 py-3 bg-teal-500 hover:bg-teal-400 text-white font-semibold rounded-full transition-all duration-200 shadow-lg shadow-teal-500/25"
@@ -54,57 +63,27 @@ export default function ContactPage() {
 
         {/* Contact Cards */}
         <div className="grid grid-cols-1 gap-6 sm:gap-7 md:gap-8 md:grid-cols-3 mb-12 sm:mb-14 md:mb-16">
-          {/* Email */}
-          <Card className="group p-6 sm:p-7 md:p-8 text-center hover:bg-white/5 transition-all duration-300 border border-white/10 hover:border-white/20">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-5 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-teal-500/20 transition-all duration-300">
-              <Mail className="w-6 h-6 sm:w-7 sm:h-7 text-teal-400" />
-            </div>
-            <Heading level="h2" size="lg" className="mb-2 sm:mb-3 text-white">
-              Email
-            </Heading>
-            <p className="text-xs sm:text-sm text-neutral-400 mb-4 sm:mb-5 leading-relaxed">
-              For general inquiries and support
-            </p>
-            <a
-              href="mailto:bluepineappleholdings@gmail.com"
-              className="text-sm sm:text-base text-teal-400 font-semibold hover:text-teal-300 transition-colors inline-block break-all"
-            >
-              bluepineappleholdings@gmail.com
-            </a>
-          </Card>
+          <ContactCard
+            icon={<Mail className="w-6 h-6 sm:w-7 sm:h-7 text-teal-400" />}
+            title="Email"
+            description="For general inquiries and support"
+            value={EMAIL}
+            href={`mailto:${EMAIL}`}
+          />
 
-          {/* Phone */}
-          <Card className="group p-6 sm:p-7 md:p-8 text-center hover:bg-white/5 transition-all duration-300 border border-white/10 hover:border-white/20">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-5 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-teal-500/20 transition-all duration-300">
-              <Phone className="w-6 h-6 sm:w-7 sm:h-7 text-teal-400" />
-            </div>
-            <Heading level="h2" size="lg" className="mb-2 sm:mb-3 text-white">
-              Phone
-            </Heading>
-            <p className="text-xs sm:text-sm text-neutral-400 mb-4 sm:mb-5 leading-relaxed">
-              Call us during business hours
-            </p>
-            <a
-              href="tel:+254708485978"
-              className="text-sm sm:text-base text-teal-400 font-semibold hover:text-teal-300 transition-colors"
-            >
-              +254 708 485 978
-            </a>
-          </Card>
+          <ContactCard
+            icon={<Phone className="w-6 h-6 sm:w-7 sm:h-7 text-teal-400" />}
+            title="Phone"
+            description="Call us during business hours"
+            value={PHONE_DISPLAY}
+            href={`tel:${PHONE_TEL}`}
+          />
 
-          {/* Location */}
-          <Card className="group p-6 sm:p-7 md:p-8 text-center hover:bg-white/5 transition-all duration-300 border border-white/10 hover:border-white/20">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-5 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-teal-500/20 transition-all duration-300">
-              <MapPin className="w-6 h-6 sm:w-7 sm:h-7 text-teal-400" />
-            </div>
-            <Heading level="h2" size="lg" className="mb-2 sm:mb-3 text-white">
-              Location
-            </Heading>
-            <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              Mombasa Marina<br />
-              Mombasa, Kenya
-            </p>
-          </Card>
+          <ContactCard
+            icon={<MapPin className="w-6 h-6 sm:w-7 sm:h-7 text-teal-400" />}
+            title="Location"
+            value={ADDRESS_FULL}
+          />
         </div>
 
         {/* Contact Form */}
@@ -206,7 +185,7 @@ export default function ContactPage() {
           </form>
 
           <p className="text-center text-xs sm:text-sm text-neutral-500 mt-6 sm:mt-8">
-            We typically respond within 24 hours during business days.
+            We typically respond within {MIN_ADVANCE_BOOKING_HOURS} hours during business days.
           </p>
         </Card>
       </Container>
