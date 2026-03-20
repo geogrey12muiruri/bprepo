@@ -57,7 +57,7 @@ export function BoatCard({ boat }: BoatCardProps) {
                         <>
                             <Image
                                 src={images[currentImageIndex]}
-                                alt={`${boat.name} - Image ${currentImageIndex + 1}`}
+                                alt={`${boat.name} vessel - Premium boat charter in Mombasa, Kenya ${hasMultipleImages ? `- Photo ${currentImageIndex + 1} of ${images.length}` : ''}`}
                                 fill
                                 className="object-cover transition-opacity duration-500"
                                 sizes="(max-width: 1024px) 100vw, 40vw"

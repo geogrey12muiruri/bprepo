@@ -8,7 +8,16 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact Us | BluePineapple",
-  description: "Get in touch with BluePineapple for booking inquiries and support.",
+  description: "Get in touch with BluePineapple for booking inquiries and support. Located in Mombasa, Kenya. Call +254 708 485 978 or email bluepineappleholdings@gmail.com",
+  alternates: {
+    canonical: "https://bluepineappleholdings.com/contact",
+  },
+  openGraph: {
+    title: "Contact Us | BluePineapple",
+    description: "Get in touch with BluePineapple for booking inquiries and support.",
+    url: "https://bluepineappleholdings.com/contact",
+    type: "website",
+  },
 };
 
 export default function ContactPage() {
@@ -45,10 +54,10 @@ export default function ContactPage() {
               For general inquiries and support
             </p>
             <a
-              href="mailto:bluepinappleholdings@gmail.com"
+              href="mailto:bluepineappleholdings@gmail.com"
               className="text-sm sm:text-base text-teal-600 font-semibold hover:text-teal-700 transition-colors inline-block break-all"
             >
-              bluepinappleholdings@gmail.com
+              bluepineappleholdings@gmail.com
             </a>
           </Card>
 

@@ -2,150 +2,80 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
-import { 
-  Users, 
-  Shield, 
-  Navigation, 
-  Camera, 
-  Anchor,
-  CheckCircle2,
-  Clock,
-  Calendar
-} from "lucide-react";
 import { boats } from "@/data/boats";
 import { formatPrice } from "@/lib/format";
+import { ROUTES } from "@/lib/routes";
+import { ArrowRight, Users } from "lucide-react";
 
 export function BoatsPreview() {
   return (
-    <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white overflow-hidden" id="fleet">
+    <section className="py-10 sm:py-12 bg-neutral-900" id="fleet">
       <Container>
-        <div className="mb-12 sm:mb-14 md:mb-16 lg:mb-20 text-center">
-          <div className="inline-block mb-4">
-            <span className="text-[10px] sm:text-xs font-black text-teal-600 uppercase tracking-[0.3em] sm:tracking-[0.4em]">
-              Premium Vessels
-            </span>
-          </div>
-          <Heading level="h2" size="2xl" className="mb-4 sm:mb-5 md:mb-6">
-            Meet Our Fleet
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <span className="text-[10px] font-black text-teal-400 uppercase tracking-[0.3em]">
+            Premium Vessels
+          </span>
+          <Heading level="h2" size="lg" className="mt-2 mb-3 text-white">
+            Our Fleet
           </Heading>
-          <p className="text-neutral-600 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed px-4 sm:px-0">
-            Carefully maintained, safety-first platforms designed for your ultimate comfort and coastal adventure.
+          <p className="text-neutral-400 max-w-xl mx-auto text-xs sm:text-sm">
+            Safety-certified boats for your ultimate comfort and coastal adventure.
           </p>
         </div>
 
-        <div className="flex flex-col gap-16 sm:gap-20 md:gap-24 lg:gap-32">
-          {boats.map((boat, index) => (
-            <div
+        {/* Horizontal scroll on mobile */}
+        <div className="flex sm:grid sm:grid-cols-2 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+          {boats.map((boat) => (
+            <Link
               key={boat.id}
-              className={`flex flex-col gap-8 sm:gap-10 md:gap-12 items-center ${index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-                }`}
+              href={ROUTES.boats}
+              className="flex-shrink-0 w-[75vw] sm:w-auto group"
             >
-              {/* Image Side */}
-              <div className="w-full md:w-1/2 relative group">
-                <div className={`absolute inset-0 bg-teal-50 rounded-3xl transform transition-transform duration-500 ${index % 2 === 1 ? "rotate-3 group-hover:rotate-2" : "-rotate-3 group-hover:-rotate-2"
-                  }`} />
-                <div className="relative h-[350px] sm:h-[400px] md:h-[500px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-neutral-900/10 border-4 border-white">
-                  <Image
-                    src={boat.image}
-                    alt={boat.name}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    quality={90}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  {/* Capacity Badge on Image */}
-                  <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl shadow-lg flex items-center gap-2">
-                    <Users className="w-4 h-4 text-teal-600" />
-                    <span className="font-black text-teal-700">{boat.capacity}</span>
-                    <span className="text-xs text-neutral-500 font-bold uppercase">Guests</span>
+              <div className="relative h-56 sm:h-64 overflow-hidden rounded-xl">
+                <Image
+                  src={boat.image}
+                  alt={boat.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 75vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                
+                <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Users className="w-3 h-3 text-teal-400" />
+                    <span className="text-[10px] text-teal-400 font-semibold">
+                      Up to {boat.capacity} guests
+                    </span>
+                  </div>
+                  <Heading level="h3" size="sm" className="text-white mb-1 !font-semibold">
+                    {boat.name}
+                  </Heading>
+                  <div className="flex items-center justify-between">
+                    <span className="text-neutral-400 text-[10px]">
+                      From {formatPrice(boat.hourlyRate || boat.dailyRate || 0)}
+                    </span>
+                    <ArrowRight className="w-3 h-3 text-teal-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </div>
-
-              {/* Content Side */}
-              <div className="w-full md:w-1/2 px-0">
-                <div className="flex flex-col gap-6 sm:gap-7 md:gap-8">
-                  {/* Boat Name */}
-                  <div>
-                    <Heading level="h3" size="xl" className="text-neutral-900 mb-3 sm:mb-4">
-                      {boat.name}
-                    </Heading>
-                    <div className="flex items-center gap-2 text-sm text-neutral-500">
-                      <Shield className="w-4 h-4 text-teal-600" />
-                      <span className="font-semibold">Fully Insured & Certified</span>
-                    </div>
-                  </div>
-
-                  {/* Key Features Grid */}
-                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                    {boat.features.slice(0, 4).map((feature, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-neutral-50 rounded-xl border border-neutral-100 hover:border-teal-200 hover:bg-teal-50 transition-all duration-300 group"
-                      >
-                        <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-teal-600 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:bg-teal-700 transition-all">
-                          {feature.includes("GPS") && <Navigation className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
-                          {feature.includes("Surveillance") && <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
-                          {feature.includes("Insured") && <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
-                          {feature.includes("Life Jackets") && <Anchor className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
-                          {!feature.includes("GPS") && !feature.includes("Surveillance") && !feature.includes("Insured") && !feature.includes("Life Jackets") && (
-                            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                          )}
-                        </div>
-                        <span className="text-xs sm:text-sm font-semibold text-neutral-700 leading-tight">
-                          {feature}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Charter Pricing */}
-                  {(boat.hourlyRate || boat.dailyRate) && (
-                    <div className="p-4 sm:p-5 md:p-6 bg-teal-50 rounded-2xl border border-teal-100">
-                      <p className="text-xs font-bold text-teal-700 uppercase tracking-widest mb-3 sm:mb-4 flex items-center gap-2">
-                        <Calendar className="w-3 h-3" />
-                        Charter Rates
-                      </p>
-                      <div className="grid grid-cols-2 gap-4">
-                        {boat.hourlyRate && (
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <Clock className="w-4 h-4 text-teal-600" />
-                              <span className="text-xs text-neutral-500 font-semibold uppercase">Hourly</span>
-                            </div>
-                            <p className="text-xl sm:text-2xl font-black text-teal-700">{formatPrice(boat.hourlyRate)}</p>
-                          </div>
-                        )}
-                        {boat.dailyRate && (
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <Calendar className="w-4 h-4 text-teal-600" />
-                              <span className="text-xs text-neutral-500 font-semibold uppercase">Daily</span>
-                            </div>
-                            <p className="text-xl sm:text-2xl font-black text-teal-700">{formatPrice(boat.dailyRate)}</p>
-                          </div>
-                        )}
-                      </div>
-                      <p className="text-xs text-neutral-500 mt-3 sm:mt-4 italic">
-                        Booking reservations should be made with as much notice as possible.
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Short Description - Only if needed */}
-                  {boat.description && (
-                    <p className="text-sm sm:text-base text-neutral-600 leading-relaxed line-clamp-3">
-                      {boat.description.split('.')[0]}. {boat.description.split('.')[1]}.
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
+            </Link>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-8 text-center">
+          <Link
+            href={ROUTES.boats}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 hover:border-white/20 text-white rounded-lg text-sm font-semibold transition-colors"
+          >
+            View Fleet Details
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </Container>
     </section>

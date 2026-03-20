@@ -16,7 +16,7 @@ export function Footer() {
           <div className="md:col-span-2 lg:col-span-1">
             <Link href={ROUTES.home} className="inline-block mb-6 group">
               <div className="flex items-center gap-3 mb-4">
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 transition-transform duration-300 group-hover:scale-110">
+                <div className="relative w-14 h-14 sm:w-16 sm:h-16 transition-transform duration-300 group-hover:scale-110">
                   <Image
                     src="/images/logo.png"
                     alt="BluePineapple Logo"
@@ -84,13 +84,13 @@ export function Footer() {
             <ul className="space-y-4 text-sm sm:text-base">
               <li>
                 <a
-                  href="mailto:bluepinappleholdings@gmail.com"
+                  href="mailto:bluepineappleholdings@gmail.com"
                   className="flex items-center gap-3 text-neutral-400 hover:text-teal-400 transition-colors duration-300 group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-neutral-800 flex items-center justify-center group-hover:bg-teal-500/20 transition-colors">
                     <Mail className="w-4 h-4 text-teal-400 group-hover:text-teal-300" />
                   </div>
-                  <span className="break-all">bluepinappleholdings@gmail.com</span>
+                  <span className="break-all">bluepineappleholdings@gmail.com</span>
                 </a>
               </li>
               <li>

@@ -26,7 +26,7 @@ export function TripCard({ trip }: TripCardProps) {
             <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
                 <Image
                     src={trip.image || trip.poster || "/images/placeholder.jpg"}
-                    alt={trip.name}
+                    alt={`${trip.name} - ${trip.boatType} boat trip in Mombasa, Kenya`}
                     fill
                     className={`object-cover transition-transform duration-700 ${!isComingSoon && "group-hover:scale-110"}`}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

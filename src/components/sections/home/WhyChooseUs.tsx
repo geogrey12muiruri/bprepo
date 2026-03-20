@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { 
@@ -9,108 +10,130 @@ import {
   Navigation, 
   Camera, 
   User, 
-  Award 
+  Award,
+  CheckCircle2
 } from "lucide-react";
+
+const featureImages = [
+  "/images/fort/fort3.jpeg",
+  "/assets/fleet/setting.jpeg",
+  "/images/gallery/choose.jpeg",
+];
 
 export function WhyChooseUs() {
   const features = [
     {
       icon: Ship,
-      title: "Latest Fully Equipped Boats",
-      description: "Modern vessels with state-of-the-art equipment for your comfort and safety.",
-      gradient: "from-blue-500 to-teal-500",
+      title: "Modern Fleet",
+      description: "Latest fully equipped boats with state-of-the-art equipment for your comfort.",
+      image: featureImages[0],
     },
     {
       icon: Shield,
-      title: "Fully Insured & Certified",
-      description: "All our boats are fully insured and certified, giving you complete peace of mind.",
-      gradient: "from-teal-500 to-emerald-500",
+      title: "Fully Insured",
+      description: "All our boats are fully insured and certified for complete peace of mind.",
+      image: featureImages[1],
     },
     {
       icon: Navigation,
       title: "GPS Navigation",
-      description: "Every vessel is fitted with GPS systems for precise navigation and safety.",
-      gradient: "from-indigo-500 to-blue-500",
+      description: "Every vessel fitted with GPS systems for precise navigation and safety.",
+      image: featureImages[2],
     },
     {
       icon: Camera,
-      title: "24-Hour Surveillance",
-      description: "360° surveillance cameras on all boats for enhanced security and monitoring.",
-      gradient: "from-purple-500 to-pink-500",
+      title: "24/7 Surveillance",
+      description: "360° surveillance cameras on all boats for enhanced security.",
+      image: featureImages[0],
     },
     {
       icon: User,
-      title: "Experienced Captains",
-      description: "Qualified captains with over 20 years of experience navigating these waters.",
-      gradient: "from-orange-500 to-red-500",
+      title: "Expert Captains",
+      description: "Qualified captains with 20+ years experience navigating these waters.",
+      image: featureImages[1],
     },
     {
       icon: Award,
-      title: "European Safety Standards",
-      description: "Everything we do adheres to European safety standards for your protection.",
-      gradient: "from-amber-500 to-orange-500",
+      title: "Safety Standards",
+      description: "Everything we do adheres to European safety standards.",
+      image: featureImages[2],
     },
   ];
 
   return (
-    <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-teal-50 overflow-hidden" id="why-choose-us">
-      {/* Decorative background elements - solid colors */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-1/2 h-full bg-teal-50" />
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-50" />
+    <section className="relative py-10 sm:py-12 bg-neutral-900 overflow-hidden" id="why-choose-us">
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,_rgba(20,184,166,0.3),_transparent_50%)]" />
       </div>
 
       <Container className="relative">
-        <div className="mb-12 sm:mb-14 md:mb-16 lg:mb-20 text-center">
-          <div className="inline-block mb-4">
-            <span className="text-[10px] sm:text-xs font-black text-teal-600 uppercase tracking-[0.3em] sm:tracking-[0.4em]">
-              Trust & Excellence
-            </span>
-          </div>
-          <Heading level="h2" size="2xl" className="mb-4 sm:mb-5 md:mb-6">
+        {/* Header */}
+        <div className="mb-8 sm:mb-10 text-center">
+          <span className="text-[10px] font-black text-teal-400 uppercase tracking-[0.3em]">
+            Trust & Excellence
+          </span>
+          <Heading level="h2" size="lg" className="mt-3 mb-3 text-white">
             Why Choose Blue Pineapple
           </Heading>
-          <p className="text-neutral-600 max-w-3xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed px-4 sm:px-0">
-            We have the latest, fully equipped boats, fully insured and certified. We place the utmost importance on passenger safety, with GPS fitted, 24-hour surveillance cameras, and qualified captains with 20 years experience of these waters. Everything we do is to European safety standards.
+          <p className="text-neutral-400 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
+            Premium boat experiences with safety at the core. Our commitment to excellence sets us apart.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 lg:gap-10">
+        {/* Horizontal scroll on mobile, grid on larger screens */}
+        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
               <div
                 key={index}
-                className="group relative"
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
+                className="flex-shrink-0 w-[80vw] sm:w-auto group relative"
               >
-                <div className="relative h-full p-6 sm:p-7 md:p-8 bg-white rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-neutral-100 hover:border-transparent overflow-hidden">
-                  {/* Solid color overlay on hover */}
-                  <div className={`absolute inset-0 bg-teal-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                <div className="relative h-56 sm:h-60 md:h-64 overflow-hidden rounded-xl sm:rounded-2xl">
+                  {/* Image */}
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 640px) 80vw, (max-width: 1024px) 50vw, 33vw"
+                  />
                   
-                  {/* Icon container */}
-                  <div className="relative mb-5 sm:mb-6">
-                    <div className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-2xl bg-teal-600 shadow-lg group-hover:shadow-xl group-hover:bg-teal-700 transform group-hover:scale-110 transition-all duration-500`}>
-                      <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 text-white" strokeWidth={2.5} />
-                    </div>
-                  </div>
-
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
+                  
                   {/* Content */}
-                  <h3 className="relative text-base sm:text-lg font-bold text-neutral-900 mb-2 sm:mb-3 leading-tight group-hover:text-teal-700 transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  <p className="relative text-sm text-neutral-600 leading-relaxed">
-                    {feature.description}
-                  </p>
-
-                  {/* Decorative accent */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-teal-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+                  <div className="absolute inset-0 p-4 sm:p-5 flex flex-col justify-end">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-teal-500/20 backdrop-blur-sm flex items-center justify-center mb-2.5">
+                      <IconComponent className="w-4 h-4 text-teal-400" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-white font-semibold text-base sm:text-lg mb-1.5">
+                      {feature.title}
+                    </h3>
+                    <p className="text-neutral-300 text-xs leading-relaxed line-clamp-2">
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
           })}
+        </div>
+
+        {/* Trust indicators */}
+        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-5 sm:gap-6">
+          {[
+            { label: "Certified", value: "100%" },
+            { label: "Experienced", value: "20+ Years" },
+            { label: "Safe", value: "0 Incidents" },
+          ].map((stat, idx) => (
+            <div key={idx} className="flex items-center gap-1.5 text-center">
+              <CheckCircle2 className="w-3.5 h-3.5 text-teal-400" />
+              <span className="text-neutral-400 text-xs">{stat.label}</span>
+              <span className="text-white font-semibold text-xs">{stat.value}</span>
+            </div>
+          ))}
         </div>
       </Container>
     </section>

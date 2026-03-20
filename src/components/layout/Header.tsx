@@ -61,19 +61,18 @@ export function Header() {
         <Container className="flex items-center justify-between">
           {/* Logo */}
           <Link href={ROUTES.home} className="relative z-[110] flex items-center gap-2 sm:gap-2.5 group">
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 transition-all duration-300">
+            <div className="relative w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 transition-all duration-300">
               <Image
                 src="/images/logo.png"
                 alt="Blue Pineapple Logo"
                 fill
                 className="object-contain"
-                sizes="(max-width: 640px) 32px, (max-width: 1024px) 36px, 40px"
+                sizes="(max-width: 640px) 40px, (max-width: 1024px) 44px, 48px"
                 priority
               />
             </div>
             <span
-              className={`font-bold tracking-tight text-sm sm:text-base lg:text-lg transition-opacity duration-300 ${isHome && !isScrolled ? "opacity-95" : "opacity-100"
-                } bg-gradient-to-r from-brand-blue to-teal-500 bg-clip-text text-transparent`}
+              className={`font-bold tracking-tight text-sm sm:text-base lg:text-lg transition-opacity duration-300 ${isHome && !isScrolled ? "text-white" : "text-neutral-900"}`}
             >
               Blue Pineapple
             </span>
@@ -169,7 +168,7 @@ export function Header() {
                   sizes="(max-width: 640px) 32px, 36px"
                 />
               </div>
-              <span className="font-bold tracking-tight text-sm sm:text-base bg-gradient-to-r from-blue-500 to-teal-500 bg-clip-text text-transparent">
+              <span className="font-bold tracking-tight text-sm sm:text-base text-neutral-900">
                 Blue Pineapple
               </span>
             </Link>
@@ -241,7 +240,7 @@ export function Header() {
                     <span className="text-neutral-900 font-semibold group-hover:text-teal-700 transition-colors">+254 708 485 978</span>
                   </a>
                   <a 
-                    href="mailto:bluepinappleholdings@gmail.com" 
+                    href="mailto:bluepineappleholdings@gmail.com" 
                     className="flex items-center gap-3 p-3 rounded-xl bg-neutral-50 hover:bg-teal-50 border border-neutral-100 hover:border-teal-200 transition-all duration-200 group"
                   >
                     <div className="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center group-hover:bg-teal-500 transition-colors">
@@ -249,7 +248,7 @@ export function Header() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <span className="text-sm text-neutral-600 group-hover:text-teal-700 transition-colors break-all">bluepinappleholdings@gmail.com</span>
+                    <span className="text-sm text-neutral-600 group-hover:text-teal-700 transition-colors break-all">bluepineappleholdings@gmail.com</span>
                   </a>
                 </div>
               </div>

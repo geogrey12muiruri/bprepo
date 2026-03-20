@@ -5,7 +5,13 @@ import { generateMetadataBase } from "@/lib/seo";
 import "./globals.css";
 import "@/styles/tokens.css";
 
-export const metadata: Metadata = generateMetadataBase();
+export const metadata: Metadata = {
+  ...generateMetadataBase(),
+  icons: {
+    icon: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
+};
 
 export default function RootLayout({
   children,
