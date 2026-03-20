@@ -122,8 +122,7 @@ function QuickFactsStrip({ trip }: { trip: Trip }) {
 }
 
 const journeyAssets = {
-  journeyVideo: "/videos/services/IMG_6071.mp4",
-  journeyPoster: "/images/fortjesus.png",
+  journey: "/images/fort/fort3.jpeg",
   coastal: "/images/fort/coastal.jpg",
   fort: "/images/fort/fortj.jpg",
 };
@@ -134,9 +133,7 @@ function JourneySection({ trip }: { trip: Trip }) {
       icon: Waves,
       title: "The Journey",
       description: "As the boat glides effortlessly away from the powder-white sands of Mombasa Beach, relax and enjoy the ride. The craft is fully equipped with life jackets, GPS navigation, and CCTV for a safe experience.",
-      image: null,
-      video: trip.video || journeyAssets.journeyVideo,
-      poster: trip.poster || journeyAssets.journeyPoster,
+      image: journeyAssets.journey,
     },
     {
       icon: Compass,
@@ -160,31 +157,14 @@ function JourneySection({ trip }: { trip: Trip }) {
           href="#itinerary"
           className="group block relative overflow-hidden rounded-xl sm:rounded-2xl aspect-video sm:aspect-[4/5]"
         >
-          {section.video ? (
-            <>
-              <video
-                poster={section.poster}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                playsInline
-                muted
-                loop
-              >
-                <source src={section.video} type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-            </>
-          ) : (
-            <>
-              <Image
-                src={section.image!}
-                alt={section.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 640px) 100vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-            </>
-          )}
+          <Image
+            src={section.image}
+            alt={section.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 640px) 100vw, 33vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
           
           <div className="absolute inset-0 p-3 sm:p-4 flex flex-col justify-end">
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 animate-fade-in-up" style={{ animationDelay: `${idx * 150 + 200}ms` }}>
