@@ -47,12 +47,12 @@ export const metadata: Metadata = {
   title: "Gallery | BluePineapple",
   description: "Experience the beauty of the Kenyan coast through our cinematic gallery of boat trips and marine adventures in Mombasa and Diani.",
   alternates: {
-    canonical: "https://bluepineappleholdings.com/gallery",
+    canonical: "https://www.bluepineappleholdings.com/gallery",
   },
   openGraph: {
     title: "Gallery | BluePineapple",
     description: "Experience the beauty of the Kenyan coast through our cinematic gallery of boat trips and marine adventures.",
-    url: "https://bluepineappleholdings.com/gallery",
+    url: "https://www.bluepineappleholdings.com/gallery",
     type: "website",
   },
 };

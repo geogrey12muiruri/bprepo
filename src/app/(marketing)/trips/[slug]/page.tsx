@@ -31,10 +31,10 @@ export async function generateMetadata({
     return { title: "Experience Not Found" };
   }
 
-  const tripUrl = `https://bluepineappleholdings.com/trips/${slug}`;
+  const tripUrl = `https://www.bluepineappleholdings.com/trips/${slug}`;
   const tripImage = trip.image.startsWith('http') 
     ? trip.image 
-    : `https://bluepineappleholdings.com${trip.image}`;
+    : `https://www.bluepineappleholdings.com${trip.image}`;
 
   return {
     title: `${trip.name} | BluePineapple`,

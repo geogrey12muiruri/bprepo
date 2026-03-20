@@ -14,11 +14,11 @@ import { Star, Clock, MapPin, ArrowRight, Waves, Compass, Landmark, Sun } from "
 export const metadata: Metadata = {
   title: "Boat Trips & Coastal Experiences | BluePineapple",
   description: "Explore our collection of premium boat trips and coastal experiences in Kenya. From Fort Jesus tours to creek safaris, sunset sailings, and private charters in Mombasa.",
-  alternates: { canonical: "https://bluepineappleholdings.com/trips" },
+  alternates: { canonical: "https://www.bluepineappleholdings.com/trips" },
   openGraph: {
     title: "Boat Trips & Coastal Experiences | BluePineapple",
     description: "Explore our collection of premium boat trips and coastal experiences in Kenya.",
-    url: "https://bluepineappleholdings.com/trips",
+    url: "https://www.bluepineappleholdings.com/trips",
     type: "website",
   },
 };

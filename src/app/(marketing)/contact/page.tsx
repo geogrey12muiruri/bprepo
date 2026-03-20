@@ -10,12 +10,12 @@ export const metadata: Metadata = {
   title: "Contact Us | BluePineapple",
   description: "Get in touch with BluePineapple for booking inquiries and support. Located in Mombasa, Kenya. Call +254 708 485 978 or email bluepineappleholdings@gmail.com",
   alternates: {
-    canonical: "https://bluepineappleholdings.com/contact",
+    canonical: "https://www.bluepineappleholdings.com/contact",
   },
   openGraph: {
     title: "Contact Us | BluePineapple",
     description: "Get in touch with BluePineapple for booking inquiries and support.",
-    url: "https://bluepineappleholdings.com/contact",
+    url: "https://www.bluepineappleholdings.com/contact",
     type: "website",
   },
 };

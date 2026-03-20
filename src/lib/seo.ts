@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const siteConfig = {
   name: "BluePineapple",
   description: "Premium boat trips and coastal experiences in Kenya",
-  url: "https://bluepineappleholdings.com",
+  url: "https://www.bluepineappleholdings.com",
   locale: "en_KE",
   twitterHandle: "@bluepineapple",
 } as const;

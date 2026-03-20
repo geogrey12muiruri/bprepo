@@ -12,11 +12,11 @@ import { ArrowRight, Users, Clock, Calendar } from "lucide-react";
 export const metadata: Metadata = {
   title: "Meet Our Fleet | BluePineapple",
   description: "Discover our collection of premium, safe, and certified vessels for coastal adventures in Mombasa. Fully insured boats with GPS, surveillance, and experienced captains.",
-  alternates: { canonical: "https://bluepineappleholdings.com/boats" },
+  alternates: { canonical: "https://www.bluepineappleholdings.com/boats" },
   openGraph: {
     title: "Meet Our Fleet | BluePineapple",
     description: "Discover our collection of premium, safe, and certified vessels for coastal adventures.",
-    url: "https://bluepineappleholdings.com/boats",
+    url: "https://www.bluepineappleholdings.com/boats",
     type: "website",
   },
 };

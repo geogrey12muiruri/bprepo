@@ -24,6 +24,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${boat.name} | BluePineapple Fleet`,
     description: boat.description,
+    alternates: {
+      canonical: `https://www.bluepineappleholdings.com/boats/${slug}`,
+    },
     openGraph: {
       title: `${boat.name} | BluePineapple Fleet`,
       description: boat.description,

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Discover unforgettable boat trips and coastal experiences in Kenya with Blue Pineapple Coastal Services. From historic Fort Jesus tours to breathtaking sunset sailings, creek safaris, and private charters. Book your maritime adventure in Mombasa today.",
   alternates: {
-    canonical: "https://bluepineappleholdings.com",
+    canonical: "https://www.bluepineappleholdings.com",
   },
   openGraph: {
     title: "Blue Pineapple | Premium Boat Trips & Coastal Experiences",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
       "Discover premium boat trips and coastal experiences in Kenya with Blue Pineapple Coastal Services. From historic Fort Jesus tours to breathtaking sunset sailings.",
     images: [
       {
-        url: "https://bluepineappleholdings.com/images/hero/hero-main.jpg",
+        url: "https://www.bluepineappleholdings.com/images/hero/hero-main.jpg",
         width: 1200,
         height: 630,
         alt: "Blue Pineapple boat trip experience on the Indian Ocean",
