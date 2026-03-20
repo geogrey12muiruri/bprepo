@@ -5,7 +5,6 @@ export const siteConfig = {
   description: "Premium boat trips and coastal experiences in Kenya",
   url: "https://www.bluepineappleholdings.com",
   locale: "en_KE",
-  twitterHandle: "@bluepineapple",
 } as const;
 
 export function generateMetadataBase(): Metadata {
@@ -49,27 +48,6 @@ export function generateMetadataBase(): Metadata {
           alt: "BluePineapple Premium Boat Trips",
         },
       ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "BluePineapple | Premium Boat Trips",
-      description: siteConfig.description,
-      creator: siteConfig.twitterHandle,
-      images: [`${siteConfig.url}/images/hero/hero-main.jpg`],
-    },
-    robots: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-        "max-video-preview": -1,
-      },
     },
     icons: {
       icon: "/images/logo.png",
