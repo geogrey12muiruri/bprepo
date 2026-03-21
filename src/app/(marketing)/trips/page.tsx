@@ -5,14 +5,34 @@ import { TripsGrid } from "@/components/trips/TripsGrid";
 import { TripsHeroSection } from "@/components/sections/trips/TripsHeroSection";
 
 export const metadata: Metadata = {
-  title: "Experiences",
-  description: "Explore our collection of premium boat trips and coastal experiences in Kenya. From Fort Jesus tours to creek safaris, sunset sailings, and private charters in Mombasa.",
+  title: "Boat Trips & Coastal Experiences in Mombasa, Kenya",
+  description:
+    "Explore all boat trips and coastal experiences with Blue Pineapple in Mombasa, Kenya. Fort Jesus harbour tours, mangrove creek safaris, Diani day trips, sunset sailings, snorkelling reefs and private charters. Book online today.",
+  keywords: [
+    "boat trips Mombasa",
+    "coastal experiences Kenya",
+    "Fort Jesus boat tour",
+    "mangrove creek safari",
+    "sunset sailing Mombasa",
+    "Diani boat trip",
+    "snorkelling Mombasa reef",
+    "private charter Mombasa",
+  ],
   alternates: { canonical: "https://www.bluepineappleholdings.com/trips" },
   openGraph: {
-    title: "Boat Trips & Coastal Experiences | BluePineapple",
-    description: "Explore our collection of premium boat trips and coastal experiences in Kenya.",
+    title: "Boat Trips & Coastal Experiences in Mombasa, Kenya | Blue Pineapple",
+    description:
+      "Fort Jesus tours, creek safaris, Diani day trips, sunset sailings and private charters on the Indian Ocean. Book with Blue Pineapple Coastal Services.",
     url: "https://www.bluepineappleholdings.com/trips",
     type: "website",
+    images: [
+      {
+        url: "https://www.bluepineappleholdings.com/images/hero/hero-main.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Blue Pineapple boat trips and coastal experiences in Mombasa Kenya",
+      },
+    ],
   },
 };
 

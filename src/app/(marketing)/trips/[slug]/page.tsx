@@ -25,6 +25,83 @@ type TripDetailPageProps = {
   readonly params: Promise<{ readonly slug: string }>;
 };
 
+// Per-trip SEO config: keyword-rich titles and search-intent keywords
+const tripSeoConfig: Record<string, { title: string; keywords: string[] }> = {
+  "fort-jesus-trip": {
+    title: "Fort Jesus Boat Tour from Mombasa Beach | Blue Pineapple",
+    keywords: [
+      "Fort Jesus boat tour Mombasa",
+      "Fort Jesus harbour tour",
+      "boat trip to Fort Jesus from Mombasa Beach",
+      "UNESCO Fort Jesus Mombasa",
+      "Mombasa Old Town boat tour",
+      "Fort Jesus tour price Kenya",
+      "Mombasa Marine Park boat trip",
+    ],
+  },
+  "creek-safaris-mangrove": {
+    title: "Mangrove Creek Safari Mombasa — Mtwapa & Tudor Creek | Blue Pineapple",
+    keywords: [
+      "mangrove creek safari Mombasa",
+      "Mtwapa creek boat safari",
+      "Tudor Creek boat trip",
+      "mangrove forest boat tour Kenya",
+      "creek safari Mombasa price",
+      "nature boat trip Mombasa",
+    ],
+  },
+  "sunset-sailing": {
+    title: "Sunset Sailing Mombasa — Indian Ocean Dhow Cruise | Blue Pineapple",
+    keywords: [
+      "sunset sailing Mombasa",
+      "sunset boat cruise Mombasa price",
+      "evening dhow cruise Mombasa",
+      "Mombasa sunset tour",
+      "romantic boat trip Mombasa",
+      "Swahili sunset cruise Kenya",
+    ],
+  },
+  "diani-experience": {
+    title: "Diani Beach Boat Trip from Mombasa — Full Day Experience | Blue Pineapple",
+    keywords: [
+      "Diani Beach boat trip from Mombasa",
+      "Mombasa to Diani boat",
+      "Diani day trip by boat",
+      "Diani boat excursion price",
+      "Mombasa Diani boat tour Kenya",
+    ],
+  },
+  "snorkelling-reef": {
+    title: "Snorkelling Reef Trip Mombasa — Coral Gardens Indian Ocean | Blue Pineapple",
+    keywords: [
+      "snorkelling Mombasa reef",
+      "coral reef snorkelling Kenya",
+      "snorkelling trip Mombasa price",
+      "Indian Ocean reef snorkel",
+      "Mombasa marine park snorkelling",
+    ],
+  },
+  "birthdays-anniversaries": {
+    title: "Private Birthday & Anniversary Boat Party Mombasa | Blue Pineapple",
+    keywords: [
+      "birthday boat party Mombasa",
+      "anniversary boat trip Mombasa",
+      "private boat hire Mombasa celebration",
+      "boat party Mombasa Indian Ocean",
+      "private charter Mombasa birthday",
+    ],
+  },
+  "malindi-trip": {
+    title: "Mombasa to Malindi Boat Trip — Kenya Coastal Experience | Blue Pineapple",
+    keywords: [
+      "Mombasa to Malindi boat trip",
+      "Malindi boat tour from Mombasa",
+      "Kenya coastal boat trip Malindi",
+      "Malindi day trip by boat",
+    ],
+  },
+};
+
 export async function generateMetadata({
   params,
 }: TripDetailPageProps): Promise<Metadata> {
@@ -35,33 +112,43 @@ export async function generateMetadata({
     return { title: "Experience Not Found" };
   }
 
+  const seo = tripSeoConfig[slug];
   const tripUrl = `https://www.bluepineappleholdings.com/trips/${slug}`;
-  const tripImage = trip.image.startsWith('http') 
-    ? trip.image 
+  const tripImage = trip.image.startsWith("http")
+    ? trip.image
     : `https://www.bluepineappleholdings.com${trip.image}`;
 
+  // Build a strong meta description: first 155 chars of fullDescription, or fallback
+  const rawDescription = trip.fullDescription || trip.description;
+  const metaDescription =
+    rawDescription.length > 155
+      ? rawDescription.slice(0, 152).trimEnd() + "…"
+      : rawDescription;
+
   return {
-    title: trip.name,
-    description: trip.fullDescription || trip.description,
+    title: seo?.title ?? `${trip.name} — Boat Trip Mombasa | Blue Pineapple`,
+    description: metaDescription,
+    keywords: seo?.keywords ?? [
+      `${trip.name} Mombasa`,
+      "boat trip Kenya",
+      "Blue Pineapple coastal services",
+    ],
     alternates: {
       canonical: tripUrl,
     },
-    keywords: [
-      trip.name,
-      "boat trips Kenya",
-      "coastal experiences Mombasa",
-      trip.category,
-      trip.boatType,
-      "Mombasa tours",
-    ],
     openGraph: {
-      title: trip.name,
-      description: trip.fullDescription || trip.description,
+      title: seo?.title ?? `${trip.name} — Boat Trip Mombasa | Blue Pineapple`,
+      description: metaDescription,
       url: tripUrl,
       type: "website",
-      images: [{ url: tripImage, width: 1200, height: 630, alt: `${trip.name} - BluePineapple boat trip experience` }],
+      images: [{ url: tripImage, width: 1200, height: 630, alt: `${trip.name} — Blue Pineapple boat trip, Mombasa Kenya` }],
     },
-    twitter: { card: "summary_large_image", title: trip.name, description: trip.fullDescription || trip.description, images: [tripImage] },
+    twitter: {
+      card: "summary_large_image",
+      title: seo?.title ?? `${trip.name} — Boat Trip Mombasa | Blue Pineapple`,
+      description: metaDescription,
+      images: [tripImage],
+    },
   };
 }
 

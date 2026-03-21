@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 export const siteConfig = {
-  name: "BluePineapple",
-  description: "Premium boat trips and coastal experiences in Kenya",
+  name: "Blue Pineapple Coastal Services",
+  description:
+    "Book premium boat trips and coastal experiences in Mombasa, Kenya. Fort Jesus boat tours, mangrove creek safaris, sunset sailings, Diani day trips and private charters on the Indian Ocean.",
   url: "https://www.bluepineappleholdings.com",
   locale: "en_KE",
 } as const;
@@ -10,23 +11,29 @@ export const siteConfig = {
 export function generateMetadataBase(): Metadata {
   return {
     metadataBase: new URL(siteConfig.url),
-    title: "BluePineapple | Premium Boat Trips & Coastal Experiences in Kenya",
+    title: "Blue Pineapple Coastal Services | Boat Trips Mombasa, Kenya",
     description: siteConfig.description,
     keywords: [
-      "boat trips Kenya",
-      "coastal experiences Mombasa",
-      "Fort Jesus tours",
-      "dhow sailing",
-      "marine tourism Kenya",
-      "boat charters Mombasa",
-      "coastal adventures",
-      "Indian Ocean trips",
-      "Mombasa boat tours",
-      "Diani boat trips",
+      // Long-tail, low-competition, high-intent — achievable for a new site
+      "boat trips Mombasa Kenya",
+      "Fort Jesus boat tour Mombasa",
+      "Fort Jesus tour from Mombasa Beach",
+      "mangrove creek safari Mtwapa",
+      "Tudor Creek boat safari Mombasa",
+      "sunset sailing Mombasa price",
+      "Diani Beach boat trip from Mombasa",
+      "snorkelling reef Mombasa",
+      "private boat charter Mombasa",
+      "birthday boat party Mombasa",
+      "Indian Ocean boat trip Kenya",
+      "Mombasa coastal experiences",
+      "Mombasa Old Town boat tour",
+      "UNESCO Fort Jesus harbour tour",
+      "Blue Pineapple Mombasa",
     ],
-    authors: [{ name: "BluePineapple" }],
-    creator: "BluePineapple",
-    publisher: "BluePineapple Coastal Services",
+    authors: [{ name: "Blue Pineapple Coastal Services" }],
+    creator: "Blue Pineapple Coastal Services",
+    publisher: "Blue Pineapple Coastal Services",
     alternates: {
       canonical: siteConfig.url,
     },
@@ -34,15 +41,15 @@ export function generateMetadataBase(): Metadata {
       type: "website",
       locale: siteConfig.locale,
       url: siteConfig.url,
-      title: "BluePineapple | Premium Boat Trips & Coastal Experiences",
+      title: "Blue Pineapple Coastal Services | Boat Trips Mombasa, Kenya",
       description: siteConfig.description,
-      siteName: siteConfig.name,
+      siteName: "Blue Pineapple Coastal Services",
       images: [
         {
           url: `${siteConfig.url}/images/hero/hero-main.jpg`,
           width: 1200,
           height: 630,
-          alt: "BluePineapple Premium Boat Trips",
+          alt: "Blue Pineapple boat trips on the Indian Ocean, Mombasa Kenya",
         },
       ],
     },
@@ -51,8 +58,7 @@ export function generateMetadataBase(): Metadata {
       apple: "/images/logo.png",
     },
     verification: {
-      // Add Google Search Console verification when available
-      // google: "your-verification-code",
+      // google: "your-verification-code", — add when available
     },
   };
 }
@@ -65,3 +71,5 @@ export function generateJsonLD(
     ...schema,
   };
 }
+
+
