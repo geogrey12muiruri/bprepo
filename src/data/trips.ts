@@ -13,7 +13,11 @@ export const trips: ReadonlyArray<Trip> = [
     pricePerPerson: 4000,
     departureTimes: "11.00 am and 2.00 pm",
     status: "available",
-    image: "/images/mangroove.jpg",
+    image: "/images/newimages/creeksafaris.jpg",
+    galleryImages: [
+      "/images/newimages/creeksafaris.jpg",
+      "/images/mangroove.jpg"
+    ],
     poster: "/images/mangroove.jpg",
     category: "leisure",
   },
@@ -85,7 +89,11 @@ export const trips: ReadonlyArray<Trip> = [
       "European safety standards",
     ],
     status: "available",
-    image: "/images/fortjesus.png",
+    image: "/images/newimages/fortwater.jpg",
+    galleryImages: [
+      "/images/newimages/fortwater.jpg",
+      "/images/fortjesus.png"
+    ],
     video: "/videos/services/IMG_6071.mp4",
     poster: "/images/fortjesus.png",
     category: "cultural",
@@ -179,7 +187,11 @@ export const trips: ReadonlyArray<Trip> = [
     pricePerPerson: 2000,
     departureTimes: "9.00 am through to 5.00 pm. Please request a time",
     status: "available",
-    image: "/images/services/img2.png",
+    image: "/images/newimages/snorkling.jpg",
+    galleryImages: [
+      "/images/newimages/snorkling.jpg",
+      "/images/services/img2.png"
+    ],
     poster: "/images/services/img2.png",
     category: "adventure",
   },

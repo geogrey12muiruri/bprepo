@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heading } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/Button";
+import { ImageCarousel } from "@/components/ui/ImageCarousel";
 import { trips } from "@/data/trips";
 import { formatPrice, formatDuration } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
@@ -25,11 +26,10 @@ function FeaturedTrip({ trip }: { trip: typeof trips[0] }) {
   return (
     <div className="group relative block cursor-pointer" onClick={() => window.location.href = ROUTES.trip(trip.slug)}>
       <div className="relative h-[45vh] sm:h-[50vh] overflow-hidden rounded-2xl">
-        <Image
-          src={trip.image}
+        <ImageCarousel
+          images={trip.galleryImages ? [...trip.galleryImages] : [trip.image]}
           alt={trip.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-700"
+          imageClassName="object-cover group-hover:scale-105 transition-transform duration-700"
           priority
           sizes="100vw"
         />
@@ -96,11 +96,10 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
     <Link href={ROUTES.trip(trip.slug)} className="group block">
       <div className="overflow-hidden rounded-2xl bg-white/5 border border-white/10 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-white/20">
         <div className="relative aspect-[4/3] overflow-hidden">
-          <Image
-            src={trip.image}
+          <ImageCarousel
+            images={trip.galleryImages ? [...trip.galleryImages] : [trip.image]}
             alt={trip.name}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            imageClassName="object-cover group-hover:scale-105 transition-transform duration-500"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           {isComingSoon && (

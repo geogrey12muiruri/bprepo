@@ -46,6 +46,7 @@ export type Trip = {
   };
   readonly status?: "available" | "coming-soon";
   readonly image: string;
+  readonly galleryImages?: ReadonlyArray<string>;
   readonly video?: string;
   readonly poster?: string;
   readonly category: "cultural" | "adventure" | "leisure" | "family";
