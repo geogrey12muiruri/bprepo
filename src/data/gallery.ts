@@ -8,10 +8,10 @@ export interface GalleryItem {
 }
 
 export const galleryImages: GalleryItem[] = [
-  { id: "1", src: "/images/gallery/img1.png", alt: "Boat adventure at sunset", featured: true },
-  { id: "2", src: "/images/gallery/img2.png", alt: "Fort Jesus from the sea", featured: false },
-  { id: "3", src: "/images/gallery/img3.png", alt: "Crystal clear waters", featured: false },
-  { id: "4", src: "/images/gallery/img4.png", alt: "Coastal scenery", featured: false },
-  { id: "5", src: "/images/gallery/img5.png", alt: "Sunset sailing", featured: true },
-  { id: "6", src: "/images/gallery/img6.png", alt: "Marine life", featured: false },
+  { id: "1", src: "/images/gallery/hero.jpeg", alt: "Boat adventure at sunset", featured: true },
+  { id: "2", src: "/images/fort/fort1.jpeg", alt: "Fort Jesus from the sea", featured: false },
+  { id: "3", src: "/images/creek.jpg", alt: "Crystal clear creek waters", featured: false },
+  { id: "4", src: "/images/services/img1.png", alt: "Coastal experience", featured: false },
+  { id: "5", src: "/images/fort/coastal.jpg", alt: "Sunset sailing on the coast", featured: true },
+  { id: "6", src: "/images/services/img2.png", alt: "Marine life and mangroves", featured: false },
 ]
