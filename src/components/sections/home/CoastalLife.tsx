@@ -24,8 +24,8 @@ const galleryItems = [
         className: "md:col-span-1 md:row-span-1 w-[75vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
     },
     {
-        src: "/images/services/IMG_6069-poster.jpg", // People/Celebration
-        alt: "Celebrations and special events on BluePineapple boat deck in Mombasa",
+        src: "/images/gallery/hero.jpeg", // Luxury Marine
+        alt: "Luxury marine experience on a BluePineapple boat in Mombasa",
         className: "md:col-span-1 md:row-span-1 w-[75vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
     },
     {
