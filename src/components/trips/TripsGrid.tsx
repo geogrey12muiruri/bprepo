@@ -61,6 +61,7 @@ function FeaturedTrip({ trip }: { trip: typeof trips[0] }) {
               <a 
                 href={`${ROUTES.boats}/${vesselSlug}`}
                 className="px-2 py-0.5 bg-white/20 hover:bg-white/30 text-white rounded text-[10px] font-medium transition-colors"
+                onClick={(e) => e.stopPropagation()}
               >
                 {trip.boatType}
               </a>
@@ -142,12 +143,15 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
                 <span>{formatDuration(trip.durationHours)}</span>
               </div>
               {vesselSlug && (
-                <a 
-                  href={`${ROUTES.boats}/${vesselSlug}`}
-                  className="px-2 py-0.5 bg-white/10 hover:bg-white/20 text-neutral-400 hover:text-white rounded text-[10px] font-medium transition-colors"
+                <span 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = `${ROUTES.boats}/${vesselSlug}`;
+                  }}
+                  className="px-2 py-0.5 bg-white/10 hover:bg-white/20 text-neutral-400 hover:text-white rounded text-[10px] font-medium transition-colors cursor-pointer"
                 >
                   {trip.boatType}
-                </a>
+                </span>
               )}
               <div className="flex items-center gap-1">
                 <MapPin className="w-3 h-3" />
