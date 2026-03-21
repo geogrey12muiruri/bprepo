@@ -56,18 +56,20 @@ export function TripCard({ trip, variant = "default" }: TripCardProps) {
 
   return (
     <Link href={ROUTES.trip(trip.slug)} className="group block h-full">
-      <div className={`flex flex-col h-full overflow-hidden rounded-2xl ${cardBg} transition-all duration-300 hover:shadow-2xl hover:-translate-y-1`}>
+      {/* Note: hover:-translate-y-1 removed — card translate + child image scale = dual compositor layer conflict on mobile */}
+      <div className={`flex flex-col h-full overflow-hidden rounded-2xl ${cardBg} transition-shadow duration-300 hover:shadow-2xl`}>
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
             src={trip.image || trip.poster || "/images/placeholder.jpg"}
             alt={`${trip.name} boat trip in Mombasa`}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           {/* Price Tag */}
-          <div className={`absolute bottom-3 left-3 z-10 ${priceBg} backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-lg`}>
+          {/* backdrop-blur-sm removed — backdrop-filter inside overflow-hidden + transform causes GPU layer conflict on Android Chrome */}
+          <div className={`absolute bottom-3 left-3 z-10 ${priceBg} px-3 py-1.5 rounded-lg shadow-lg`}>
             <span className={`font-black text-sm ${priceText}`}>{formatPrice(trip.pricePerPerson)}</span>
             <span className="text-neutral-500 text-[9px] font-bold ml-1 uppercase">/pax</span>
           </div>

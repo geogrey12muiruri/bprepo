@@ -189,10 +189,13 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
         </Container>
 
         {/* Related Trips */}
-        <div className="bg-neutral-800/50 py-12 sm:py-16">
+        {/* isolate: creates a hard stacking context boundary — prevents bg-neutral-800/50's
+            semi-transparent layer from bleeding into compositor layers above/below on mobile.
+            contain: scopes any card hover repaints to within this section only. */}
+        <div className="isolate bg-neutral-800 py-12 sm:py-16">
           <Container>
             <Heading level="h2" size="lg" className="mb-8 text-center !font-bold tracking-tight text-white">More Experiences</Heading>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 [contain:layout_style_paint]">
               {trips.filter((t) => t.slug !== slug && t.status !== "coming-soon").slice(0, 3).map((relatedTrip) => (
                 <TripCard key={relatedTrip.id} trip={relatedTrip} variant="dark" />
               ))}
