@@ -8,36 +8,28 @@ import { services } from "@/data/services";
 
 export function Services() {
     return (
-        <section className="py-10 md:py-14 bg-neutral-50 overflow-hidden" id="featured-experiences">
+        <section className="py-10 sm:py-12 bg-neutral-900 overflow-hidden" id="featured-experiences">
             <Container>
-                <div className="mb-8 md:mb-10 text-center max-w-2xl mx-auto">
-                    <p className="text-[10px] font-black text-teal-600 uppercase tracking-[0.3em] mb-3">Discovery Awaits</p>
-                    <Heading level="h2" size="lg" className="mb-3 tracking-tight">
+                <div className="mb-8 text-center">
+                    <span className="text-[10px] font-black text-teal-400 uppercase tracking-[0.3em]">
+                        Discovery Awaits
+                    </span>
+                    <Heading level="h2" size="lg" className="mt-2 mb-3 text-white">
                         Curated Experiences
                     </Heading>
-                    <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                    <p className="text-neutral-400 max-w-xl mx-auto text-xs sm:text-sm">
                         From serene creek safaris to historical voyages. Choose your perfect coastal adventure.
                     </p>
                 </div>
 
-                <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 -mx-4 sm:-mx-6 md:-mx-0 px-4 sm:px-6 md:px-0 snap-x snap-mandatory scroll-smooth no-scrollbar">
+                <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
                     {services.map((service) => (
-                        <div key={service.id} className="flex-shrink-0 w-[65vw] sm:w-[55vw] md:w-[40vw] lg:w-[30vw] snap-center">
+                        <div key={service.id} className="flex-shrink-0 w-[75vw] sm:w-auto snap-center sm:snap-align-none">
                             <ServiceCard service={service} />
                         </div>
                     ))}
                 </div>
             </Container>
-
-            <style jsx global>{`
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
         </section>
     );
 }
