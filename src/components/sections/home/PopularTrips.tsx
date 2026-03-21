@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ImageCarousel } from "@/components/ui/ImageCarousel";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { trips } from "@/data/trips";
@@ -48,14 +49,13 @@ export function PopularTrips() {
               className="flex-shrink-0 w-[75vw] sm:w-auto group"
             >
               <div className="relative h-48 sm:h-56 overflow-hidden rounded-xl">
-                <Image
-                  src={categoryImages[trip.slug] || trip.image}
+                <ImageCarousel
+                  images={trip.galleryImages ? [...trip.galleryImages] : [categoryImages[trip.slug] || trip.image]}
                   alt={trip.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  imageClassName="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 640px) 75vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
                 
                 <div className="absolute inset-0 p-4 flex flex-col justify-end">
                   <span className="text-[9px] font-black text-teal-400 uppercase tracking-wider mb-1">
