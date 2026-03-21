@@ -21,6 +21,9 @@ export type Trip = {
   readonly name: string;
   readonly description: string;
   readonly fullDescription: string;
+  readonly seoTitle?: string;
+  readonly seoDescription?: string;
+  readonly heroImageAlt?: string;
   readonly durationHours: number;
   readonly boatType: "Small Boat" | "Big Boat" | "Small & Big Boat";
   readonly pricePerPerson: number;

@@ -12,6 +12,7 @@ import type { Trip } from "@/types/trip";
 import { formatDuration } from "@/lib/format";
 import { generateJsonLD } from "@/lib/seo";
 import { ROUTES } from "@/lib/routes";
+import { SITE_URL, BUSINESS_NAME } from "@/constants/contacts";
 import { TripCard } from "@/components/ui/TripCard";
 import { PricingCard } from "@/components/trips/PricingCard";
 import { TripJourneyTimeline } from "@/components/sections/TripJourneyTimeline";
@@ -118,36 +119,45 @@ export async function generateMetadata({
     ? trip.image
     : `https://www.bluepineappleholdings.com${trip.image}`;
 
-  // Build a strong meta description: first 155 chars of fullDescription, or fallback
-  const rawDescription = trip.fullDescription || trip.description;
-  const metaDescription =
-    rawDescription.length > 155
-      ? rawDescription.slice(0, 152).trimEnd() + "…"
-      : rawDescription;
+  // Meta description — prefer handcrafted, fall back to truncated fullDescription
+  const description = trip.seoDescription
+    ?? (trip.fullDescription ? trip.fullDescription.slice(0, 155).trim() + "..." : trip.description);
+
+  // Page title — prefer handcrafted seoTitle for <title> tag
+  const title = trip.seoTitle ?? trip.name;
 
   return {
-    title: seo?.title ?? `${trip.name} — Boat Trip Mombasa | Blue Pineapple`,
-    description: metaDescription,
+    title,
+    description,
     keywords: seo?.keywords ?? [
       `${trip.name} Mombasa`,
       "boat trip Kenya",
       "Blue Pineapple coastal services",
     ],
-    alternates: {
-      canonical: tripUrl,
-    },
     openGraph: {
-      title: seo?.title ?? `${trip.name} — Boat Trip Mombasa | Blue Pineapple`,
-      description: metaDescription,
-      url: tripUrl,
+      title: trip.seoTitle ?? trip.name,
+      description,
+      url: `${SITE_URL}/trips/${trip.slug}`,
+      siteName: BUSINESS_NAME,
+      images: [
+        {
+          url: tripImage,
+          width: 1200,
+          height: 630,
+          alt: trip.heroImageAlt ?? trip.name,
+        },
+      ],
       type: "website",
-      images: [{ url: tripImage, width: 1200, height: 630, alt: `${trip.name} — Blue Pineapple boat trip, Mombasa Kenya` }],
+      locale: "en_KE",
     },
     twitter: {
       card: "summary_large_image",
-      title: seo?.title ?? `${trip.name} — Boat Trip Mombasa | Blue Pineapple`,
-      description: metaDescription,
+      title: trip.seoTitle ?? trip.name,
+      description,
       images: [tripImage],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/trips/${trip.slug}`,
     },
   };
 }
@@ -173,24 +183,63 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
     "@id": `${tripUrl}#trip`,
     name: trip.name,
     description: trip.fullDescription || trip.description,
-    image: tripImage,
+    image: [tripImage],
     url: tripUrl,
-    provider: { "@type": "LocalBusiness", "@id": "https://bluepineappleholdings.com/#organization", name: "Blue Pineapple Coastal Services" },
+    touristType: ["Family", "History Enthusiasts", "Cultural Tourists"],
+    provider: { 
+      "@type": "LocalBusiness", 
+      "@id": "https://bluepineappleholdings.com/#organization", 
+      name: "Blue Pineapple Coastal Services",
+      priceRange: `KES ${trip.pricePerPerson}–${trip.pricePerPerson * 2}`
+    },
     location: { "@type": "Place", name: "Mombasa, Kenya", address: { "@type": "PostalAddress", addressLocality: "Mombasa", addressCountry: "KE" } },
     duration: `PT${trip.durationHours}H`,
     ...(trip.rating && { aggregateRating: { "@type": "AggregateRating", ratingValue: trip.rating.toString(), reviewCount: trip.reviewCount || 0 } }),
-    offers: { "@type": "Offer", price: trip.pricePerPerson.toString(), priceCurrency: "KES", availability: isComingSoon ? "https://schema.org/PreOrder" : "https://schema.org/InStock", url: tripUrl, validFrom: new Date().toISOString() },
+    offers: { 
+      "@type": "Offer", 
+      price: trip.pricePerPerson, 
+      priceCurrency: "KES", 
+      availability: isComingSoon ? "https://schema.org/PreOrder" : "https://schema.org/InStock", 
+      url: tripUrl, 
+      validFrom: new Date().getFullYear().toString() 
+    },
     itinerary: { "@type": "ItemList", itemListElement: trip.highlights?.map((h, i) => ({ "@type": "ListItem", position: i + 1, name: h })) || [] },
   });
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Experiences",
+        item: `${SITE_URL}/trips`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: trip.seoTitle ?? trip.name,
+        item: `${SITE_URL}/trips/${trip.slug}`,
+      },
+    ],
+  };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <div className="min-h-screen bg-neutral-900">
         {/* Hero Section */}
         <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden isolate">
-          <Image src={trip.image} alt={trip.name} fill className="object-cover [transform:translateZ(0)]" priority sizes="100vw" />
+          <Image src={trip.image} alt={trip.heroImageAlt ?? trip.name} fill className="object-cover [transform:translateZ(0)]" priority sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           
           {isComingSoon && (
@@ -215,7 +264,7 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
               )}
             </div>
             <Heading level="h1" className="text-white mb-2 !font-bold text-3xl sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:200ms]">
-              {trip.name}
+              {trip.seoTitle ?? trip.name}
             </Heading>
             <p className="text-white/80 text-base sm:text-lg max-w-2xl animate-fade-in-up [animation-delay:300ms]">
               {trip.description}
