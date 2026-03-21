@@ -53,8 +53,8 @@ export function PricingCard({ trip, isComingSoon }: PricingCardProps) {
         </div>
       </div>
 
-      {/* Desktop Card */}
-      <Card className="hidden lg:block p-6 xl:p-8 shadow-xl border-none rounded-2xl bg-white/5 border border-white/10">
+      {/* Desktop & Mobile Card */}
+      <Card className="p-6 xl:p-8 shadow-xl border-none rounded-2xl bg-white/5 border border-white/10 mb-8 lg:mb-0">
         <div className="mb-6">
           <p className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">Select Package</p>
           
@@ -126,6 +126,12 @@ export function PricingCard({ trip, isComingSoon }: PricingCardProps) {
               {trip.discounts.underFiveFree && (
                 <li className="text-xs text-amber-200 font-medium">
                   <span className="font-bold">FREE</span> under 5 years
+                </li>
+              )}
+              {trip.discounts.launchDiscount && (
+                <li className="text-xs text-amber-200 font-medium">
+                  <span className="font-bold">{trip.discounts.launchDiscount.percent}% OFF</span> launch discount
+                  {trip.discounts.launchDiscount.months && ` (${trip.discounts.launchDiscount.months.join(" & ")})`}
                 </li>
               )}
             </ul>
