@@ -57,9 +57,9 @@ export function TripCard({ trip, variant = "default" }: TripCardProps) {
   return (
     <Link href={ROUTES.trip(trip.slug)} className="group block h-full">
       {/* Note: hover:-translate-y-1 removed — card translate + child image scale = dual compositor layer conflict on mobile */}
-      <div className={`flex flex-col h-full overflow-hidden rounded-2xl ${cardBg} transition-shadow duration-300 hover:shadow-2xl`}>
+      <div className={`flex flex-col h-full overflow-hidden rounded-2xl ${cardBg} transition-shadow duration-300 hover:shadow-2xl isolate [transform:translateZ(0)]`}>
         {/* Image */}
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[4/3] overflow-hidden [transform:translateZ(0)] backface-hidden">
           <Image
             src={trip.image || trip.poster || "/images/placeholder.jpg"}
             alt={`${trip.name} boat trip in Mombasa`}

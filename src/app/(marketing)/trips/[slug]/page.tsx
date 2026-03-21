@@ -189,8 +189,8 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
 
       <div className="min-h-screen bg-neutral-900">
         {/* Hero Section */}
-        <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden">
-          <Image src={trip.image} alt={trip.name} fill className="object-cover" priority sizes="100vw" />
+        <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden isolate">
+          <Image src={trip.image} alt={trip.name} fill className="object-cover [transform:translateZ(0)]" priority sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           
           {isComingSoon && (
@@ -208,7 +208,7 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
                 {trip.category}
               </span>
               {trip.rating && (
-                <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                <div className="flex items-center gap-1.5 bg-neutral-900/60 sm:bg-white/20 sm:backdrop-blur-sm px-3 py-1 rounded-full">
                   <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
                   <span className="text-white font-bold text-sm">{trip.rating}</span>
                 </div>
@@ -282,7 +282,7 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
         <div className="isolate bg-neutral-800 py-12 sm:py-16">
           <Container>
             <Heading level="h2" size="lg" className="mb-8 text-center !font-bold tracking-tight text-white">More Experiences</Heading>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 [contain:layout_style_paint]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" style={{ contain: 'layout style paint' }}>
               {trips.filter((t) => t.slug !== slug && t.status !== "coming-soon").slice(0, 3).map((relatedTrip) => (
                 <TripCard key={relatedTrip.id} trip={relatedTrip} variant="dark" />
               ))}
