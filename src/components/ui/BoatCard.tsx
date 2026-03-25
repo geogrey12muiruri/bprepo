@@ -38,10 +38,10 @@ export function BoatCard({ boat }: BoatCardProps) {
     };
 
     return (
-        <Card className="group overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-100 hover:border-teal-200/50 rounded-2xl sm:rounded-3xl">
+        <Card className="group overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-shadow duration-500 border border-neutral-100 hover:border-teal-200/50 rounded-2xl sm:rounded-3xl isolate [transform:translateZ(0)]">
             <div className="grid grid-cols-1 lg:grid-cols-5 h-full">
                 {/* Image Section with Gallery */}
-                <div className="relative h-[400px] sm:h-[450px] md:h-[500px] lg:h-full lg:col-span-2 overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-50">
+                <div className="relative h-[400px] sm:h-[450px] md:h-[500px] lg:h-full lg:col-span-2 overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-50 [transform:translateZ(0)] backface-hidden">
                     {boat.video ? (
                         <video
                             autoPlay
