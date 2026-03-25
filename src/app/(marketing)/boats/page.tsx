@@ -10,15 +10,16 @@ import { formatPrice } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
 import { buildWhatsAppUrl, buildGeneralEnquiryMessage } from "@/lib/whatsapp";
 import { ArrowRight, Users, Check } from "lucide-react";
+import { getAbsoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Our Fleet",
   description: "Discover our collection of premium, safe, and certified vessels for coastal adventures in Mombasa. Fully insured boats with GPS, surveillance, and experienced captains.",
-  alternates: { canonical: "https://www.bluepineappleholdings.com/boats" },
+  alternates: { canonical: getAbsoluteUrl("/boats") },
   openGraph: {
     title: "Meet Our Fleet | BluePineapple",
     description: "Discover our collection of premium, safe, and certified vessels for coastal adventures.",
-    url: "https://www.bluepineappleholdings.com/boats",
+    url: getAbsoluteUrl("/boats"),
     type: "website",
   },
 };

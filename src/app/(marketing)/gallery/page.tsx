@@ -3,15 +3,16 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { galleryImages } from "@/data/gallery";
+import { getAbsoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Gallery",
   description: "Explore our gallery of stunning coastal moments. See the beauty of Mombasa marine adventures, Fort Jesus tours, and sunset sailings with BluePineapple.",
-  alternates: { canonical: "https://www.bluepineappleholdings.com/gallery" },
+  alternates: { canonical: getAbsoluteUrl("/gallery") },
   openGraph: {
     title: "Gallery | BluePineapple",
     description: "Explore our gallery of stunning coastal moments.",
-    url: "https://www.bluepineappleholdings.com/gallery",
+    url: getAbsoluteUrl("/gallery"),
     type: "website",
   },
 };

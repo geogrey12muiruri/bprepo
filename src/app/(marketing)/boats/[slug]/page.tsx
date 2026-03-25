@@ -7,6 +7,7 @@ import { Heading } from "@/components/ui/Heading";
 import { boats } from "@/data/boats";
 import { formatPrice } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
+import { getAbsoluteUrl } from "@/lib/seo";
 import { buildWhatsAppUrl, buildCharterMessage } from "@/lib/whatsapp";
 import { MIN_CHARTER_HOURS, MIN_ADVANCE_BOOKING_HOURS } from "@/constants/contacts";
 import { ArrowLeft, Users, Shield, Clock, Calendar, CheckCircle2, Navigation, Camera, Anchor, Info } from "lucide-react";
@@ -27,12 +28,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: boat.name,
     description: boat.description,
     alternates: {
-      canonical: `https://www.bluepineappleholdings.com/boats/${slug}`,
+      canonical: getAbsoluteUrl(`/boats/${slug}`),
     },
     openGraph: {
       title: boat.name,
       description: boat.description,
-      images: [boat.image],
+      images: [getAbsoluteUrl(boat.image)],
+      url: getAbsoluteUrl(`/boats/${slug}`),
     },
   };
 }

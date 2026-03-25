@@ -8,6 +8,14 @@ export const siteConfig = {
   locale: "en_KE",
 } as const;
 
+/**
+ * Generates an absolute URL for a given path, ensuring 'www' and protocol consistency.
+ */
+export function getAbsoluteUrl(path: string): string {
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  return `${siteConfig.url}${cleanPath}`;
+}
+
 export function generateMetadataBase(): Metadata {
   return {
     metadataBase: new URL(siteConfig.url),
@@ -30,13 +38,12 @@ export function generateMetadataBase(): Metadata {
       "Mombasa Old Town boat tour",
       "UNESCO Fort Jesus harbour tour",
       "Blue Pineapple Mombasa",
+      "Blue Pineapple Holdings",
     ],
     authors: [{ name: "Blue Pineapple Coastal Services" }],
     creator: "Blue Pineapple Coastal Services",
     publisher: "Blue Pineapple Coastal Services",
-    alternates: {
-      canonical: siteConfig.url,
-    },
+    // REMOVED alternates.canonical from here to prevent "Canonical Leak" to home page
     openGraph: {
       type: "website",
       locale: siteConfig.locale,
@@ -46,7 +53,7 @@ export function generateMetadataBase(): Metadata {
       siteName: "Blue Pineapple Coastal Services",
       images: [
         {
-          url: `${siteConfig.url}/images/hero/hero-main.jpg`,
+          url: getAbsoluteUrl("/images/hero/hero-main.jpg"),
           width: 1200,
           height: 630,
           alt: "Blue Pineapple boat trips on the Indian Ocean, Mombasa Kenya",

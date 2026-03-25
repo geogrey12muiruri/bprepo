@@ -14,17 +14,18 @@ import {
 } from "@/constants/contacts";
 import { buildWhatsAppUrl, buildGeneralBookingMessage } from "@/lib/whatsapp";
 import { ContactCard } from "@/components/contact/ContactCard";
+import { getAbsoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with BluePineapple for booking inquiries and support. Located in Mombasa, Kenya.",
   alternates: {
-    canonical: "https://www.bluepineappleholdings.com/contact",
+    canonical: getAbsoluteUrl("/contact"),
   },
   openGraph: {
     title: "Contact Us | BluePineapple",
     description: "Get in touch with BluePineapple for booking inquiries and support.",
-    url: "https://www.bluepineappleholdings.com/contact",
+    url: getAbsoluteUrl("/contact"),
     type: "website",
   },
 };

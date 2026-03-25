@@ -10,7 +10,7 @@ import {
 import { trips } from "@/data/trips";
 import type { Trip } from "@/types/trip";
 import { formatDuration } from "@/lib/format";
-import { generateJsonLD } from "@/lib/seo";
+import { getAbsoluteUrl, generateJsonLD } from "@/lib/seo";
 import { ROUTES } from "@/lib/routes";
 import { SITE_URL, BUSINESS_NAME } from "@/constants/contacts";
 import { TripCard } from "@/components/ui/TripCard";
@@ -115,10 +115,10 @@ export async function generateMetadata({
   }
 
   const seo = tripSeoConfig[slug];
-  const tripUrl = `https://www.bluepineappleholdings.com/trips/${slug}`;
+  const tripUrl = getAbsoluteUrl(`/trips/${slug}`);
   const tripImage = trip.image.startsWith("http")
     ? trip.image
-    : `https://www.bluepineappleholdings.com${trip.image}`;
+    : getAbsoluteUrl(trip.image);
 
   // Meta description — prefer handcrafted, fall back to truncated fullDescription
   const description = trip.seoDescription
@@ -158,7 +158,7 @@ export async function generateMetadata({
       images: [tripImage],
     },
     alternates: {
-      canonical: `${SITE_URL}/trips/${trip.slug}`,
+      canonical: tripUrl,
     },
   };
 }
@@ -176,8 +176,8 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
   }
 
   const isComingSoon = trip.status === "coming-soon";
-  const tripImage = trip.image.startsWith('http') ? trip.image : `https://bluepineappleholdings.com${trip.image}`;
-  const tripUrl = `https://bluepineappleholdings.com/trips/${slug}`;
+  const tripUrl = getAbsoluteUrl(`/trips/${slug}`);
+  const tripImage = trip.image.startsWith('http') ? trip.image : getAbsoluteUrl(trip.image);
 
   const jsonLD = generateJsonLD({
     "@type": "TouristTrip",
