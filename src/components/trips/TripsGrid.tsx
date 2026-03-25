@@ -21,7 +21,7 @@ const categoryIcons: Record<string, React.ElementType> = {
 
 function FeaturedTrip({ trip }: { trip: typeof trips[0] }) {
   const Icon = categoryIcons[trip.category] || Compass;
-  const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : null;
+  const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : trip.boatType === "Glass-bottomed Boat" ? "hunky-dory" : null;
   
   return (
     <div className="group relative block cursor-pointer" onClick={() => window.location.href = ROUTES.trip(trip.slug)}>
@@ -90,7 +90,7 @@ function FeaturedTrip({ trip }: { trip: typeof trips[0] }) {
 function TripCard({ trip }: { trip: typeof trips[0] }) {
   const isComingSoon = trip.status === "coming-soon";
   const Icon = categoryIcons[trip.category] || Compass;
-  const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : null;
+  const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : trip.boatType === "Glass-bottomed Boat" ? "hunky-dory" : null;
   
   return (
     <Link href={ROUTES.trip(trip.slug)} className="group block">

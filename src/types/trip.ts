@@ -25,7 +25,7 @@ export type Trip = {
   readonly seoDescription?: string;
   readonly heroImageAlt?: string;
   readonly durationHours: number;
-  readonly boatType: "Small Boat" | "Big Boat" | "Small & Big Boat";
+  readonly boatType: "Small Boat" | "Big Boat" | "Small & Big Boat" | "Glass-bottomed Boat";
   readonly pricePerPerson: number;
   readonly priceOneWay?: number;
   readonly priceReturn?: number;

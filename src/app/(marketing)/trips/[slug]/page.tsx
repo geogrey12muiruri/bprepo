@@ -21,6 +21,7 @@ import { JourneySection } from "@/components/trips/JourneySection";
 import { ItineraryTimeline } from "@/components/trips/ItineraryTimeline";
 import { SafetyFeatures } from "@/components/trips/SafetyFeatures";
 import { DepartureDetails } from "@/components/trips/DepartureDetails";
+import { ReviewsSection } from "@/components/ui/ReviewsSection";
 
 type TripDetailPageProps = {
   readonly params: Promise<{ readonly slug: string }>;
@@ -286,18 +287,13 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
                 <JourneySection trip={trip} />
               </section>
 
-              {/* Journey Highlights */}
-              {trip.journeyStops && trip.returnNote ? (
+              {/* Journey Highlights — only for trips with journey data */}
+              {trip.journeyStops && trip.returnNote && (
                 <section className="pt-8 border-t border-white/10">
                   <TripJourneyTimeline 
                     stops={trip.journeyStops} 
                     returnNote={trip.returnNote} 
                   />
-                </section>
-              ) : (
-                <section className="pt-8 border-t border-white/10">
-                  <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">Itinerary</Heading>
-                  <ItineraryTimeline trip={trip} />
                 </section>
               )}
 
@@ -340,6 +336,8 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
             </Container>
           </div>
         )}
+
+        <ReviewsSection />
       </div>
     </>
   );

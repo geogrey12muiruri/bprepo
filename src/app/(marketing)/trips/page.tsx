@@ -3,18 +3,19 @@ import { Container } from "@/components/ui/Container";
 import { trips } from "@/data/trips";
 import { TripsGrid } from "@/components/trips/TripsGrid";
 import { TripsHeroSection } from "@/components/sections/trips/TripsHeroSection";
+import { ReviewsSection } from "@/components/ui/ReviewsSection";
 
 export const metadata: Metadata = {
   title: "Boat Trips & Coastal Experiences in Mombasa, Kenya",
   description:
-    "Explore all boat trips and coastal experiences with Blue Pineapple in Mombasa, Kenya. Fort Jesus harbour tours, mangrove creek safaris, Diani day trips, sunset sailings, snorkelling reefs and private charters. Book online today.",
+    "Explore all boat trips and coastal experiences with Blue Pineapple in Mombasa, Kenya. Fort Jesus harbour tours, mangrove creek safaris, glass-bottomed boat safaris, sunset sailings, snorkelling reefs and private charters. Book online today.",
   keywords: [
     "boat trips Mombasa",
     "coastal experiences Kenya",
     "Fort Jesus boat tour",
-    "mangrove creek safari",
+    "mangrove creek safari Mombasa",
+    "glass-bottomed boat safari Kenya",
     "sunset sailing Mombasa",
-    "Diani boat trip",
     "snorkelling Mombasa reef",
     "private charter Mombasa",
   ],
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Boat Trips & Coastal Experiences in Mombasa, Kenya | Blue Pineapple",
     description:
-      "Fort Jesus tours, creek safaris, Diani day trips, sunset sailings and private charters on the Indian Ocean. Book with Blue Pineapple Coastal Services.",
+      "Fort Jesus tours, glass-bottomed mangrove safaris, sunset sailings and private charters on the Indian Ocean. Book with Blue Pineapple Coastal Services.",
     url: "https://www.bluepineappleholdings.com/trips",
     type: "website",
     images: [
@@ -46,6 +47,8 @@ export default function TripsPage() {
       <Container className="py-8 sm:py-10 md:py-12">
         <TripsGrid />
       </Container>
+
+      <ReviewsSection />
     </div>
   );
 }

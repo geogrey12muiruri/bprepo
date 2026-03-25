@@ -13,6 +13,7 @@ import { MessageCircle, Mail, Phone, X, Menu } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Experiences", href: ROUTES.trips },
+  { label: "FortJesus", href: ROUTES.trip("fort-jesus-trip") },
   { label: "Our Fleet", href: ROUTES.boats },
   { label: "Gallery", href: ROUTES.gallery },
   { label: "Contact", href: ROUTES.contact },

@@ -7,7 +7,7 @@ import { ROUTES } from "@/lib/routes";
 
 export function QuickFactsStrip({ trip }: { trip: Trip }) {
   const departureTimes = trip.departureTimes ? trip.departureTimes.split(",").map(t => t.trim()) : [];
-  const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : null;
+  const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : trip.boatType === "Glass-bottomed Boat" ? "hunky-dory" : null;
   
   const facts = [
     { icon: Clock, label: "Duration", value: formatDuration(trip.durationHours) },
