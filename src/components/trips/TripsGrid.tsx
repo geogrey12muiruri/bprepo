@@ -24,8 +24,8 @@ function FeaturedTrip({ trip }: { trip: typeof trips[0] }) {
   const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : trip.boatType === "Glass-bottomed Boat" ? "hunky-dory" : null;
   
   return (
-    <div className="group relative block cursor-pointer" onClick={() => window.location.href = ROUTES.trip(trip.slug)}>
-      <div className="relative h-[45vh] sm:h-[50vh] overflow-hidden rounded-2xl">
+    <div className="group relative block cursor-pointer isolate [transform:translateZ(0)]" onClick={() => window.location.href = ROUTES.trip(trip.slug)}>
+      <div className="relative h-[45vh] sm:h-[50vh] overflow-hidden rounded-2xl [transform:translateZ(0)] backface-hidden">
         <ImageCarousel
           images={trip.galleryImages ? [...trip.galleryImages] : [trip.image]}
           alt={trip.name}
@@ -93,8 +93,8 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
   const vesselSlug = trip.boatType === "Big Boat" ? "setting-sons" : trip.boatType === "Glass-bottomed Boat" ? "hunky-dory" : null;
   
   return (
-    <Link href={ROUTES.trip(trip.slug)} className="group block">
-      <div className="overflow-hidden rounded-2xl bg-white/5 border border-white/10 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-white/20">
+    <Link href={ROUTES.trip(trip.slug)} className="group block isolate [transform:translateZ(0)]">
+      <div className="overflow-hidden rounded-2xl bg-[#171717] border border-white/10 transition-shadow duration-300 hover:shadow-2xl hover:border-white/20 [transform:translateZ(0)] backface-hidden">
         <div className="relative aspect-[4/3] overflow-hidden">
           <ImageCarousel
             images={trip.galleryImages ? [...trip.galleryImages] : [trip.image]}
@@ -108,7 +108,7 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
             </div>
           )}
           <div className="absolute top-2 left-2">
-            <div className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="w-7 h-7 rounded-full bg-black/60 flex items-center justify-center">
               <Icon className="w-3.5 h-3.5 text-teal-400" strokeWidth={1.5} />
             </div>
           </div>
