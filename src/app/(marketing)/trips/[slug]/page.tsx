@@ -22,6 +22,8 @@ import { ItineraryTimeline } from "@/components/trips/ItineraryTimeline";
 import { SafetyFeatures } from "@/components/trips/SafetyFeatures";
 import { DepartureDetails } from "@/components/trips/DepartureDetails";
 import { ReviewsSection } from "@/components/ui/ReviewsSection";
+import { FortJesusHero } from "@/components/trips/FortJesusHero";
+import { MobileFloatingCTA } from "@/components/ui/MobileFloatingCTA";
 
 type TripDetailPageProps = {
   readonly params: Promise<{ readonly slug: string }>;
@@ -237,49 +239,53 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <div className="min-h-screen bg-neutral-900">
+      <div className="min-h-screen bg-neutral-900 pb-32 lg:pb-0">
         {/* Hero Section */}
-        <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden isolate">
-          <Image src={trip.image} alt={trip.heroImageAlt ?? trip.name} fill className="object-cover [transform:translateZ(0)]" priority sizes="100vw" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          
-          {isComingSoon && (
-            <div className="absolute top-6 right-6 bg-amber-500 text-white px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider">
-              Coming Soon
-            </div>
-          )}
+        {slug === "fort-jesus-trip" ? (
+          <FortJesusHero trip={trip} />
+        ) : (
+          <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden isolate">
+            <Image src={trip.image} alt={trip.heroImageAlt ?? trip.name} fill className="object-cover [transform:translateZ(0)]" priority sizes="100vw" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            
+            {isComingSoon && (
+              <div className="absolute top-6 right-6 bg-amber-500 text-white px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider">
+                Coming Soon
+              </div>
+            )}
 
-          <Container className="absolute bottom-0 left-0 right-0 pb-8 sm:pb-12">
-            <Link href={ROUTES.trips} className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-6 text-sm font-medium transition-colors animate-fade-in">
-              <ArrowRight className="w-4 h-4 rotate-180" /> Back to Experiences
-            </Link>
-            <div className="flex items-center gap-3 mb-3 animate-fade-in-up [animation-delay:100ms]">
-              <span className="px-3 py-1 bg-teal-500 text-white text-xs font-black uppercase tracking-wider rounded-full">
-                {trip.category}
-              </span>
-              {trip.rating && (
-                <div className="flex items-center gap-1.5 bg-neutral-900/60 sm:bg-white/20 sm:backdrop-blur-sm px-3 py-1 rounded-full">
-                  <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                  <span className="text-white font-bold text-sm">{trip.rating}</span>
-                </div>
-              )}
-            </div>
-            <Heading level="h1" className="text-white mb-2 !font-bold text-3xl sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:200ms]">
-              {trip.seoTitle ?? trip.name}
-            </Heading>
-            <p className="text-white/80 text-base sm:text-lg max-w-2xl animate-fade-in-up [animation-delay:300ms]">
-              {trip.description}
-            </p>
-          </Container>
-        </div>
+            <Container className="absolute bottom-0 left-0 right-0 pb-8 sm:pb-12">
+              <Link href={ROUTES.trips} className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-6 text-sm font-medium transition-colors animate-fade-in">
+                <ArrowRight className="w-4 h-4 rotate-180" /> Back to Experiences
+              </Link>
+              <div className="flex items-center gap-3 mb-3 animate-fade-in-up [animation-delay:100ms]">
+                <span className="px-3 py-1 bg-teal-500 text-white text-xs font-black uppercase tracking-wider rounded-full">
+                  {trip.category}
+                </span>
+                {trip.rating && (
+                  <div className="flex items-center gap-1.5 bg-neutral-900/60 sm:bg-white/20 sm:backdrop-blur-sm px-3 py-1 rounded-full">
+                    <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    <span className="text-white font-bold text-sm">{trip.rating}</span>
+                  </div>
+                )}
+              </div>
+              <Heading level="h1" className="text-white mb-2 !font-bold text-3xl sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:200ms]">
+                {trip.seoTitle ?? trip.name}
+              </Heading>
+              <p className="text-white/80 text-base sm:text-lg max-w-2xl animate-fade-in-up [animation-delay:300ms]">
+                {trip.description}
+              </p>
+            </Container>
+          </div>
+        )}
 
         <QuickFactsStrip trip={trip} />
 
-        <Container className="py-8 sm:py-12 md:py-16 lg:py-20 pb-28 lg:pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <Container className="py-12 sm:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             
             {/* Main Content */}
-            <div className="lg:col-span-8 order-2 lg:order-1 space-y-12 lg:space-y-16">
+            <div className="lg:col-span-8 order-2 lg:order-1 space-y-16 sm:space-y-24">
               
               {/* Journey Sections */}
               <section className="pb-8 border-b border-white/10">
@@ -338,6 +344,9 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
         )}
 
         <ReviewsSection />
+        
+        {/* Floating Mobile CTA */}
+        <MobileFloatingCTA trip={trip} />
       </div>
     </>
   );

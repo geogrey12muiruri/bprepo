@@ -28,14 +28,14 @@ export function BoatsPreview() {
         </div>
 
         {/* Horizontal scroll on mobile */}
-        <div className="flex sm:grid sm:grid-cols-2 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+        <div className="flex sm:grid sm:grid-cols-2 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x snap-mandatory overscroll-x-contain">
           {boats.map((boat) => (
             <Link
               key={boat.id}
               href={ROUTES.boats}
-              className="flex-shrink-0 w-[75vw] sm:w-auto group"
+              className="flex-shrink-0 w-[85vw] sm:w-auto group snap-center sm:snap-align-none"
             >
-              <div className="relative h-56 sm:h-64 overflow-hidden rounded-xl">
+              <div className="relative h-72 sm:h-64 overflow-hidden rounded-xl">
                 <Image
                   src={boat.image}
                   alt={boat.name}

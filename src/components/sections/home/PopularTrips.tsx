@@ -41,14 +41,14 @@ export function PopularTrips() {
         </div>
 
         {/* Horizontal scroll on mobile */}
-        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x snap-mandatory overscroll-x-contain">
           {featuredTrips.map((trip) => (
             <Link
               key={trip.id}
               href={ROUTES.trip(trip.slug)}
-              className="flex-shrink-0 w-[75vw] sm:w-auto group"
+              className="flex-shrink-0 w-[85vw] sm:w-auto group snap-center sm:snap-align-none"
             >
-              <div className="relative h-48 sm:h-56 overflow-hidden rounded-xl">
+              <div className="relative h-64 sm:h-56 overflow-hidden rounded-xl">
                 <ImageCarousel
                   images={trip.galleryImages ? [...trip.galleryImages] : [categoryImages[trip.slug] || trip.image]}
                   alt={trip.name}

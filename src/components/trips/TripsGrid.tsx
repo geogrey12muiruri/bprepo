@@ -95,12 +95,12 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
   return (
     <Link href={ROUTES.trip(trip.slug)} className="group block isolate [transform:translateZ(0)]">
       <div className="overflow-hidden rounded-2xl bg-[#171717] border border-white/10 transition-shadow duration-300 hover:shadow-2xl hover:border-white/20 [transform:translateZ(0)] backface-hidden">
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[16/10] sm:aspect-[4/3] overflow-hidden">
           <ImageCarousel
             images={trip.galleryImages ? [...trip.galleryImages] : [trip.image]}
             alt={trip.name}
             imageClassName="object-cover group-hover:scale-105 transition-transform duration-500"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 640px) 85vw, (max-width: 1024px) 50vw, 33vw"
           />
           {isComingSoon && (
             <div className="absolute top-2 right-2 bg-amber-500 text-white px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">
@@ -127,7 +127,7 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
             )}
           </div>
           
-          <Heading level="h3" size="sm" className="mb-1.5 group-hover:text-teal-400 transition-colors !font-semibold text-white">
+          <Heading level="h3" size="sm" className="mb-1.5 group-hover:text-teal-400 transition-colors !font-semibold text-white line-clamp-1 sm:line-clamp-none">
             {trip.name}
           </Heading>
           
@@ -135,10 +135,10 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
             {trip.description}
           </p>
           
-          <div className="flex items-center justify-between pt-2.5 border-t border-white/10">
-            <div className="flex items-center gap-2 text-xs text-neutral-500">
-              <div className="flex items-center gap-1">
-                <Clock className="w-3 h-3" />
+          <div className="flex items-center justify-between pt-2 border-t border-white/10">
+            <div className="flex items-center gap-1.5 text-[9px] sm:text-xs text-neutral-500">
+              <div className="flex items-center gap-0.5">
+                <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                 <span>{formatDuration(trip.durationHours)}</span>
               </div>
               {vesselSlug && (
@@ -152,7 +152,7 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
                   {trip.boatType}
                 </span>
               )}
-              <div className="flex items-center gap-1">
+              <div className="hidden sm:flex items-center gap-1">
                 <MapPin className="w-3 h-3" />
                 <span>Mombasa</span>
               </div>
@@ -189,9 +189,11 @@ export function TripsGrid() {
           <span className="text-xs text-neutral-500">{trips.length} trips</span>
         </div>
         
-        <div className="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x snap-mandatory overscroll-x-contain">
           {otherTrips.map((trip) => (
-            <TripCard key={trip.id} trip={trip} />
+            <div key={trip.id} className="flex-shrink-0 w-[85vw] sm:w-auto snap-center sm:snap-align-none">
+              <TripCard trip={trip} />
+            </div>
           ))}
         </div>
       </section>

@@ -11,33 +11,33 @@ const galleryItems = [
     {
         src: "/images/hero/IMG_5883-poster.jpg", // Sunset Magic - The "Golden Hour" shot
         alt: "Sunset sailing experience on the Indian Ocean in Mombasa, Kenya - Golden hour boat trip",
-        className: "md:col-span-2 md:row-span-2 w-[75vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-96 flex-shrink-0 snap-center sm:snap-align-none", // Large feature
+        className: "md:col-span-2 md:row-span-2 w-[85vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-96 flex-shrink-0 snap-center sm:snap-align-none", // Large feature
     },
     {
         src: "/images/hero/IMG_5880-poster.jpg", // Ocean Vibes - Open water freedom
         alt: "Cruising the turquoise waters of the Indian Ocean off the coast of Mombasa, Kenya",
-        className: "md:col-span-1 md:row-span-1 w-[75vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
+        className: "md:col-span-1 md:row-span-1 w-[85vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
     },
     {
         src: "/images/hero/IMG_5935-poster.jpg", // Marine Life / Charter
         alt: "Private boat charter experience in Mombasa - Exclusive coastal adventure",
-        className: "md:col-span-1 md:row-span-1 w-[75vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
+        className: "md:col-span-1 md:row-span-1 w-[85vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
     },
     {
         src: "/images/gallery/hero.jpeg", // Luxury Marine
         alt: "Luxury marine experience on a BluePineapple boat in Mombasa",
-        className: "md:col-span-1 md:row-span-1 w-[75vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
+        className: "md:col-span-1 md:row-span-1 w-[85vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
     },
     {
         src: "/images/services/IMG_5997-poster.jpg", // Nature/Mangrove
         alt: "Mangrove creek safari through Mtwapa and Tudor Creek in Mombasa, Kenya",
-        className: "md:col-span-1 md:row-span-1 w-[75vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
+        className: "md:col-span-1 md:row-span-1 w-[85vw] sm:w-auto aspect-[4/5] sm:aspect-auto sm:h-64 md:h-48 flex-shrink-0 snap-center sm:snap-align-none",
     },
 ];
 
 export function CoastalLife() {
     return (
-        <section className="py-12 md:py-16 bg-neutral-950 text-white overflow-hidden">
+        <section className="py-12 md:py-16 bg-neutral-950 text-white overflow-hidden isolate [transform:translateZ(0)]">
             <Container>
                 <div className="mb-10 text-center max-w-2xl mx-auto">
                     <p className="text-[10px] font-black text-teal-500 uppercase tracking-[0.3em] mb-3">
@@ -51,7 +51,7 @@ export function CoastalLife() {
                     </p>
                 </div>
 
-                <div className="flex sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 gap-3 md:gap-4 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory scrollbar-hide">
+                <div className="flex sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 gap-3 md:gap-4 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory overscroll-x-contain scrollbar-hide">
                     {galleryItems.map((item, idx) => (
                         <div
                             key={idx}

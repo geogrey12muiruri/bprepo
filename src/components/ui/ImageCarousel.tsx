@@ -50,19 +50,19 @@ export function ImageCarousel({
   };
 
   return (
-    <div className={`relative w-full h-full ${className} group/carousel`} onClick={(e) => e.stopPropagation()}>
+    <div className={`relative w-full h-full ${className} group/carousel isolate [transform:translateZ(0)]`} onClick={(e) => e.stopPropagation()}>
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex w-full h-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        className="flex w-full h-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] overscroll-x-contain"
       >
         {images.map((src, idx) => (
-          <div key={idx} className="relative w-full h-full flex-none snap-center overflow-hidden">
+          <div key={idx} className="relative w-full h-full flex-none snap-center overflow-hidden [transform:translateZ(0)] backface-hidden">
             <Image
               src={src}
               alt={`${alt} - Image ${idx + 1}`}
               fill={fill}
-              className={imageClassName}
+              className={`${imageClassName} [transform:translateZ(0)] backface-hidden`}
               priority={priority && idx === 0}
               sizes={sizes}
             />
@@ -70,13 +70,13 @@ export function ImageCarousel({
         ))}
       </div>
 
-      {/* Dots Indicator */}
-      <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10 pointer-events-none">
+      {/* Glass-Pill Indicators */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/30 backdrop-blur-md rounded-full border border-white/10 z-10 pointer-events-none transition-opacity duration-300">
         {images.map((_, idx) => (
           <div
             key={idx}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              idx === currentIndex ? "w-4 bg-teal-400" : "w-1.5 bg-white/60 backdrop-blur-sm"
+            className={`h-1 rounded-full transition-all duration-300 ${
+              idx === currentIndex ? "w-4 bg-teal-400" : "w-1 bg-white/40"
             }`}
           />
         ))}
