@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Professional Gallery Page
+ * Professional Gallery Component
  * Uses centralized asset management system from src/config/gallery.ts
  * Supports images and videos with professional metadata
  */
@@ -55,16 +55,23 @@ export default function GalleryPage() {
         </div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
           {galleryItems.map((item) => {
+            const isFeatured = item.featured;
             const isVideo = item.type === "video";
 
             return (
               <div
                 key={item.id}
-                className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-1"
+                className={`group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-1 ${
+                  isFeatured ? "sm:col-span-2 lg:col-span-2 sm:row-span-2" : ""
+                }`}
               >
-                <div className="relative aspect-[3/4]">
+                <div
+                  className={`relative ${
+                    isFeatured ? "aspect-[16/10]" : "aspect-[4/3]"
+                  }`}
+                >
                   {isVideo ? (
                     <>
                       <video
@@ -95,12 +102,34 @@ export default function GalleryPage() {
                       alt={item.alt}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 20vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      priority={isFeatured}
                     />
                   )}
 
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Content Badge */}
+                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+                    {isVideo && (
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white text-xs font-semibold">
+                        <svg
+                          className="w-3.5 h-3.5"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm3.5 1a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+                        </svg>
+                        Video
+                      </div>
+                    )}
+                    {item.featured && (
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-teal-500/80 backdrop-blur-sm border border-teal-400/50 text-white text-xs font-semibold ml-2">
+                        ⭐ Featured
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Info on Hover */}

@@ -33,7 +33,7 @@ export const trips: ReadonlyArray<Trip> = [
     heroImageAlt: "Blue Pineapple boat approaching the historic Fort Jesus harbour on the Mombasa coastline, Kenya",
     durationHours: 1,
     boatType: "Big Boat",
-    pricePerPerson: 3000,
+    pricePerPerson: 1000,
     priceOneWay: 2000,
     priceReturn: 3000,
     departureTimes: "10:00, 12:00, 14:00, 16:00",
