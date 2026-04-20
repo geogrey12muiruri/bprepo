@@ -34,6 +34,7 @@ export function StopOversCarousel({ stops, className }: StopOversCarouselProps) 
   const stopIds = useMemo(() => stops.map((s) => s.id), [stops]);
   const [autoPaused, setAutoPaused] = useState(false);
   const resumeTimerRef = useRef<number | null>(null);
+  const [isInView, setIsInView] = useState(false);
 
   // Fallback active index calculation (works even if IntersectionObserver behaves oddly)
   useEffect(() => {
@@ -106,10 +107,11 @@ export function StopOversCarousel({ stops, className }: StopOversCarouselProps) 
     const target = items[index];
     if (!target) return;
 
-    target.scrollIntoView({
+    const targetLeft = target.offsetLeft - (scroller.clientWidth - target.offsetWidth) / 2;
+    const clampedLeft = Math.max(0, Math.min(targetLeft, scroller.scrollWidth - scroller.clientWidth));
+    scroller.scrollTo({
+      left: clampedLeft,
       behavior: reduceMotion ? "auto" : "smooth",
-      block: "nearest",
-      inline: "center",
     });
   };
 
@@ -122,10 +124,28 @@ export function StopOversCarousel({ stops, className }: StopOversCarouselProps) 
     resumeTimerRef.current = window.setTimeout(() => setAutoPaused(false), 9000);
   };
 
+  // Only autoplay when the carousel is actually in view (prevents page auto-scroll to this section).
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsInView(Boolean(entry?.isIntersecting));
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(scroller);
+    return () => observer.disconnect();
+  }, [stopIds]);
+
   // Autoplay: gently advances one card at a time, pauses on interaction.
   useEffect(() => {
     if (reduceMotion) return;
     if (autoPaused) return;
+    if (!isInView) return;
     if (stopCount <= 1) return;
 
     const timer = window.setInterval(() => {
@@ -134,7 +154,7 @@ export function StopOversCarousel({ stops, className }: StopOversCarouselProps) 
     }, 4500);
 
     return () => window.clearInterval(timer);
-  }, [activeIndex, autoPaused, reduceMotion, stopCount]);
+  }, [activeIndex, autoPaused, isInView, reduceMotion, stopCount]);
 
   useEffect(() => {
     const scroller = scrollerRef.current;

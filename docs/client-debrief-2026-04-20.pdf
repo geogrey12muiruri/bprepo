@@ -1,0 +1,130 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Length 3017 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 54 800 Tm
+/F1 16 Tf
+(Blue Pineapple Website Updates - Client Debrief) Tj
+/F1 11 Tf
+0 -20 Td
+(Date: April 20, 2026 \(Nairobi\)) Tj
+0 -14 Td
+(Client: Ian) Tj
+0 -14 Td
+(Project: Landing page + Fort Jesus Trip \(Hop-On Hop-Off\)) Tj
+0 -14 Td
+0 -14 Td
+(Goal) Tj
+0 -14 Td
+(Refresh the website to feel premium, modern, and fully responsive, while clearly) Tj
+0 -14 Td
+(communicating the updated Hop?On Hop?Off Fort Jesus experience \(water-matatu style along the) Tj
+0 -14 Td
+(North Coast\).) Tj
+0 -14 Td
+0 -14 Td
+(What We Improved) Tj
+0 -14 Td
+(1\) Landing page \(Home\)) Tj
+0 -14 Td
+(? Balanced mobile layout \(no sideways scrolling / blank space on small screens\).) Tj
+0 -14 Td
+(? More premium feel: reduced visual noise, consistent spacing, calmer hero behavior.) Tj
+0 -14 Td
+(? Modern section layout on large screens using responsive grid structure.) Tj
+0 -14 Td
+0 -14 Td
+(2\) Fort Jesus Trip page) Tj
+0 -14 Td
+(? Rebuilt the page hierarchy to emphasize Hop?On Hop?Off immediately after the hero \(no) Tj
+0 -14 Td
+(longer buried\).) Tj
+0 -14 Td
+(? Removed redundant/duplicated route UI.) Tj
+0 -14 Td
+(? Removed placeholder guest reviews to create space for clean, high-value content.) Tj
+0 -14 Td
+(? Added a simple in-page navigation row for faster scanning \(Route & Fares / Safety /) Tj
+0 -14 Td
+(Departure\).) Tj
+0 -14 Td
+0 -14 Td
+(Hop?On Hop?Off: What?s Now Captured \(from the leaflet brief\)) Tj
+0 -14 Td
+(? Clear headline/subtitle: ?Hop?On. Hop?Off. Your Coast.?) Tj
+0 -14 Td
+(? Route stops \(Mtwapa ? Fort Jesus\) presented as a modern horizontal block carousel.) Tj
+0 -14 Td
+(? Pricing cards + pricing note \(4-7 stops range + per-stop add-on after 3\).) Tj
+0 -14 Td
+(? Concessions: Children 5-15 \(50% off\) + Under 5 \(Free\).) Tj
+0 -14 Td
+(? Timetable: depart daily, approximate arrival times, last return by 5:30 PM.) Tj
+0 -14 Td
+(? ?How it works? steps: Choose stop ? Board ? Pay on board.) Tj
+0 -14 Td
+(? Launch discounts: Kenyan resident + local community discounts.) Tj
+0 -14 Td
+(? Fare table kept compact \(collapsed preview\) to reduce clutter.) Tj
+0 -14 Td
+0 -14 Td
+(Design Notes / UX Decisions) Tj
+0 -14 Td
+(? Avoid distracting background video loops; keep motion subtle and purposeful.) Tj
+0 -14 Td
+(? Typography standardized to match the landing page?s hierarchy.) Tj
+0 -14 Td
+(? Keep the UI premium/dark, with controlled accent colors.) Tj
+0 -14 Td
+0 -14 Td
+(Version / Delivery) Tj
+0 -14 Td
+(? All changes committed and pushed to main.) Tj
+0 -14 Td
+(? Commit: 2145e56 - ?Redesign Fort Jesus hop-on/hop-off and refine home layout?) Tj
+0 -14 Td
+0 -14 Td
+(Items to Confirm With Client) Tj
+0 -14 Td
+(? Final wording for hotel partnerships / pickup points \(where to mention) Tj
+0 -14 Td
+(Serena/Bamburi/Whitesands etc\).) Tj
+0 -14 Td
+(? Final WhatsApp number and website URL \(if any placeholders remain\).) Tj
+0 -14 Td
+(? Asset hosting plan: keep assets in repo short-term vs migrate to Cloudflare) Tj
+0 -14 Td
+(\(Images/Stream/R2\) for optimization.) Tj
+0 -14 Td
+0 -14 Td
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000253 00000 n 
+0000000323 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+3391
+%%EOF

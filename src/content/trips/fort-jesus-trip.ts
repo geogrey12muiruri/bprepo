@@ -39,8 +39,8 @@ export const FORT_JESUS_TRIP_CONTENT = {
     ],
     timetable: [
       { label: "Depart Mtwapa Beach", value: "9:30 AM daily" },
-      { label: "Arrive Mombasa Beach", value: "approx. 10:30 AM" },
-      { label: "Arrive Fort Jesus", value: "approx. 11:30 AM" },
+      { label: "Arrive Mombasa Beach", value: "10:30 AM" },
+      { label: "Arrive Fort Jesus", value: "11:30 AM" },
       { label: "Last return to Mtwapa", value: "by 5:30 PM" },
     ],
     fares: {

@@ -228,7 +228,7 @@ export function HopOnHopOffSection() {
                     </div>
 
                     <p className="mt-4 text-xs" style={{ color: "rgba(11,61,107,0.75)" }}>
-                      Multiple runs until <span className="font-semibold" style={{ color: PALETTE.navy }}>5:30 PM</span>. Times are approximate depending on sea conditions.
+                      Multiple runs until <span className="font-semibold" style={{ color: PALETTE.navy }}>5:30 PM</span>.
                     </p>
                   </div>
                 </div>
