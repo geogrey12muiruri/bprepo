@@ -33,12 +33,14 @@ export function PricingCard({ trip, isComingSoon }: PricingCardProps) {
   return (
     <div className="relative">
       {/* Mobile: Fixed bottom bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 p-4 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-neutral-950 border-t border-white/10 p-4 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.45)]">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-xs text-neutral-500">From</p>
-            <p className="text-xl font-black text-teal-600">
-              {trip.priceReturn ? formatPrice(trip.priceReturn) : formatPrice(trip.pricePerPerson)}
+            <p className="text-xs text-neutral-400">From</p>
+            <p className="text-xl font-black text-teal-400">
+              {trip.pricingModel === "hop_on_hop_off"
+                ? formatPrice(trip.pricePerPerson)
+                : (trip.priceReturn ? formatPrice(trip.priceReturn) : formatPrice(trip.pricePerPerson))}
             </p>
           </div>
           {isComingSoon ? (
@@ -56,9 +58,38 @@ export function PricingCard({ trip, isComingSoon }: PricingCardProps) {
       {/* Desktop & Mobile Card */}
       <Card className="p-6 xl:p-8 shadow-xl border-none rounded-2xl bg-white/5 border border-white/10 mb-8 lg:mb-0">
         <div className="mb-6">
-          <p className="text-xs font-black text-neutral-400 uppercase tracking-widest mb-4">Select Package</p>
+          <p className="text-xs font-black text-neutral-400 uppercase tracking-[0.3em] mb-4">
+            {trip.pricingModel === "hop_on_hop_off" ? "Hop-On Hop-Off Fares" : "Select Package"}
+          </p>
           
-          {trip.priceOneWay && trip.priceReturn ? (
+          {trip.pricingModel === "hop_on_hop_off" ? (
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+              <p className="text-xs text-neutral-400">Starting from</p>
+              <p className="mt-1 text-3xl font-black text-teal-300">{formatPrice(trip.pricePerPerson)}</p>
+              <p className="mt-1 text-xs text-neutral-400">
+                Pay on board · Board at any stop · Under 5s free
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    document
+                      .getElementById("hop-on-hop-off")
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                  }
+                  className="flex items-center justify-center h-11 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold transition-colors"
+                >
+                  View Full Fares
+                </button>
+                <Link
+                  href={whatsAppLink("book")}
+                  className="flex items-center justify-center h-11 rounded-xl bg-teal-500 hover:bg-teal-400 text-white text-xs font-bold transition-colors"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+          ) : trip.priceOneWay && trip.priceReturn ? (
             <div className="space-y-3">
               <button 
                 onClick={() => setSelectedPackage("return")}

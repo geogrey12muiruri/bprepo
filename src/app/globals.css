@@ -6,6 +6,11 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+html,
+body {
+  overflow-x: clip;
+}
+
 /* Selection styling */
 ::selection {
   background-color: #0D9488;
@@ -17,6 +22,9 @@ html {
 body {
   font-size: 16px;
   line-height: 1.6;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 /* Focus outline for accessibility */
@@ -40,6 +48,13 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .bp-float,
+  .route-dash,
+  .bp-underline,
+  .bp-pulse {
+    animation: none !important;
+  }
 }
 
 /* Image optimization */
@@ -47,6 +62,18 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+/* Hide scrollbars for horizontal carousels (keeps scroll behavior) */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE/Edge legacy */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+  width: 0;
+  height: 0;
 }
 
 /* Text animations */
@@ -173,6 +200,83 @@ img {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Subtle motion cue for hop-on/hop-off route (no auto-scrolling) */
+@keyframes dash-move {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -40px 0;
+  }
+}
+
+.route-dash {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(45, 212, 191, 0.55) 0 10px,
+    rgba(45, 212, 191, 0) 10px 20px
+  );
+  animation: dash-move 2.6s linear infinite;
+  opacity: 0.75;
+}
+
+/* Floating highlight card (subtle, premium) */
+@keyframes float-card {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.bp-float {
+  animation: float-card 7.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Subtle internal UI animations (card stays static) */
+@keyframes bp-underline {
+  0% {
+    transform: scaleX(0.55);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(0.55);
+    opacity: 0.55;
+  }
+}
+
+.bp-underline {
+  transform-origin: left center;
+  animation: bp-underline 3.8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes bp-pulse-soft {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+.bp-pulse {
+  animation: bp-pulse-soft 2.4s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 @theme {

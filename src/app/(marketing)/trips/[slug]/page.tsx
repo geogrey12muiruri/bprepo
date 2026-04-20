@@ -24,6 +24,7 @@ import { DepartureDetails } from "@/components/trips/DepartureDetails";
 import { ReviewsSection } from "@/components/ui/ReviewsSection";
 import { FortJesusHero } from "@/components/trips/FortJesusHero";
 import { MobileFloatingCTA } from "@/components/ui/MobileFloatingCTA";
+import { HopOnHopOffSection } from "@/components/trips/HopOnHopOffSection";
 
 type TripDetailPageProps = {
   readonly params: Promise<{ readonly slug: string }>;
@@ -293,8 +294,13 @@ export default async function TripDetailPage({ params }: TripDetailPageProps) {
                 <JourneySection trip={trip} />
               </section>
 
-              {/* Journey Highlights — only for trips with journey data */}
-              {trip.journeyStops && trip.returnNote && (
+              {/* Fort Jesus: Hop-On Hop-Off details */}
+              {slug === "fort-jesus-trip" && (
+                <HopOnHopOffSection />
+              )}
+
+              {/* Journey Highlights — only for trips with journey data (exclude Fort Jesus to avoid duplicating the route info) */}
+              {slug !== "fort-jesus-trip" && trip.journeyStops && trip.returnNote && (
                 <section className="pt-8 border-t border-white/10">
                   <TripJourneyTimeline 
                     stops={trip.journeyStops} 

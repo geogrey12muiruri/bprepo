@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased bg-white text-neutral-900">
+      <body className="antialiased bg-neutral-950 text-white overflow-x-clip">
         <Header />
         <main>{children}</main>
         <Footer />

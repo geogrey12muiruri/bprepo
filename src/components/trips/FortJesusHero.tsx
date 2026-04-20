@@ -5,109 +5,107 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
-import { ArrowRight, Star, Waves, Compass, Landmark } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import type { Trip } from "@/types/trip";
 import { ROUTES } from "@/lib/routes";
 import { cn } from "@/lib/utils";
-
-const journeyAssets = {
-  journey: "/images/fort/fort3.jpeg",
-  coastal: "/images/fort/coastal.jpg",
-  fort: "/images/fort/fortj.jpg",
-};
+import { FORT_JESUS_TRIP_CONTENT } from "@/content/trips/fort-jesus-trip";
 
 export function FortJesusHero({ trip }: { trip: Trip }) {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const images = FORT_JESUS_TRIP_CONTENT.heroImages;
+  const heroVideo = FORT_JESUS_TRIP_CONTENT.heroVideo;
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [saveData, setSaveData] = useState(false);
   const isComingSoon = trip.status === "coming-soon";
 
-  const slides = [
-    {
-      id: "intro",
-      image: trip.image,
-      title: trip.seoTitle ?? trip.name,
-      description: trip.description,
-      icon: null,
-    },
-    {
-      id: "journey",
-      image: journeyAssets.journey,
-      title: "The Journey",
-      description: "As the boat glides effortlessly away from the powder-white sands of Mombasa Beach, relax and enjoy the ride. The craft is fully equipped with life jackets, GPS navigation, and CCTV for a safe experience.",
-      icon: Waves,
-    },
-    {
-      id: "coastal",
-      image: journeyAssets.coastal,
-      title: "Coastal Views",
-      description: "Cruise past Nyali, the pristine waters of Mombasa Marine Park, Likoni, and Shelly Beach. Spot landmarks including Ras Serani Lighthouse, State House, and Mombasa Hospital from the water.",
-      icon: Compass,
-    },
-    {
-      id: "fort",
-      image: journeyAssets.fort,
-      title: "Fort Jesus",
-      description: "Arrive at the magnificent Fort Jesus, a UNESCO World Heritage Site. Step ashore and explore Old Town's narrow streets filled with antique treasures and Swahili artistry.",
-      icon: Landmark,
-    },
-  ];
+  const safeImages = images.length > 0 ? images : [trip.image];
+  const showVideo = Boolean(heroVideo?.src) && !reduceMotion && !isMobile && !saveData;
 
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  }, [slides.length]);
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % safeImages.length);
+  }, [safeImages.length]);
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 6000);
+    const mql = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const mobileMql = window.matchMedia?.("(max-width: 640px)");
+
+    const updateAll = () => {
+      setReduceMotion(Boolean(mql?.matches));
+      setIsMobile(Boolean(mobileMql?.matches));
+
+      const navWithConnection = navigator as Navigator & {
+        connection?: { saveData?: boolean };
+      };
+      setSaveData(Boolean(navWithConnection.connection?.saveData));
+    };
+
+    updateAll();
+    mql?.addEventListener?.("change", updateAll);
+    mobileMql?.addEventListener?.("change", updateAll);
+    return () => {
+      mql?.removeEventListener?.("change", updateAll);
+      mobileMql?.removeEventListener?.("change", updateAll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion || safeImages.length <= 1) return;
+    const timer = setInterval(nextImage, 6500);
     return () => clearInterval(timer);
-  }, [nextSlide]);
+  }, [nextImage, reduceMotion, safeImages.length]);
 
   return (
     <div className="relative h-[65vh] sm:h-[75vh] min-h-[500px] overflow-hidden group isolate [transform:translateZ(0)]">
-      {/* 1. Desktop Experience: Cross-fade (hidden on mobile) */}
-      <div className="hidden sm:block absolute inset-0">
-        {slides.map((slide, idx) => (
-          <div
-            key={`desktop-${slide.id}`}
-            className={cn(
-              "absolute inset-0 transition-opacity duration-1000 ease-in-out",
-              currentSlide === idx ? "opacity-100 z-10" : "opacity-0 z-0"
-            )}
+      {/* Background video (desktop-first). Falls back to image carousel on reduced motion. */}
+      {showVideo && (
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="h-full w-full object-cover opacity-55 scale-105 animate-[slow-zoom_25s_ease-in-out_infinite]"
+            poster={heroVideo.poster}
           >
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              className={cn(
-                "object-cover [transform:translateZ(0)] transition-transform duration-[10s] ease-out",
-                currentSlide === idx ? "scale-105" : "scale-100"
-              )}
-              priority={idx === 0}
-              sizes="100vw"
-            />
-          </div>
-        ))}
-      </div>
+            <source src={heroVideo.src} type="video/mp4" />
+          </video>
+        </div>
+      )}
 
-      {/* 2. Mobile Experience: Native Swipeable (hidden on desktop) */}
-      <div className="sm:hidden absolute inset-0 flex overflow-x-auto snap-x snap-mandatory scrollbar-hide overscroll-x-contain z-10"
-           onScroll={(e) => {
-             const scrollPosition = e.currentTarget.scrollLeft;
-             const width = e.currentTarget.clientWidth;
-             const index = Math.round(scrollPosition / width);
-             if (index !== currentSlide) setCurrentSlide(index);
-           }}
-      >
-        {slides.map((slide) => (
-          <div key={`mobile-${slide.id}`} className="relative h-full w-screen flex-none snap-center overflow-hidden">
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              className="object-cover [transform:translateZ(0)] backface-hidden"
-              priority={slide.id === "intro"}
-              sizes="100vw"
-            />
-          </div>
-        ))}
+      {/* Background image carousel (text stays static to avoid visual distraction) */}
+      <div className={cn("absolute inset-0", showVideo ? "hidden" : "block")}>
+        {safeImages.map((src, idx) => {
+          const isActive = idx === currentImageIndex;
+          return (
+            <div
+              key={src}
+              className={cn(
+                "absolute inset-0 transition-opacity duration-700 ease-out",
+                isActive ? "opacity-100 z-10" : "opacity-0 z-0"
+              )}
+            >
+              <Image
+                src={src}
+                alt={trip.heroImageAlt ?? trip.name}
+                fill
+                className={cn(
+                  "object-cover [transform:translateZ(0)] will-change-transform",
+                  reduceMotion
+                    ? "scale-100"
+                    : isActive
+                      ? "scale-105 transition-transform duration-[9000ms] ease-out"
+                      : "scale-100"
+                )}
+                priority={idx === 0}
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
+            </div>
+          );
+        })}
       </div>
 
       {/* Shared Gradient Overlay */}
@@ -122,12 +120,20 @@ export function FortJesusHero({ trip }: { trip: Trip }) {
       {/* Persistent Back Link */}
       <div className="absolute top-6 left-0 right-0 z-40 pointer-events-none">
         <Container>
-          <Link
-            href={ROUTES.trips}
-            className="inline-flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium transition-colors backdrop-blur-sm bg-black/20 px-3 py-1.5 rounded-full pointer-events-auto"
-          >
-            <ArrowRight className="w-4 h-4 rotate-180" /> Back to Experiences
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href={ROUTES.home}
+              className="inline-flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium transition-colors backdrop-blur-sm bg-black/20 px-3 py-1.5 rounded-full pointer-events-auto"
+            >
+              <ArrowRight className="w-4 h-4 rotate-180" /> Home
+            </Link>
+            <Link
+              href={ROUTES.trips}
+              className="inline-flex items-center gap-2 text-white/70 hover:text-white text-sm font-medium transition-colors backdrop-blur-sm bg-black/15 px-3 py-1.5 rounded-full pointer-events-auto"
+            >
+              Experiences
+            </Link>
+          </div>
         </Container>
       </div>
 
@@ -146,59 +152,34 @@ export function FortJesusHero({ trip }: { trip: Trip }) {
             )}
           </div>
 
-          <div className="relative min-h-[160px] sm:min-h-[140px]">
-            {slides.map((slide, idx) => {
-              const Icon = slide.icon;
-              return (
-                <div
-                  key={`content-${slide.id}`}
-                  className={cn(
-                    "transition-all duration-700 absolute bottom-0 left-0 w-full",
-                    currentSlide === idx
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-8 pointer-events-none"
-                  )}
-                >
-                  {Icon && (
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 border border-white/10 shadow-xl">
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" strokeWidth={1.5} />
-                    </div>
-                  )}
-                  <Heading
-                    level={idx === 0 ? "h1" : "h2"}
-                    className={cn(
-                      "text-white mb-2 sm:mb-3 !font-bold drop-shadow-lg",
-                      idx === 0 ? "text-2xl sm:text-4xl md:text-5xl lg:text-6xl" : "text-xl sm:text-3xl md:text-4xl"
-                    )}
-                  >
-                    {slide.title}
-                  </Heading>
-                  <p className="text-white/90 text-sm sm:text-lg max-w-2xl drop-shadow-md leading-relaxed line-clamp-3 sm:line-clamp-none">
-                    {slide.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+          <Heading
+            level="h1"
+            className="text-white mb-2 sm:mb-3 !font-bold drop-shadow-lg text-2xl sm:text-4xl md:text-5xl lg:text-6xl"
+          >
+            {trip.seoTitle ?? trip.name}
+          </Heading>
+          <p className="text-white/90 text-sm sm:text-lg max-w-2xl drop-shadow-md leading-relaxed">
+            {trip.description}
+          </p>
         </div>
       </Container>
 
-      {/* Glass-Pill Indicators (Bottom Right on Mobile, Bottom Center on Desktop?) */}
+      {/* Glass-Pill Indicators */}
       <div className="absolute bottom-6 left-0 right-0 z-40 pointer-events-none">
         <Container>
           <div className="flex justify-center sm:justify-end">
             <div className="flex items-center gap-1.5 px-3 py-2 bg-black/30 backdrop-blur-md rounded-full border border-white/10 pointer-events-auto">
-              {slides.map((_, idx) => (
+              {safeImages.map((_, idx) => (
                 <button
                   key={`dot-${idx}`}
-                  onClick={() => setCurrentSlide(idx)}
+                  onClick={() => setCurrentImageIndex(idx)}
                   className="group p-1"
                   aria-label={`Go to slide ${idx + 1}`}
                 >
                   <div
                     className={cn(
                       "h-1 rounded-full transition-all duration-300",
-                      currentSlide === idx
+                      currentImageIndex === idx
                         ? "w-6 bg-teal-400"
                         : "w-1.5 bg-white/40 group-hover:bg-white"
                     )}

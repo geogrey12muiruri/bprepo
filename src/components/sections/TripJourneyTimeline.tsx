@@ -1,6 +1,5 @@
 "use client";
 
-import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import type { JourneyStop, JourneyStopIcon } from "@/types/trip";
 

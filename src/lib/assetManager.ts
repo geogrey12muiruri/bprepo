@@ -52,6 +52,18 @@ export const getVideoPoster = (videoSrc: string, fallback?: string): string => {
     "/videos/hero/IMG_5883.mp4": "/images/hero/IMG_5883-poster.jpg",
     "/videos/hero/IMG_5880.mp4": "/images/hero/IMG_5880-poster.jpg",
     "/videos/hero/IMG_5935.mp4": "/images/hero/IMG_5880-poster.jpg",
+    "/videos/hero/cruise.mp4": "/images/hero/cruise-poster.jpg",
+    "/videos/hero/cruise-mobile.mp4": "/images/hero/cruise-poster.jpg",
+    "/videos/hero/coastal.mp4": "/images/hero/coastal-poster.jpg",
+    "/videos/hero/coastal-mobile.mp4": "/images/hero/coastal-poster.jpg",
+    "/videos/hero/coastal2.mp4": "/images/hero/coastal2-poster.jpg",
+    "/videos/hero/coastal2-mobile.mp4": "/images/hero/coastal2-poster.jpg",
+    "/videos/hero/crew.mp4": "/images/hero/crew-poster.jpg",
+    "/videos/hero/cruise2.mp4": "/images/hero/cruise2-poster.jpg",
+    "/videos/hero/cruise2-mobile.mp4": "/images/hero/cruise2-poster.jpg",
+    "/videos/hero/cruise3.mp4": "/images/hero/cruise3-poster.jpg",
+    "/videos/hero/serena.mp4": "/images/hero/serena-poster.jpg",
+    "/videos/hero/serena2.mp4": "/images/hero/serena2-poster.jpg",
     "/videos/services/IMG_6071.mp4": "/images/services/IMG_6071-poster.jpg",
   }
 

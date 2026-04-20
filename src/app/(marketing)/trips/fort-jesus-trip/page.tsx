@@ -5,15 +5,13 @@ import { Heading } from "@/components/ui/Heading";
 import { trips } from "@/data/trips";
 import { generateJsonLD } from "@/lib/seo";
 import { SITE_URL, BUSINESS_NAME } from "@/constants/contacts";
-import { TripCard } from "@/components/ui/TripCard";
 import { PricingCard } from "@/components/trips/PricingCard";
-import { TripJourneyTimeline } from "@/components/sections/TripJourneyTimeline";
 import { QuickFactsStrip } from "@/components/trips/QuickFactsStrip";
 import { ItineraryTimeline } from "@/components/trips/ItineraryTimeline";
 import { SafetyFeatures } from "@/components/trips/SafetyFeatures";
 import { DepartureDetails } from "@/components/trips/DepartureDetails";
-import { ReviewsSection } from "@/components/ui/ReviewsSection";
 import { FortJesusHero } from "@/components/trips/FortJesusHero";
+import { HopOnHopOffSection } from "@/components/trips/HopOnHopOffSection";
 
 const SLUG = "fort-jesus-trip";
 
@@ -154,34 +152,52 @@ export default async function FortJesusTripPage() {
 
         <QuickFactsStrip trip={trip} />
 
-        <Container className="py-8 sm:py-12 md:py-16 lg:py-20 pb-28 lg:pb-20">
+        {/* Make Hop-On Hop-Off the primary content block (above the fold after hero) */}
+        <div className="py-8 sm:py-10 md:py-12">
+          <Container>
+            <HopOnHopOffSection />
+          </Container>
+        </div>
+
+        <Container className="py-6 sm:py-10 md:py-12 lg:py-14 pb-28 lg:pb-20">
+          {/* In-page navigation */}
+          <div className="mb-10 sm:mb-12">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+              {[
+                { href: "#hop-on-hop-off", label: "Route & Fares" },
+                { href: "#safety", label: "Safety & Comfort" },
+                { href: "#departure", label: "Departure" },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-white/90 text-xs font-semibold transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             
             {/* Main Content Column */}
             <div className="lg:col-span-8 space-y-12 lg:space-y-16">
-              {/* Journey Highlights */}
-              <section className="pb-8">
-                {trip.journeyStops && trip.returnNote ? (
-                  <>
-                    <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">Journey Highlights</Heading>
-                    <TripJourneyTimeline 
-                      stops={trip.journeyStops} 
-                      returnNote={trip.returnNote} 
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">Itinerary</Heading>
-                    <ItineraryTimeline trip={trip} />
-                  </>
-                )}
-              </section>
-
               {/* Safety Features */}
-              <section className="pt-8 border-t border-white/10">
+              <section id="safety" className="pt-8 border-t border-white/10 scroll-mt-24">
                 <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">Safety & Comfort</Heading>
                 <SafetyFeatures trip={trip} />
               </section>
+
+              {/* Itinerary fallback (only if no hop-on/off route exists) */}
+              {(!trip.stopOvers || trip.stopOvers.length === 0) && (
+                <section className="pt-8 border-t border-white/10">
+                  <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">
+                    Itinerary
+                  </Heading>
+                  <ItineraryTimeline trip={trip} />
+                </section>
+              )}
             </div>
 
             {/* Sidebar Column */}
@@ -191,7 +207,7 @@ export default async function FortJesusTripPage() {
                 <PricingCard trip={trip} isComingSoon={isComingSoon} />
                 
                 {/* Departure Details in Sidebar */}
-                <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6">
+                <div id="departure" className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 scroll-mt-24">
                   <DepartureDetails trip={trip} />
                 </div>
               </div>
@@ -199,8 +215,6 @@ export default async function FortJesusTripPage() {
 
           </div>
         </Container>
-
-        <ReviewsSection />
       </div>
     </>
   );

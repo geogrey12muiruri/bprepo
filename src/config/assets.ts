@@ -1,8 +1,18 @@
 export const ASSETS = {
     marketing: {
         hero: {
-            video: "/videos/hero/IMG_5880.mp4",
-            poster: "/images/hero/IMG_5880-poster.jpg",
+            playlist: [
+                {
+                    src: "/videos/hero/coastal.mp4",
+                    mobileSrc: "/videos/hero/coastal-mobile.mp4",
+                    poster: "/images/fort/fort1.jpeg",
+                },
+                {
+                    src: "/videos/hero/coastal2.mp4",
+                    mobileSrc: "/videos/hero/coastal2-mobile.mp4",
+                    poster: "/images/fort/fort2.jpeg",
+                },
+            ],
             desktopImages: [
                 "/images/gallery/hero.jpeg",
                 "/assets/fleet/setting-sons/high-res.jpg",
@@ -17,7 +27,7 @@ export const ASSETS = {
             },
             privateCharter: {
                 video: "/videos/hero/IMG_5935.mp4",
-                poster: "/images/hero/IMG_5880-poster.jpg", // Fallback
+                poster: "/images/hero/coastal2-poster.jpg",
             },
             fortJesus: {
                 image: "/images/services/img3.png", // Updated to img3
@@ -26,13 +36,13 @@ export const ASSETS = {
                 image: "/images/services/img4.png", // Updated to img4
             },
             sunsetSailing: {
-                video: "/videos/hero/IMG_5883.mp4", // Safe sunset video
-                poster: "/images/hero/IMG_5883-poster.jpg",
-                image: "/images/hero/IMG_5883-poster.jpg",
+                video: "/videos/hero/cruise3.mp4",
+                poster: "/images/hero/cruise3-poster.jpg",
+                image: "/images/hero/cruise3-poster.jpg",
             },
             birthdays: {
-                video: "/videos/hero/IMG_5880.mp4", // Safe generic ocean video
-                poster: "/images/hero/IMG_5880-poster.jpg",
+                video: "/videos/hero/cruise2.mp4",
+                poster: "/images/hero/cruise2-poster.jpg",
                 image: "/images/hero/hero-main.jpg",
             }
         }

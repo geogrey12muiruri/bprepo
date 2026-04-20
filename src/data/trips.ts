@@ -1,5 +1,6 @@
 import type { Trip } from "@/types/trip";
 import { ASSETS } from "@/config/assets";
+import { FORT_JESUS_TRIP_CONTENT } from "@/content/trips/fort-jesus-trip";
 
 export const trips: ReadonlyArray<Trip> = [
   {
@@ -26,29 +27,26 @@ export const trips: ReadonlyArray<Trip> = [
     id: "fort-jesus-trip",
     slug: "fort-jesus-trip",
     name: "Fort Jesus",
-    description: "Panoramic views of the historic coastline, old harbour and the stunning skyline of this ancient maritime city.",
-    fullDescription: "Step aboard Blue Pineapple Coastal Services for an unforgettable journey across the Indian Ocean aboard a custom-built vessel designed for both comfort and safety.\n\nAs the boat glides effortlessly away from the powder-white sands of Mombasa Beach, you can relax and enjoy the ride knowing the craft is fully equipped with life jackets, GPS navigation, and CCTV to ensure a safe and comfortable experience.\n\nThe journey begins with sweeping views of Nyali, before cruising past the pristine waters of Mombasa Marine Park, where brilliant turquoise seas meet vibrant marine life beneath the surface.\n\nContinuing along the channel, the coastline unfolds with distant views of Likoni and the golden stretch of Shelly Beach, offering a unique perspective of the island city from the water.\n\nAs the gentle hum of the engine carries you forward, some of Mombasa's most recognizable landmarks appear along the shoreline, including the historic Ras Serani Lighthouse, the coastal residence of State House Mombasa, and the renowned Mombasa Hospital.\n\nThe journey reaches its highlight at the magnificent Fort Jesus, a UNESCO World Heritage Site and one of the most iconic historical treasures on the East African coast.\n\nHere, step ashore and immerse yourself in the charm of Mombasa's Old Town — a captivating maze of narrow streets filled with antique treasures, traditional Swahili artistry, and centuries of rich coastal heritage.\n\nAn experience of history, culture, and breathtaking ocean views — this is the Blue Pineapple Coastal journey.",
+    pricingModel: "hop_on_hop_off",
+    description: "Hop on anywhere from Mtwapa Beach to Fort Jesus — like a water matatu along the Mombasa North Coast.",
+    fullDescription: "Blue Pineapple Coastal Services is launching a hop-on hop-off boat service along the Mombasa North Coast — operating like a water matatu from Mtwapa Beach all the way to Fort Jesus.\n\nBoard at any of our 9 stops (Serena, Bamburi, Whitesands, Pirates, Mombasa Beach, Nyali, English Point) and pay only for the stops you travel.\n\nPerfect for tourists, hotel guests, and local residents — with child fares, under-5s free, and launch discounts for Kenyan residents and the local community.",
     seoTitle: "Fort Jesus Historical Boat Tour from Mombasa",
     seoDescription: "Experience a historic Fort Jesus boat tour from Mombasa Beach. Enjoy scenic coastal views, a UNESCO World Heritage Site, and optional stops. Book today!",
     heroImageAlt: "Blue Pineapple boat approaching the historic Fort Jesus harbour on the Mombasa coastline, Kenya",
-    durationHours: 1,
+    durationHours: 8,
     boatType: "Big Boat",
-    pricePerPerson: 1000,
-    priceOneWay: 2000,
-    priceReturn: 3000,
-    departureTimes: "10:00, 12:00, 14:00, 16:00",
-    returnTimes: "11:00, 13:00, 15:00, 17:00",
-    departurePoints: "Mombasa Beach (access via Maasai Bar)",
-    stops: "Bamburi Beach & English Point on request",
+    pricePerPerson: 500,
+    departureTimes: "9:30 AM daily",
+    departurePoints: "Hop on at any stop along the route",
+    stops: "Mtwapa Beach → Fort Jesus (9 stops)",
     discounts: {
-      kenyansPercent: 50,
+      kenyansPercent: 25,
       childrenMinAge: 5,
       childrenMaxAge: 15,
       childrenPercent: 50,
       underFiveFree: true,
       launchDiscount: {
         percent: 50,
-        months: ["March", "April"],
       },
     },
     features: [
@@ -68,6 +66,7 @@ export const trips: ReadonlyArray<Trip> = [
     video: "/videos/services/IMG_6071.mp4",
     poster: "/images/fortjesus.png",
     category: "cultural",
+    stopOvers: FORT_JESUS_TRIP_CONTENT.stopOvers,
     journeyStops: [
       {
         id: "depart",

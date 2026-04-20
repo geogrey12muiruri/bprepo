@@ -30,12 +30,12 @@ export function DepartureDetails({ trip }: { trip: Trip }) {
           <div key={detail.label} className="flex items-start gap-3">
             <detail.icon className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
             <div>
-              <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">{detail.label}</p>
+              <p className="text-[10px] font-black text-neutral-400 uppercase tracking-[0.3em]">{detail.label}</p>
               {/* Render times as pills if it's an array with values, otherwise as plain text */}
               {(detail.isArray && detail.times && detail.times.length > 0) ? (
                 <div className="flex flex-wrap gap-1.5 mt-1">
                   {detail.times.map((time, idx) => (
-                    <span key={idx} className="px-2 py-1 bg-white/10 text-neutral-200 text-xs font-medium rounded font-mono">
+                    <span key={idx} className="px-2 py-1 bg-white/10 text-neutral-200 text-xs font-semibold rounded tabular-nums">
                       {time}
                     </span>
                   ))}

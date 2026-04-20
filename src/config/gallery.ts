@@ -449,8 +449,8 @@ export const GALLERY_VIDEOS: GalleryItem[] = [
   {
     id: "video-sunset-sail",
     type: "video",
-    src: "/videos/hero/IMG_5883.mp4",
-    poster: "/images/hero/IMG_5883-poster.jpg",
+    src: "/videos/hero/cruise3.mp4",
+    poster: "/images/hero/cruise3-poster.jpg",
     alt: "Beautiful sunset sailing experience",
     title: "Sunset Sailing - Pure Magic",
     description: "Experience unforgettable sunsets on the water",

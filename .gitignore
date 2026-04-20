@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# codex
+.codex
+.codex/
+
+# local briefs
+BP_Leaflet_Design_Brief.docx

@@ -19,7 +19,7 @@ const sizeStyles: Record<HeadingSize, string> = {
   xl: "text-lg sm:text-xl font-semibold",
   "2xl": "text-xl sm:text-2xl font-bold",
   "3xl": "text-2xl sm:text-3xl font-bold",
-  "4xl": "text-2xl sm:text-3xl md:text-4xl font-bold",
+  "4xl": "text-[clamp(1.9rem,3.2vw,3.5rem)] leading-[1.05] font-bold",
 };
 
 export function Heading({
@@ -30,7 +30,7 @@ export function Heading({
   id,
 }: HeadingProps) {
   const HeadingTag = level;
-  const baseStyles = "text-neutral-900 leading-tight";
+  const baseStyles = "text-neutral-900 leading-tight font-[family:var(--font-display)] tracking-tight";
 
   return (
     <HeadingTag

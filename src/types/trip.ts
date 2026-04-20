@@ -15,6 +15,12 @@ export interface JourneyStop {
   readonly variant?: "default" | "highlight" | "final";
 }
 
+export interface StopOver {
+  readonly id: string;
+  readonly label: string;
+  readonly variant?: "default" | "final";
+}
+
 export type Trip = {
   readonly id: string;
   readonly slug: string;
@@ -26,6 +32,7 @@ export type Trip = {
   readonly heroImageAlt?: string;
   readonly durationHours: number;
   readonly boatType: "Small Boat" | "Big Boat" | "Small & Big Boat" | "Glass-bottomed Boat";
+  readonly pricingModel?: "fixed" | "hop_on_hop_off";
   readonly pricePerPerson: number;
   readonly priceOneWay?: number;
   readonly priceReturn?: number;
@@ -56,4 +63,5 @@ export type Trip = {
   readonly highlights?: ReadonlyArray<string>;
   readonly journeyStops?: ReadonlyArray<JourneyStop>;
   readonly returnNote?: string;
+  readonly stopOvers?: ReadonlyArray<StopOver>;
 };
