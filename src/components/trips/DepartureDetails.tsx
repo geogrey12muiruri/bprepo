@@ -1,8 +1,7 @@
-import { MapPin, Clock, Anchor, Ship, Info } from "lucide-react";
+import { MapPin, Clock, Anchor, Ship } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Heading } from "@/components/ui/Heading";
 import type { Trip } from "@/types/trip";
-import { MIN_TRIP_PASSENGERS } from "@/constants/contacts";
 
 export function DepartureDetails({ trip }: { trip: Trip }) {
   // Parse departure times into array for pill rendering
@@ -46,13 +45,6 @@ export function DepartureDetails({ trip }: { trip: Trip }) {
             </div>
           </div>
         ))}
-        {/* Minimum booking info - Enhancement 4 */}
-        <div className="pt-3 border-t border-white/10">
-          <p className="text-xs text-neutral-500 flex items-center gap-1.5">
-            <Info className="w-3 h-3" />
-            Minimum booking: {MIN_TRIP_PASSENGERS} passengers
-          </p>
-        </div>
       </div>
     </Card>
   );

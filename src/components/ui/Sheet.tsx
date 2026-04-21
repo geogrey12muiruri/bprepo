@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 
 interface SheetProps {
@@ -11,10 +11,7 @@ interface SheetProps {
 }
 
 export function Sheet({ isOpen, onClose, children, side = "right" }: SheetProps) {
-    const [mounted, setMounted] = useState(false);
-
     useEffect(() => {
-        setMounted(true);
         if (isOpen) {
             document.body.style.overflow = "hidden";
         } else {
@@ -34,7 +31,7 @@ export function Sheet({ isOpen, onClose, children, side = "right" }: SheetProps)
         return () => window.removeEventListener("keydown", handleEsc);
     }, [onClose]);
 
-    if (!mounted) return null;
+    if (typeof document === "undefined") return null;
 
     const content = (
         <>

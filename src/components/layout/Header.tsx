@@ -34,10 +34,6 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
-
   const showSolidHeader = !isHome || isScrolled;
   const headerBg = showSolidHeader 
     ? "bg-neutral-900/95 backdrop-blur-md border-b border-white/5" 

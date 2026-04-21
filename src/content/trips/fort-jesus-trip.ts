@@ -54,6 +54,12 @@ export const FORT_JESUS_TRIP_CONTENT = {
         { stops: 7, adultKes: 2600, childKes: 1300, under5: "Free" },
         { stops: 8, adultKes: 3000, childKes: 1500, under5: "Free", highlight: true },
       ],
+      returnFares: [
+        { stops: 1, adultKes: 800 },
+        { stops: 2, adultKes: 1200 },
+        { stops: 3, adultKes: 1500 },
+        { stops: 8, adultKes: 5000, label: "Full return" },
+      ],
       returnSummary:
         "Return tickets available — ask on board. 1 stop return KES 800 · 2 stops KES 1,200 · 3 stops KES 1,500 · Full return KES 5,000.",
     },

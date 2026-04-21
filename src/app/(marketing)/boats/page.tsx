@@ -156,7 +156,7 @@ export default function BoatsPage() {
               Ready to charter?
             </Heading>
             <p className="text-neutral-400 text-sm mb-6 max-w-md mx-auto">
-              Get in touch to discuss your charter requirements. We'll help you find the perfect vessel for your needs.
+              Get in touch to discuss your charter requirements. We&apos;ll help you find the perfect vessel for your needs.
             </p>
             <Button
               href={buildWhatsAppUrl(buildGeneralEnquiryMessage())}

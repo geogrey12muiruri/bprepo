@@ -64,4 +64,8 @@ export type Trip = {
   readonly journeyStops?: ReadonlyArray<JourneyStop>;
   readonly returnNote?: string;
   readonly stopOvers?: ReadonlyArray<StopOver>;
+  readonly imageBadge?: {
+    readonly text: string;
+    readonly tone?: "info" | "warning" | "success";
+  };
 };

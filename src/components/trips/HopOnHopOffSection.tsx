@@ -29,7 +29,7 @@ export function HopOnHopOffSection() {
             </p>
             <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm text-white/85 list-disc pl-5">
               <li>Board at any stop on the route</li>
-              <li>Pay on board for the stops you travel</li>
+              <li>Pay on board (Cash or M‑Pesa)</li>
               <li>
                 From <span className="font-semibold text-white tabular-nums">KES 500</span>
               </li>
@@ -120,7 +120,7 @@ export function HopOnHopOffSection() {
             </div>
             <p className="mt-2 text-sm text-white/80">{hopOnHopOff.pricingNote}</p>
             <a href="#full-fares" className="inline-flex mt-2 text-sm font-semibold text-teal-300 hover:text-teal-200 transition-colors">
-              View full fare table →
+              View full fares (one-way + return) →
             </a>
           </div>
 
@@ -204,7 +204,36 @@ export function HopOnHopOffSection() {
               </tbody>
             </table>
           </div>
-          <p className="mt-2 text-sm text-white/80">{hopOnHopOff.fares.returnSummary}</p>
+          <div className="mt-4">
+            <Heading level="h4" size="sm" className="text-white !font-semibold mb-2">
+              Return fares (Adult)
+            </Heading>
+            <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/[0.03]">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-white/[0.04]">
+                  <tr>
+                    <th className="px-4 py-3 text-[11px] font-black uppercase tracking-[0.3em] text-white/70">Stops</th>
+                    <th className="px-4 py-3 text-[11px] font-black uppercase tracking-[0.3em] text-white/70">Return (KES)</th>
+                    <th className="px-4 py-3 text-[11px] font-black uppercase tracking-[0.3em] text-white/70">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hopOnHopOff.fares.returnFares.map((row) => (
+                    <tr key={`return-${row.stops}`} className="border-t border-white/10">
+                      <td className="px-4 py-3 text-white/80 tabular-nums">{row.stops}</td>
+                      <td className="px-4 py-3 text-white/90 font-semibold tabular-nums">
+                        {row.adultKes.toLocaleString("en-US")}
+                      </td>
+                      <td className="px-4 py-3 text-white/70">
+                        {("label" in row && row.label) ? row.label : "Child 5–15 pays 50% · Under 5 free"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-2 text-sm text-white/80">{hopOnHopOff.fares.returnSummary}</p>
+          </div>
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5 text-sm text-white/80">

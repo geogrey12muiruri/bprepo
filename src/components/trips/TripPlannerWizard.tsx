@@ -20,11 +20,10 @@ type OneWayFareRow = {
   readonly under5: string;
 };
 
-const RETURN_FARES: Record<number, number> = {
-  1: 800,
-  2: 1200,
-  3: 1500,
-  8: 5000,
+type ReturnFareRow = {
+  readonly stops: number;
+  readonly adultKes: number;
+  readonly label?: string;
 };
 
 function clampInt(value: number, min: number, max: number) {
@@ -50,6 +49,7 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
   const [fromStopId, setFromStopId] = useState<string>(stops[0]?.id ?? "");
   const [toStopId, setToStopId] = useState<string>(stops[stops.length - 1]?.id ?? "");
   const [tripType, setTripType] = useState<"one_way" | "return">("one_way");
+  const [discount, setDiscount] = useState<"none" | "kenyan_25" | "community_50">("none");
   const [adults, setAdults] = useState<number>(1);
   const [children, setChildren] = useState<number>(0);
   const [date, setDate] = useState<string>("");
@@ -85,9 +85,25 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     return oneWay.find((r) => r.stops === stopsTravelled) ?? null;
   }, [stopsTravelled]);
 
-  const adultFare = fareRow?.adultKes ?? 0;
-  const childFare = fareRow?.childKes ?? Math.round(adultFare * 0.5);
-  const returnFare = useMemo(() => (tripType === "return" ? (RETURN_FARES[stopsTravelled] ?? null) : null), [stopsTravelled, tripType]);
+  const discountFactor = useMemo(() => {
+    if (discount === "kenyan_25") return 0.75;
+    if (discount === "community_50") return 0.5;
+    return 1;
+  }, [discount]);
+
+  const adultFareBase = fareRow?.adultKes ?? 0;
+  const adultFare = useMemo(() => Math.round(adultFareBase * discountFactor), [adultFareBase, discountFactor]);
+  const childFare = useMemo(() => Math.round(adultFare * 0.5), [adultFare]);
+
+  const returnFareBase = useMemo(() => {
+    if (tripType !== "return") return null;
+    const returnRows = FORT_JESUS_TRIP_CONTENT.hopOnHopOff.fares.returnFares as unknown as ReadonlyArray<ReturnFareRow>;
+    return returnRows.find((r) => r.stops === stopsTravelled)?.adultKes ?? null;
+  }, [stopsTravelled, tripType]);
+  const returnFare = useMemo(
+    () => (returnFareBase == null ? null : Math.round(returnFareBase * discountFactor)),
+    [discountFactor, returnFareBase]
+  );
 
   const safeAdults = clampInt(adults, 0, 20);
   const safeChildren = clampInt(children, 0, 20);
@@ -108,7 +124,7 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     return true;
   }, [fromStop, step, stopsTravelled, toStop]);
 
-  const whatsAppMessage = useMemo(() => {
+  const whatsAppMessage = (() => {
     const parts: string[] = [];
     if (date) parts.push(`Preferred date: ${formatDateHuman(date)}`);
     if (time) parts.push(`Preferred time: ${time}`);
@@ -116,6 +132,10 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     parts.push(`Stops travelled: ${stopsTravelled}`);
     parts.push(`Trip: ${tripType === "return" ? "Return" : "One-way"}`);
     parts.push(`Passengers: ${safeAdults} adult(s), ${safeChildren} child(ren) 5–15`);
+    parts.push(`Payment: Cash or M‑Pesa on board`);
+    if (discount !== "none") {
+      parts.push(`Discount: ${discount === "kenyan_25" ? "Kenyan resident 25% off" : "Local community 50% off"}`);
+    }
     if (stopsTravelled > 0) {
       if (tripType === "return" && returnFare == null) {
         parts.push("Return fare: ask on board");
@@ -124,27 +144,16 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     }
     parts.push(`Page: ${SITE_URL}/trips/fort-jesus-trip`);
     return buildBookingMessage(tripName, parts.join(" | "));
-  }, [
-    date,
-    estimatedTotal,
-    fromStop.label,
-    returnFare,
-    safeAdults,
-    safeChildren,
-    stopsTravelled,
-    time,
-    toStop.label,
-    tripName,
-    tripType,
-  ]);
+  })();
 
-  const whatsAppUrl = useMemo(() => buildWhatsAppUrl(whatsAppMessage), [whatsAppMessage]);
+  const whatsAppUrl = buildWhatsAppUrl(whatsAppMessage);
 
   const reset = () => {
     setStep(1);
     setFromStopId(stops[0]?.id ?? "");
     setToStopId(stops[stops.length - 1]?.id ?? "");
     setTripType("one_way");
+    setDiscount("none");
     setAdults(1);
     setChildren(0);
     setDate("");
@@ -350,6 +359,25 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
                         Return
                       </button>
                     </div>
+
+                    <label className="block pt-1">
+                      <span className="block text-[11px] font-black uppercase tracking-[0.3em] text-white/60 mb-2">
+                        Discount (launch)
+                      </span>
+                      <select
+                        value={discount}
+                        onChange={(e) => setDiscount(e.target.value as typeof discount)}
+                        className="w-full h-12 sm:h-11 rounded-xl bg-neutral-900 border border-white/15 px-3 text-white text-sm"
+                        style={{ colorScheme: "dark" }}
+                      >
+                        <option value="none">No discount</option>
+                        <option value="kenyan_25">Kenyan resident — 25% off</option>
+                        <option value="community_50">Local community — 50% off</option>
+                      </select>
+                      <p className="mt-2 text-xs text-white/55">
+                        Discounts are applied to the base fare. Child fare remains 50% of the adult fare.
+                      </p>
+                    </label>
                   </div>
                 )}
 
@@ -411,6 +439,17 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
                       <p>
                         <span className="font-semibold text-white">Passengers:</span>{" "}
                         {safeAdults} adult(s), {safeChildren} child(ren) 5–15
+                      </p>
+                      <p>
+                        <span className="font-semibold text-white">Payment:</span> Cash or M‑Pesa on board
+                      </p>
+                      <p>
+                        <span className="font-semibold text-white">Discount:</span>{" "}
+                        {discount === "none"
+                          ? "None"
+                          : discount === "kenyan_25"
+                            ? "Kenyan resident (25% off)"
+                            : "Local community (50% off)"}
                       </p>
                       {date && (
                         <p>

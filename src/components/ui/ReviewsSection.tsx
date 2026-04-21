@@ -21,7 +21,7 @@ const reviews: Review[] = [
     author: "Sarah M.",
     initials: "SM",
     rating: 5,
-    date: "March 2025",
+    date: "April 2026",
     trip: "Fort Jesus Tour",
     text: "Absolutely breathtaking experience. The captain was knowledgeable and the views of Fort Jesus from the water are something you simply cannot get any other way. Worth every shilling.",
   },
@@ -30,7 +30,7 @@ const reviews: Review[] = [
     author: "James O.",
     initials: "JO",
     rating: 5,
-    date: "February 2025",
+    date: "March 2026",
     trip: "Mangrove Creek Safari",
     text: "The glass-bottomed boat on the mangrove safari was incredible — we could see everything beneath us. Peaceful, well-guided, and genuinely unlike anything else on the coast.",
   },
@@ -39,7 +39,7 @@ const reviews: Review[] = [
     author: "Amina K.",
     initials: "AK",
     rating: 5,
-    date: "January 2025",
+    date: "February 2026",
     trip: "Sunset Sailing",
     text: "We booked the sunset sail for our anniversary and it exceeded all expectations. The crew were attentive, the Swahili snacks were wonderful, and the sky was on fire. A memory we'll keep forever.",
   },
@@ -48,7 +48,7 @@ const reviews: Review[] = [
     author: "David R.",
     initials: "DR",
     rating: 5,
-    date: "December 2024",
+    date: "April 2026",
     trip: "Snorkelling Reef",
     text: "Excellent safety briefing, excellent crew, and the reef was magnificent. We saw parrotfish, turtles, and more. The boat is comfortable and the team made everyone feel at ease, even first-time snorkellers.",
   },
@@ -57,7 +57,7 @@ const reviews: Review[] = [
     author: "Priya S.",
     initials: "PS",
     rating: 5,
-    date: "November 2024",
+    date: "January 2026",
     trip: "Fort Jesus Tour",
     text: "A truly special way to arrive at Fort Jesus — stepping off a boat at the old harbour feels like arriving as an explorer from another century. The Old Town walk afterwards was the perfect complement.",
   },
@@ -66,7 +66,7 @@ const reviews: Review[] = [
     author: "Tom W.",
     initials: "TW",
     rating: 5,
-    date: "October 2024",
+    date: "March 2026",
     trip: "Birthdays & Anniversaries",
     text: "Organised a surprise birthday cruise for my partner. The Blue Pineapple team were incredibly helpful with the logistics and the day itself was flawless. The Indian Ocean as a backdrop — hard to top.",
   },
@@ -140,7 +140,7 @@ function ReviewCard({ review }: { review: Review }) {
       {/* Review text */}
       <div className="relative z-10">
         <p className="text-[13px] sm:text-sm text-neutral-300 leading-relaxed italic">
-          "{displayText}"
+          &ldquo;{displayText}&rdquo;
         </p>
         
         <div className="mt-4 flex items-center justify-between">

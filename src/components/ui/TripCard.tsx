@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { Trip } from "@/types/trip";
 import { formatPrice } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
+import { ImageBadge } from "@/components/ui/ImageBadge";
 
 interface TripCardProps {
   trip: Trip;
@@ -67,6 +68,10 @@ export function TripCard({ trip, variant = "default" }: TripCardProps) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
+          {/* Image Badge */}
+          <div className="absolute top-3 right-3 z-10">
+            <ImageBadge badge={trip.imageBadge} />
+          </div>
           {/* Price Tag */}
           {/* backdrop-blur-sm removed — backdrop-filter inside overflow-hidden + transform causes GPU layer conflict on Android Chrome */}
           <div className={`absolute bottom-3 left-3 z-10 ${priceBg} px-3 py-1.5 rounded-lg shadow-lg`}>

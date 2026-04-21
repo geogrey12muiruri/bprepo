@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Heading } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/Button";
 import { ImageCarousel } from "@/components/ui/ImageCarousel";
+import { ImageBadge } from "@/components/ui/ImageBadge";
 import { trips } from "@/data/trips";
 import { formatPrice, formatDuration } from "@/lib/format";
 import { ROUTES } from "@/lib/routes";
@@ -39,6 +40,10 @@ function FeaturedTrip({ trip }: { trip: typeof trips[0] }) {
           <span className="px-2.5 py-1 bg-teal-500 text-white text-[10px] font-black uppercase tracking-wider rounded-full">
             Featured
           </span>
+        </div>
+
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+          <ImageBadge badge={trip.imageBadge} />
         </div>
         
         <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
@@ -105,6 +110,16 @@ function TripCard({ trip }: { trip: typeof trips[0] }) {
           {isComingSoon && (
             <div className="absolute top-2 right-2 bg-amber-500 text-white px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">
               Coming Soon
+            </div>
+          )}
+          {!isComingSoon && (
+            <div className="absolute top-2 right-2 z-10">
+              <ImageBadge badge={trip.imageBadge} />
+            </div>
+          )}
+          {isComingSoon && (
+            <div className="absolute top-10 right-2 z-10">
+              <ImageBadge badge={trip.imageBadge} />
             </div>
           )}
           <div className="absolute top-2 left-2">
