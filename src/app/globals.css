@@ -49,10 +49,7 @@ body {
     transition-duration: 0.01ms !important;
   }
 
-  .bp-float,
-  .route-dash,
-  .bp-underline,
-  .bp-pulse {
+  .route-dash {
     animation: none !important;
   }
 }
@@ -222,62 +219,7 @@ img {
   opacity: 0.75;
 }
 
-/* Floating highlight card (subtle, premium) */
-@keyframes float-card {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, -8px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.bp-float {
-  animation: float-card 7.5s ease-in-out infinite;
-  will-change: transform;
-}
-
-/* Subtle internal UI animations (card stays static) */
-@keyframes bp-underline {
-  0% {
-    transform: scaleX(0.55);
-    opacity: 0.55;
-  }
-  50% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scaleX(0.55);
-    opacity: 0.55;
-  }
-}
-
-.bp-underline {
-  transform-origin: left center;
-  animation: bp-underline 3.8s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
-@keyframes bp-pulse-soft {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-  50% {
-    transform: scale(1.12);
-    opacity: 1;
-  }
-}
-
-.bp-pulse {
-  animation: bp-pulse-soft 2.4s ease-in-out infinite;
-  will-change: transform, opacity;
-}
+/* (intentionally left blank) */
 
 @theme {
   --color-brand-blue: #0B3D91;
