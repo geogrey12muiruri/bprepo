@@ -58,13 +58,26 @@ export function TripPlannerWizard({
   const [fromStopId, setFromStopId] = useState<string>(stops[0]?.id ?? "");
   const [toStopId, setToStopId] = useState<string>(stops[stops.length - 1]?.id ?? "");
   const [tripType, setTripType] = useState<"one_way" | "return">("one_way");
-  const [adults, setAdults] = useState<number>(1);
-  const [children, setChildren] = useState<number>(0);
-  const [under5s, setUnder5s] = useState<number>(0);
+  // Keep passenger inputs as strings so users can fully clear/edit values without the field snapping back.
+  const [adultsText, setAdultsText] = useState<string>("1");
+  const [childrenText, setChildrenText] = useState<string>("0");
+  const [under5sText, setUnder5sText] = useState<string>("0");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>(defaultTime ?? "09:30");
 
   const panelRef = useRef<HTMLDivElement | null>(null);
+
+  const parseCount = (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed) return 0;
+    const asNumber = Number(trimmed);
+    return Number.isFinite(asNumber) ? asNumber : 0;
+  };
+
+  const normaliseCountText = (text: string, min: number, max: number) => {
+    const clamped = clampInt(parseCount(text), min, max);
+    return String(clamped);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -108,9 +121,9 @@ export function TripPlannerWizard({
     return oneWay.find((r) => r.stops === stopsTravelled) ?? null;
   }, [stopsTravelled]);
 
-  const safeAdults = clampInt(adults, 0, 20);
-  const safeChildren = clampInt(children, 0, 20);
-  const safeUnder5s = clampInt(under5s, 0, 20);
+  const safeAdults = clampInt(parseCount(adultsText), 0, 20);
+  const safeChildren = clampInt(parseCount(childrenText), 0, 20);
+  const safeUnder5s = clampInt(parseCount(under5sText), 0, 20);
 
   const discount = useMemo(() => {
     if (safeAdults >= 4) return "group_20";
@@ -186,11 +199,11 @@ export function TripPlannerWizard({
     setFromStopId(stops[0]?.id ?? "");
     setToStopId(stops[stops.length - 1]?.id ?? "");
     setTripType("one_way");
-    setAdults(1);
-    setChildren(0);
-    setUnder5s(0);
+    setAdultsText("1");
+    setChildrenText("0");
+    setUnder5sText("0");
     setDate("");
-    setTime("09:30");
+    setTime(defaultTime ?? "09:30");
   };
 
   return (
@@ -223,11 +236,16 @@ export function TripPlannerWizard({
             <div
               ref={panelRef}
               tabIndex={-1}
-              className="relative w-full sm:max-w-[620px] max-h-[92svh] sm:max-h-[calc(100vh-48px)] rounded-t-3xl sm:rounded-3xl bg-neutral-950 border border-white/10 shadow-2xl shadow-black/50 outline-none flex flex-col"
+              className="relative w-full sm:max-w-[620px] h-[92svh] sm:h-auto max-h-[92svh] sm:max-h-[calc(100vh-48px)] rounded-t-3xl sm:rounded-3xl bg-neutral-950 border border-white/10 shadow-2xl shadow-black/50 outline-none flex flex-col overscroll-contain"
               role="dialog"
               aria-modal="true"
               aria-label="Trip planner"
             >
+              {/* Grab handle (mobile affordance) */}
+              <div className="sm:hidden flex justify-center pt-3">
+                <div className="h-1 w-10 rounded-full bg-white/15" />
+              </div>
+
               {/* Header */}
               <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-white/10">
                 <div>
@@ -236,18 +254,27 @@ export function TripPlannerWizard({
                   </p>
                   <p className="text-sm font-semibold text-white">{tripName}</p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="w-10 h-10 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white/80 transition-colors"
-                  aria-label="Close"
-                >
-                  <X className="w-4 h-4 mx-auto" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={reset}
+                    className="h-10 px-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white/80 text-xs font-semibold transition-colors"
+                  >
+                    Reset
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="w-10 h-10 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white/80 transition-colors"
+                    aria-label="Close"
+                  >
+                    <X className="w-4 h-4 mx-auto" />
+                  </button>
+                </div>
               </div>
 
               {/* Body */}
-              <div className="px-5 py-5 flex-1 overflow-y-auto">
+              <div className="px-5 py-5 flex-1 overflow-y-auto pb-[calc(env(safe-area-inset-bottom)+12px)]">
                 <div className="flex items-center justify-between gap-3 mb-4">
                   <p className="text-sm font-semibold text-white">
                     Step {step} of 4
@@ -346,8 +373,9 @@ export function TripPlannerWizard({
                           inputMode="numeric"
                           min={0}
                           max={20}
-                          value={adults}
-                          onChange={(e) => setAdults(clampInt(Number(e.target.value), 0, 20))}
+                          value={adultsText}
+                          onChange={(e) => setAdultsText(e.target.value)}
+                          onBlur={() => setAdultsText((v) => normaliseCountText(v, 0, 20))}
                           className="w-full h-12 sm:h-11 rounded-xl bg-white/10 border border-white/15 px-3 text-white text-sm tabular-nums"
                         />
                       </label>
@@ -361,8 +389,9 @@ export function TripPlannerWizard({
                           inputMode="numeric"
                           min={0}
                           max={20}
-                          value={children}
-                          onChange={(e) => setChildren(clampInt(Number(e.target.value), 0, 20))}
+                          value={childrenText}
+                          onChange={(e) => setChildrenText(e.target.value)}
+                          onBlur={() => setChildrenText((v) => normaliseCountText(v, 0, 20))}
                           className="w-full h-12 sm:h-11 rounded-xl bg-white/10 border border-white/15 px-3 text-white text-sm tabular-nums"
                         />
                       </label>
@@ -376,8 +405,9 @@ export function TripPlannerWizard({
                           inputMode="numeric"
                           min={0}
                           max={20}
-                          value={under5s}
-                          onChange={(e) => setUnder5s(clampInt(Number(e.target.value), 0, 20))}
+                          value={under5sText}
+                          onChange={(e) => setUnder5sText(e.target.value)}
+                          onBlur={() => setUnder5sText((v) => normaliseCountText(v, 0, 20))}
                           className="w-full h-12 sm:h-11 rounded-xl bg-white/10 border border-white/15 px-3 text-white text-sm tabular-nums"
                         />
                       </label>
@@ -445,26 +475,50 @@ export function TripPlannerWizard({
                         <span className="block text-[11px] font-black uppercase tracking-[0.3em] text-white/60 mb-2">
                           Date
                         </span>
-                        <input
-                          type="date"
-                          value={date}
-                          onChange={(e) => setDate(e.target.value)}
-                          className="w-full h-12 sm:h-11 rounded-xl bg-neutral-900 border border-white/15 px-3 text-white text-sm"
-                          style={{ colorScheme: "dark" }}
-                        />
+                        <div className="relative">
+                          <input
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            className="w-full h-12 sm:h-11 rounded-xl bg-neutral-900 border border-white/15 px-3 pr-10 text-white text-sm"
+                            style={{ colorScheme: "dark" }}
+                          />
+                          {date && (
+                            <button
+                              type="button"
+                              onClick={() => setDate("")}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white/70"
+                              aria-label="Clear date"
+                            >
+                              <X className="w-4 h-4 mx-auto" />
+                            </button>
+                          )}
+                        </div>
                       </label>
 
                       <label className="block">
                         <span className="block text-[11px] font-black uppercase tracking-[0.3em] text-white/60 mb-2">
                           Time
                         </span>
-                        <input
-                          type="time"
-                          value={time}
-                          onChange={(e) => setTime(e.target.value)}
-                          className="w-full h-12 sm:h-11 rounded-xl bg-neutral-900 border border-white/15 px-3 text-white text-sm tabular-nums"
-                          style={{ colorScheme: "dark" }}
-                        />
+                        <div className="relative">
+                          <input
+                            type="time"
+                            value={time}
+                            onChange={(e) => setTime(e.target.value)}
+                            className="w-full h-12 sm:h-11 rounded-xl bg-neutral-900 border border-white/15 px-3 pr-10 text-white text-sm tabular-nums"
+                            style={{ colorScheme: "dark" }}
+                          />
+                          {time && (
+                            <button
+                              type="button"
+                              onClick={() => setTime("")}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white/70"
+                              aria-label="Clear time"
+                            >
+                              <X className="w-4 h-4 mx-auto" />
+                            </button>
+                          )}
+                        </div>
                       </label>
                     </div>
                     <p className="text-xs text-white/55">
@@ -556,11 +610,11 @@ export function TripPlannerWizard({
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between gap-3 px-5 py-4 border-t border-white/10 pb-[calc(env(safe-area-inset-bottom)+16px)]">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 px-5 py-4 border-t border-white/10 pb-[calc(env(safe-area-inset-bottom)+16px)]">
                 <button
                   type="button"
                   onClick={() => setStep((prev) => (prev > 1 ? ((prev - 1) as 1 | 2 | 3 | 4) : prev))}
-                  className="inline-flex items-center gap-2 h-11 px-4 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-white text-sm font-semibold transition-colors disabled:opacity-40"
+                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2 h-11 px-4 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-white text-sm font-semibold transition-colors disabled:opacity-40"
                   disabled={step === 1}
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -571,7 +625,7 @@ export function TripPlannerWizard({
                   <button
                     type="button"
                     onClick={() => setStep((prev) => ((prev + 1) as 2 | 3 | 4))}
-                    className="inline-flex items-center gap-2 h-11 px-4 rounded-xl bg-teal-500 hover:bg-teal-400 text-white text-sm font-bold transition-colors disabled:opacity-40"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 h-11 px-4 rounded-xl bg-teal-500 hover:bg-teal-400 text-white text-sm font-bold transition-colors disabled:opacity-40"
                     disabled={!canContinue}
                   >
                     Next
@@ -582,7 +636,7 @@ export function TripPlannerWizard({
                     href={whatsAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 h-11 px-4 rounded-xl bg-teal-500 hover:bg-teal-400 text-white text-sm font-bold transition-colors"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 h-11 px-4 rounded-xl bg-teal-500 hover:bg-teal-400 text-white text-sm font-bold transition-colors"
                   >
                     WhatsApp
                     <ArrowRight className="w-4 h-4" />
