@@ -11,6 +11,9 @@ type TripPlannerWizardProps = {
   readonly tripName: string;
   readonly stops: ReadonlyArray<StopOver>;
   readonly ctaLabel?: string;
+  readonly triggerClassName?: string;
+  /** When provided, initialises the time picker on open (used by QuickFactsStrip time pills) */
+  readonly defaultTime?: string;
 };
 
 type OneWayFareRow = {
@@ -42,18 +45,24 @@ function formatDateHuman(dateValue: string) {
   });
 }
 
-export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }: TripPlannerWizardProps) {
+export function TripPlannerWizard({
+  tripName,
+  stops,
+  ctaLabel = "Plan a trip",
+  triggerClassName = "inline-flex w-full sm:w-auto items-center justify-center h-12 sm:h-11 px-4 rounded-xl bg-brand-blue hover:bg-blue-900 text-white text-sm font-bold transition-colors",
+  defaultTime,
+}: TripPlannerWizardProps) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
   const [fromStopId, setFromStopId] = useState<string>(stops[0]?.id ?? "");
   const [toStopId, setToStopId] = useState<string>(stops[stops.length - 1]?.id ?? "");
   const [tripType, setTripType] = useState<"one_way" | "return">("one_way");
-  const [discount, setDiscount] = useState<"none" | "kenyan_25" | "community_50">("none");
   const [adults, setAdults] = useState<number>(1);
   const [children, setChildren] = useState<number>(0);
+  const [under5s, setUnder5s] = useState<number>(0);
   const [date, setDate] = useState<string>("");
-  const [time, setTime] = useState<string>("09:30");
+  const [time, setTime] = useState<string>(defaultTime ?? "09:30");
 
   const panelRef = useRef<HTMLDivElement | null>(null);
 
@@ -71,7 +80,21 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [open]);
+   }, [open]);
+
+  // ── Listen for time-pill clicks from QuickFactsStrip ──────────────────────
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const custom = e as CustomEvent<{ time: string }>;
+      if (custom.detail?.time) {
+        setTime(custom.detail.time);
+        setOpen(true);
+        setStep(4);
+      }
+    };
+    window.addEventListener("open-trip-planner", handler);
+    return () => window.removeEventListener("open-trip-planner", handler);
+  }, []);
 
   const fromIndex = useMemo(() => Math.max(0, stops.findIndex((s) => s.id === fromStopId)), [fromStopId, stops]);
   const toIndex = useMemo(() => Math.max(0, stops.findIndex((s) => s.id === toStopId)), [toStopId, stops]);
@@ -85,15 +108,25 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     return oneWay.find((r) => r.stops === stopsTravelled) ?? null;
   }, [stopsTravelled]);
 
+  const safeAdults = clampInt(adults, 0, 20);
+  const safeChildren = clampInt(children, 0, 20);
+  const safeUnder5s = clampInt(under5s, 0, 20);
+
+  const discount = useMemo(() => {
+    if (safeAdults >= 4) return "group_20";
+    if (safeAdults === 2) return "couple_10";
+    return "none";
+  }, [safeAdults]);
+
   const discountFactor = useMemo(() => {
-    if (discount === "kenyan_25") return 0.75;
-    if (discount === "community_50") return 0.5;
+    if (discount === "couple_10") return 0.9;
+    if (discount === "group_20") return 0.8;
     return 1;
   }, [discount]);
 
   const adultFareBase = fareRow?.adultKes ?? 0;
   const adultFare = useMemo(() => Math.round(adultFareBase * discountFactor), [adultFareBase, discountFactor]);
-  const childFare = useMemo(() => Math.round(adultFare * 0.5), [adultFare]);
+  const childFare = useMemo(() => Math.round(adultFareBase * 0.5), [adultFareBase]);
 
   const returnFareBase = useMemo(() => {
     if (tripType !== "return") return null;
@@ -105,24 +138,24 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     [discountFactor, returnFareBase]
   );
 
-  const safeAdults = clampInt(adults, 0, 20);
-  const safeChildren = clampInt(children, 0, 20);
-
   const estimatedTotal = useMemo(() => {
     if (stopsTravelled === 0) return 0;
-    if (tripType === "return" && returnFare != null) {
-      const childReturn = Math.round(returnFare * 0.5);
+    if (tripType === "return" && returnFare != null && returnFareBase != null) {
+      const childReturn = Math.round(returnFareBase * 0.5);
       return safeAdults * returnFare + safeChildren * childReturn;
     }
     return safeAdults * adultFare + safeChildren * childFare;
-  }, [adultFare, childFare, returnFare, safeAdults, safeChildren, stopsTravelled, tripType]);
+  }, [adultFare, childFare, returnFare, returnFareBase, safeAdults, safeChildren, stopsTravelled, tripType]);
 
   const canContinue = useMemo(() => {
     if (step === 1) return Boolean(fromStop && toStop && stopsTravelled > 0);
-    if (step === 2) return true;
+    if (step === 2) {
+      if (safeAdults === 0) return false;
+      return true;
+    }
     if (step === 3) return true;
     return true;
-  }, [fromStop, step, stopsTravelled, toStop]);
+  }, [fromStop, step, stopsTravelled, toStop, safeAdults]);
 
   const whatsAppMessage = (() => {
     const parts: string[] = [];
@@ -131,10 +164,10 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     parts.push(`Route: ${fromStop.label} → ${toStop.label}`);
     parts.push(`Stops travelled: ${stopsTravelled}`);
     parts.push(`Trip: ${tripType === "return" ? "Return" : "One-way"}`);
-    parts.push(`Passengers: ${safeAdults} adult(s), ${safeChildren} child(ren) 5–15`);
+    parts.push(`Passengers: ${safeAdults} adult(s), ${safeChildren} child(ren) 5–15, ${safeUnder5s} under 5s (free)`);
     parts.push(`Payment: Cash or M‑Pesa on board`);
     if (discount !== "none") {
-      parts.push(`Discount: ${discount === "kenyan_25" ? "Kenyan resident 25% off" : "Local community 50% off"}`);
+      parts.push(`Discount: ${discount === "couple_10" ? "Couple Bookings 10% off" : "Group/Family 20% off"}`);
     }
     if (stopsTravelled > 0) {
       if (tripType === "return" && returnFare == null) {
@@ -153,9 +186,9 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
     setFromStopId(stops[0]?.id ?? "");
     setToStopId(stops[stops.length - 1]?.id ?? "");
     setTripType("one_way");
-    setDiscount("none");
     setAdults(1);
     setChildren(0);
+    setUnder5s(0);
     setDate("");
     setTime("09:30");
   };
@@ -170,7 +203,7 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
           // focus the panel after open
           window.setTimeout(() => panelRef.current?.focus(), 30);
         }}
-        className="inline-flex w-full sm:w-auto items-center justify-center h-12 sm:h-11 px-4 rounded-xl bg-teal-500 hover:bg-teal-400 text-white text-sm font-bold transition-colors"
+        className={triggerClassName}
       >
         {ctaLabel}
       </button>
@@ -303,7 +336,7 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
                       <p className="text-sm font-semibold">Passengers</p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       <label className="block">
                         <span className="block text-[11px] font-black uppercase tracking-[0.3em] text-white/60 mb-2">
                           Adults
@@ -333,7 +366,28 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
                           className="w-full h-12 sm:h-11 rounded-xl bg-white/10 border border-white/15 px-3 text-white text-sm tabular-nums"
                         />
                       </label>
+
+                      <label className="block">
+                        <span className="block text-[11px] font-black uppercase tracking-[0.3em] text-white/60 mb-2">
+                          Under 5s
+                        </span>
+                        <input
+                          type="number"
+                          inputMode="numeric"
+                          min={0}
+                          max={20}
+                          value={under5s}
+                          onChange={(e) => setUnder5s(clampInt(Number(e.target.value), 0, 20))}
+                          className="w-full h-12 sm:h-11 rounded-xl bg-white/10 border border-white/15 px-3 text-white text-sm tabular-nums"
+                        />
+                      </label>
                     </div>
+
+                    {(safeChildren > 0 || safeUnder5s > 0) && safeAdults === 0 && (
+                      <p className="text-sm font-semibold text-red-400">
+                        Children must be accompanied by at least 1 adult.
+                      </p>
+                    )}
 
                     <div className="flex flex-wrap items-center gap-2">
                       <button
@@ -360,24 +414,22 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
                       </button>
                     </div>
 
-                    <label className="block pt-1">
-                      <span className="block text-[11px] font-black uppercase tracking-[0.3em] text-white/60 mb-2">
-                        Discount (launch)
-                      </span>
-                      <select
-                        value={discount}
-                        onChange={(e) => setDiscount(e.target.value as typeof discount)}
-                        className="w-full h-12 sm:h-11 rounded-xl bg-neutral-900 border border-white/15 px-3 text-white text-sm"
-                        style={{ colorScheme: "dark" }}
-                      >
-                        <option value="none">No discount</option>
-                        <option value="kenyan_25">Kenyan resident — 25% off</option>
-                        <option value="community_50">Local community — 50% off</option>
-                      </select>
-                      <p className="mt-2 text-xs text-white/55">
-                        Discounts are applied to the base fare. Child fare remains 50% of the adult fare.
-                      </p>
-                    </label>
+                    <div className="pt-2">
+                      <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                        <p className="text-sm font-semibold text-white mb-2">Automatic Discounts</p>
+                        <ul className="text-xs text-white/70 space-y-1.5 list-disc list-inside">
+                          <li>10% off for Couples (2 adults)</li>
+                          <li>20% off for Groups (4+ adults)</li>
+                          <li>Children 5–15 pay 50% of adult fare</li>
+                          <li>Children under 5 travel free</li>
+                        </ul>
+                        {discount !== "none" && (
+                          <div className="mt-3 inline-flex items-center rounded-full bg-teal-500/20 px-2.5 py-1 text-xs font-medium text-teal-300">
+                            {discount === "couple_10" ? "Couple's discount (10%) applied!" : "Group discount (20%) applied!"}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 )}
 
@@ -438,7 +490,7 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
                       </p>
                       <p>
                         <span className="font-semibold text-white">Passengers:</span>{" "}
-                        {safeAdults} adult(s), {safeChildren} child(ren) 5–15
+                        {safeAdults} adult(s), {safeChildren} child(ren) 5–15, {safeUnder5s} under 5s
                       </p>
                       <p>
                         <span className="font-semibold text-white">Payment:</span> Cash or M‑Pesa on board
@@ -447,9 +499,9 @@ export function TripPlannerWizard({ tripName, stops, ctaLabel = "Plan a trip" }:
                         <span className="font-semibold text-white">Discount:</span>{" "}
                         {discount === "none"
                           ? "None"
-                          : discount === "kenyan_25"
-                            ? "Kenyan resident (25% off)"
-                            : "Local community (50% off)"}
+                          : discount === "couple_10"
+                            ? "Couple Bookings (10% off)"
+                            : "Group/Family (20% off)"}
                       </p>
                       {date && (
                         <p>

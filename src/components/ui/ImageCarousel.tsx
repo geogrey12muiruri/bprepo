@@ -64,6 +64,8 @@ export function ImageCarousel({
               fill={fill}
               className={`${imageClassName} [transform:translateZ(0)] backface-hidden`}
               priority={priority && idx === 0}
+              loading={priority && idx === 0 ? "eager" : "lazy"}
+              fetchPriority={priority && idx === 0 ? "high" : "auto"}
               sizes={sizes}
             />
           </div>

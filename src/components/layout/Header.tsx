@@ -38,8 +38,8 @@ export function Header() {
   const headerBg = showSolidHeader 
     ? "bg-neutral-900/95 backdrop-blur-md border-b border-white/5" 
     : "bg-transparent";
-  const textColor = isHome && !isScrolled ? "text-white" : "text-white";
-  const hoverColor = isHome && !isScrolled ? "hover:text-teal-400" : "hover:text-teal-400";
+  const textColor = "text-white";
+  const hoverColor = "hover:text-white";
 
   return (
     <>
@@ -71,12 +71,12 @@ export function Header() {
                     key={link.href}
                     href={link.href}
                     className={`text-sm font-medium transition-colors relative ${
-                      isActive ? "text-teal-400" : `${textColor} ${hoverColor}`
+                      isActive ? "text-white" : `${textColor} ${hoverColor}`
                     }`}
                   >
                     {link.label}
                     {isActive && (
-                      <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-teal-400 rounded-full" />
+                      <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-white rounded-full" />
                     )}
                   </Link>
                 );
@@ -89,7 +89,7 @@ export function Header() {
                 href={buildWhatsAppUrl(buildGeneralBookingMessage())}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-400 text-white text-sm font-semibold rounded-full transition-all duration-200"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-brand-blue hover:bg-blue-900 text-white text-sm font-semibold rounded-full transition-all duration-200"
               >
                 <MessageCircle className="w-4 h-4" />
                 Book Now
@@ -99,7 +99,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+              className="md:hidden p-2 rounded-lg text-white hover:bg-blue-900/10 transition-colors"
               aria-label="Open menu"
             >
               <Menu className="w-6 h-6" />
@@ -131,7 +131,7 @@ export function Header() {
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition-colors"
+              className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-blue-900/5 transition-colors"
               aria-label="Close menu"
             >
               <X className="w-5 h-5" />
@@ -149,8 +149,8 @@ export function Header() {
                     href={link.href}
                     className={`block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
                       isActive
-                        ? "bg-teal-500/10 text-teal-400"
-                        : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                        ? "bg-white/10 text-white"
+                        : "text-neutral-300 hover:bg-blue-900/5 hover:text-white"
                     }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -167,7 +167,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-teal-500 hover:bg-teal-400 text-white font-semibold rounded-xl transition-colors"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-brand-blue hover:bg-blue-900 text-white font-semibold rounded-xl transition-colors"
               >
                 <MessageCircle className="w-5 h-5" />
                 Book via WhatsApp
@@ -181,25 +181,25 @@ export function Header() {
             <div className="grid grid-cols-3 gap-3">
               <a
                 href={`tel:${PHONE_TEL}`}
-                className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-blue-900/10 transition-colors group"
               >
-                <Phone className="w-5 h-5 text-neutral-400 group-hover:text-teal-400" />
+                <Phone className="w-5 h-5 text-neutral-400 group-hover:text-white" />
                 <span className="text-xs text-neutral-400 group-hover:text-white">Call</span>
               </a>
               <a
                 href={buildWhatsAppUrl(buildGeneralBookingMessage())}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-blue-900/10 transition-colors group"
               >
-                <MessageCircle className="w-5 h-5 text-neutral-400 group-hover:text-teal-400" />
+                <MessageCircle className="w-5 h-5 text-neutral-400 group-hover:text-white" />
                 <span className="text-xs text-neutral-400 group-hover:text-white">WhatsApp</span>
               </a>
               <a
                 href={`mailto:${EMAIL}`}
-                className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-blue-900/10 transition-colors group"
               >
-                <Mail className="w-5 h-5 text-neutral-400 group-hover:text-teal-400" />
+                <Mail className="w-5 h-5 text-neutral-400 group-hover:text-white" />
                 <span className="text-xs text-neutral-400 group-hover:text-white">Email</span>
               </a>
             </div>

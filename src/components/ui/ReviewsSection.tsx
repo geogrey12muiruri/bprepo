@@ -72,14 +72,26 @@ const reviews: Review[] = [
   },
 ];
 
-function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "md" }) {
+function StarRating({
+  rating,
+  size = "sm",
+  variant = "dark",
+}: {
+  rating: number;
+  size?: "sm" | "md";
+  variant?: "dark" | "light";
+}) {
   return (
     <div className="flex items-center gap-0.5">
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
           className={`${size === "md" ? "w-4 h-4" : "w-3.5 h-3.5"} ${
-            star <= rating ? "text-amber-400 fill-amber-400" : "text-neutral-600"
+            star <= rating
+              ? "text-amber-400 fill-amber-400"
+              : variant === "light"
+                ? "text-neutral-300"
+                : "text-neutral-600"
           }`}
         />
       ))}
@@ -87,29 +99,63 @@ function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "md
   );
 }
 
-function ReviewCard({ review }: { review: Review }) {
+function ReviewCard({ review, variant }: { review: Review; variant: "dark" | "light" }) {
   const [expanded, setExpanded] = useState(false);
   const isLong = review.text.length > 160;
   const displayText = !expanded && isLong ? review.text.slice(0, 160).trim() + "…" : review.text;
+  const isLight = variant === "light";
 
   // Determine source icon (simulated for now)
   const isGoogle = review.id === "r1" || review.id === "r3" || review.id === "r5";
 
   return (
-    <div className="break-inside-avoid mb-5 group relative flex flex-col gap-4 bg-white/[0.03] border border-white/10 rounded-2xl p-5 sm:p-6 hover:border-teal-500/30 hover:bg-white/[0.05] transition-all duration-300">
+    <div
+      className={[
+        "break-inside-avoid mb-5 group relative flex flex-col gap-4 rounded-2xl p-5 sm:p-6 transition-all duration-300",
+        isLight
+          ? "bg-white border border-neutral-200 hover:border-brand-blue/40"
+          : "bg-white/[0.03] border border-white/10 hover:border-teal-500/30 hover:bg-white/[0.05]",
+      ].join(" ")}
+    >
       {/* Subtle accent gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div
+        className={[
+          "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none",
+          isLight
+            ? "bg-gradient-to-br from-brand-blue/[0.06] via-transparent to-transparent"
+            : "bg-gradient-to-br from-teal-500/5 via-transparent to-transparent",
+        ].join(" ")}
+      />
 
       {/* Header */}
       <div className="flex items-start justify-between gap-3 relative z-10">
         <div className="flex items-center gap-3">
           {/* Avatar */}
-          <div className="w-10 h-10 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center flex-shrink-0 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-600/20 to-teal-800/20" />
-            <span className="relative text-[11px] font-bold text-teal-400">{review.initials}</span>
+          <div
+            className={[
+              "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 relative overflow-hidden",
+              isLight ? "bg-neutral-100 border border-neutral-200" : "bg-neutral-800 border border-white/10",
+            ].join(" ")}
+          >
+            {!isLight && <div className="absolute inset-0 bg-gradient-to-br from-teal-600/20 to-teal-800/20" />}
+            <span
+              className={[
+                "relative text-[11px] font-bold",
+                isLight ? "text-brand-blue" : "text-teal-400",
+              ].join(" ")}
+            >
+              {review.initials}
+            </span>
           </div>
           <div>
-            <span className="block text-sm font-semibold text-white leading-tight">{review.author}</span>
+            <span
+              className={[
+                "block text-sm font-semibold leading-tight",
+                isLight ? "text-neutral-950" : "text-white",
+              ].join(" ")}
+            >
+              {review.author}
+            </span>
             <div className="flex items-center gap-1.5 mt-1">
               <span className="text-[10px] text-neutral-500">{review.date}</span>
               <span className="w-0.5 h-0.5 rounded-full bg-neutral-700" />
@@ -133,20 +179,32 @@ function ReviewCard({ review }: { review: Review }) {
           </div>
         </div>
         <div className="flex flex-col items-end gap-1">
-          <StarRating rating={review.rating} />
+          <StarRating rating={review.rating} variant={variant} />
         </div>
       </div>
 
       {/* Review text */}
       <div className="relative z-10">
-        <p className="text-[13px] sm:text-sm text-neutral-300 leading-relaxed italic">
+        <p
+          className={[
+            "text-[13px] sm:text-sm leading-relaxed italic",
+            isLight ? "text-neutral-700" : "text-neutral-300",
+          ].join(" ")}
+        >
           &ldquo;{displayText}&rdquo;
         </p>
         
         <div className="mt-4 flex items-center justify-between">
           {/* Trip badge */}
           {review.trip && (
-            <span className="px-2 py-0.5 bg-white/5 border border-white/10 text-neutral-400 text-[9px] font-medium uppercase tracking-wider rounded-md">
+            <span
+              className={[
+                "px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider rounded-md",
+                isLight
+                  ? "bg-neutral-100 border border-neutral-200 text-neutral-600"
+                  : "bg-white/5 border border-white/10 text-neutral-400",
+              ].join(" ")}
+            >
               {review.trip}
             </span>
           )}
@@ -154,7 +212,10 @@ function ReviewCard({ review }: { review: Review }) {
           {isLong && (
             <button
               onClick={() => setExpanded(!expanded)}
-              className="text-[11px] font-medium text-teal-400 hover:text-teal-300 transition-colors"
+              className={[
+                "text-[11px] font-medium transition-colors",
+                isLight ? "text-brand-blue hover:text-blue-900" : "text-teal-400 hover:text-teal-300",
+              ].join(" ")}
             >
               {expanded ? "Show less" : "Read more"}
             </button>
@@ -165,28 +226,29 @@ function ReviewCard({ review }: { review: Review }) {
   );
 }
 
-export function ReviewsSection() {
+export function ReviewsSection({ variant = "dark" }: { variant?: "dark" | "light" }) {
   const avgRating = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
+  const isLight = variant === "light";
 
   return (
-    <section className="py-12 sm:py-16 bg-neutral-900">
+    <section className={isLight ? "py-12 sm:py-16 bg-stone-50 border-t border-neutral-200" : "py-12 sm:py-16 bg-neutral-900"}>
       <Container>
         {/* Section header */}
         <div className="mb-8 sm:mb-10">
-          <span className="text-[10px] font-black text-teal-400 uppercase tracking-[0.3em]">
+          <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${isLight ? "text-brand-blue" : "text-teal-400"}`}>
             Guest Reviews
           </span>
           <div className="mt-2 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-            <Heading level="h2" size="lg" className="text-white !font-bold">
+            <Heading level="h2" size="lg" className={`${isLight ? "text-neutral-950" : "text-white"} !font-bold`}>
               What Our Guests Say
             </Heading>
             {/* Aggregate score */}
             <div className="flex items-center gap-3 sm:pb-1">
               <div className="flex items-center gap-2">
-                <span className="text-3xl font-black text-white">{avgRating}</span>
+                <span className={`text-3xl font-black ${isLight ? "text-neutral-950" : "text-white"}`}>{avgRating}</span>
                 <div>
-                  <StarRating rating={5} size="md" />
-                  <span className="block text-[10px] text-neutral-500 mt-0.5">
+                  <StarRating rating={5} size="md" variant={variant} />
+                  <span className={`block text-[10px] mt-0.5 ${isLight ? "text-neutral-500" : "text-neutral-500"}`}>
                     {reviews.length} verified reviews
                   </span>
                 </div>
@@ -198,12 +260,12 @@ export function ReviewsSection() {
         {/* Reviews Masonry Columns */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-5">
           {reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
+            <ReviewCard key={review.id} review={review} variant={variant} />
           ))}
         </div>
 
         {/* Footer note */}
-        <p className="mt-6 text-center text-[11px] text-neutral-600">
+        <p className={`mt-6 text-center text-[11px] ${isLight ? "text-neutral-600" : "text-neutral-600"}`}>
           Reviews from Google, TripAdvisor, and direct guest feedback.
         </p>
       </Container>

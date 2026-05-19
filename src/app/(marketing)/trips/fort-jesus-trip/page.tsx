@@ -145,21 +145,24 @@ export default async function FortJesusTripPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <div className="min-h-screen bg-neutral-900">
+      <div className="min-h-screen bg-stone-50 text-neutral-950">
         
         {/* New Specialized Hero Carousel */}
         <FortJesusHero trip={trip} />
 
         <QuickFactsStrip trip={trip} />
 
+        {/* anchor for time-pill click → scroll target */}
+        <div id="plan-trip-anchor" />
+
         {/* Make Hop-On Hop-Off the primary content block (above the fold after hero) */}
-        <div className="py-8 sm:py-10 md:py-12">
+        <div className="py-8 sm:py-10 md:py-12 lg:py-14 pb-28 lg:pb-14">
           <Container>
             <HopOnHopOffSection />
           </Container>
         </div>
 
-        <Container className="py-6 sm:py-10 md:py-12 lg:py-14 pb-28 lg:pb-20">
+        <Container className="py-6 sm:py-10 md:py-12 lg:py-16 pb-28 lg:pb-20">
           {/* In-page navigation */}
           <div className="mb-10 sm:mb-12">
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
@@ -171,7 +174,7 @@ export default async function FortJesusTripPage() {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-white/90 text-xs font-semibold transition-colors"
+                  className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-neutral-200 bg-white hover:border-brand-blue hover:text-brand-blue text-neutral-700 text-xs font-semibold transition-colors"
                 >
                   {item.label}
                 </a>
@@ -179,20 +182,20 @@ export default async function FortJesusTripPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16">
             
             {/* Main Content Column */}
             <div className="lg:col-span-8 space-y-12 lg:space-y-16">
               {/* Safety Features */}
-              <section id="safety" className="pt-8 border-t border-white/10 scroll-mt-24">
-                <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">Safety & Comfort</Heading>
+              <section id="safety" className="scroll-mt-24 border-t border-neutral-200 pt-8">
+                <Heading level="h2" size="xl" className="mb-5 lg:mb-6 !font-bold tracking-tight text-neutral-950">Safety & Comfort</Heading>
                 <SafetyFeatures trip={trip} />
               </section>
 
               {/* Itinerary fallback (only if no hop-on/off route exists) */}
               {(!trip.stopOvers || trip.stopOvers.length === 0) && (
-                <section className="pt-8 border-t border-white/10">
-                  <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-white">
+                <section className="pt-8 border-t border-neutral-200">
+                  <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-neutral-950">
                     Itinerary
                   </Heading>
                   <ItineraryTimeline trip={trip} />
@@ -202,12 +205,12 @@ export default async function FortJesusTripPage() {
 
             {/* Sidebar Column */}
             <div className="lg:col-span-4 space-y-8 order-first lg:order-last">
-              <div className="lg:sticky lg:top-8 space-y-8">
+              <div className="lg:sticky lg:top-24 space-y-8">
                 {/* PricingCard in Sidebar */}
                 <PricingCard trip={trip} isComingSoon={isComingSoon} />
                 
                 {/* Departure Details in Sidebar */}
-                <div id="departure" className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 scroll-mt-24">
+                <div id="departure" className="scroll-mt-24">
                   <DepartureDetails trip={trip} />
                 </div>
               </div>

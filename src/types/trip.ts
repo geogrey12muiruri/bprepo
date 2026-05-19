@@ -41,15 +41,13 @@ export type Trip = {
   readonly departurePoints?: string;
   readonly stops?: string;
   readonly discounts?: {
-    readonly kenyansPercent?: number;
+    readonly couplePercent?: number;
+    readonly groupFamilyPercent?: number;
+    readonly groupFamilyMinPassengers?: number;
     readonly childrenMinAge?: number;
     readonly childrenMaxAge?: number;
     readonly childrenPercent?: number;
     readonly underFiveFree?: boolean;
-    readonly launchDiscount?: {
-      readonly percent: number;
-      readonly months?: string[];
-    };
   };
   readonly status?: "available" | "coming-soon";
   readonly image: string;

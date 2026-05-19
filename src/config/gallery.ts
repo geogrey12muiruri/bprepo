@@ -427,6 +427,7 @@ export const GALLERY_VIDEOS: GalleryItem[] = [
     category: "boats",
     featured: true,
     metadata: {
+      date: "2026-03-31",
       boat: "Setting Sons",
       tags: ["luxury", "video", "showcase"],
     },
@@ -442,6 +443,7 @@ export const GALLERY_VIDEOS: GalleryItem[] = [
     category: "boats",
     featured: true,
     metadata: {
+      date: "2026-03-31",
       boat: "Hunky Dory",
       tags: ["adventure", "video", "speedboat"],
     },
@@ -457,6 +459,7 @@ export const GALLERY_VIDEOS: GalleryItem[] = [
     category: "trips",
     featured: true,
     metadata: {
+      date: "2026-03-31",
       trip: "Sunset Sailing",
       tags: ["sunset", "romantic", "scenic"],
     },
@@ -472,6 +475,7 @@ export const GALLERY_VIDEOS: GalleryItem[] = [
     category: "adventures",
     featured: false,
     metadata: {
+      date: "2026-03-31",
       tags: ["adventure", "boat", "experience"],
     },
   },

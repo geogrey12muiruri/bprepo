@@ -28,7 +28,7 @@ export function Button({
     primary:
       "bg-brand-blue text-white hover:bg-blue-900 shadow-lg shadow-brand-blue/20 hover:shadow-xl",
     secondary:
-      "bg-brand-teal text-brand-blue hover:bg-teal-400 shadow-lg shadow-brand-teal/20",
+      "bg-brand-blue text-white hover:bg-blue-900 shadow-lg shadow-brand-blue/20",
     outline:
       "border-2 border-brand-blue text-brand-blue hover:bg-brand-blue/5",
     ghost: "text-brand-blue hover:bg-brand-blue/5",

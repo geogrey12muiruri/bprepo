@@ -29,7 +29,7 @@ export const trips: ReadonlyArray<Trip> = [
     name: "Fort Jesus",
     pricingModel: "hop_on_hop_off",
     description: "Hop on anywhere from Mtwapa Beach to Fort Jesus — like a water matatu along the Mombasa North Coast.",
-    fullDescription: "Blue Pineapple Coastal Services is launching a hop-on hop-off boat service along the Mombasa North Coast — operating like a water matatu from Mtwapa Beach all the way to Fort Jesus.\n\nBoard at any of our 9 stops (Serena, Bamburi, Whitesands, Pirates, Mombasa Beach, Nyali, English Point) and pay only for the stops you travel.\n\nPerfect for tourists, hotel guests, and local residents — with child fares, under-5s free, and launch discounts for Kenyan residents and the local community.",
+    fullDescription: "Blue Pineapple Coastal Services is launching a hop-on hop-off boat service along the Mombasa North Coast — operating like a water matatu from Mtwapa Beach all the way to Fort Jesus.\n\nBoard at any of our 9 stops (Serena, Bamburi, Whitesands, Pirates, Mombasa Beach, Nyali, English Point) and pay only for the stops you travel.\n\nPerfect for tourists, hotel guests, couples, families, and local residents — with 10% off couple bookings, 20% off group/family bookings of 4 or more paying passengers, child fares for ages 5–15, and free travel for children under 5.",
     seoTitle: "Fort Jesus Historical Boat Tour from Mombasa",
     seoDescription: "Experience a historic Fort Jesus boat tour from Mombasa Beach. Enjoy scenic coastal views, a UNESCO World Heritage Site, and optional stops. Book today!",
     heroImageAlt: "Blue Pineapple boat approaching the historic Fort Jesus harbour on the Mombasa coastline, Kenya",
@@ -40,14 +40,13 @@ export const trips: ReadonlyArray<Trip> = [
     departurePoints: "Hop on at any stop along the route",
     stops: "Mtwapa Beach → Fort Jesus (9 stops)",
     discounts: {
-      kenyansPercent: 25,
+      couplePercent: 10,
+      groupFamilyPercent: 20,
+      groupFamilyMinPassengers: 4,
       childrenMinAge: 5,
       childrenMaxAge: 15,
       childrenPercent: 50,
       underFiveFree: true,
-      launchDiscount: {
-        percent: 50,
-      },
     },
     features: [
       "Life jackets for all passengers",

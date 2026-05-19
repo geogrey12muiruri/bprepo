@@ -19,6 +19,37 @@ export const ASSETS = {
                 "/images/gallery/WhatsApp Image 2026-02-12 at 5.51.55 PM.jpeg",
             ]
         },
+        coastalLife: {
+            galleryPreview: [
+                {
+                    src: "/images/hero/IMG_5883-poster.jpg",
+                    alt: "Sunset sailing experience on the Indian Ocean in Mombasa, Kenya - Golden hour boat trip",
+                    emphasis: "feature",
+                },
+                {
+                    src: "/images/hero/IMG_5880-poster.jpg",
+                    alt: "Cruising the turquoise waters of the Indian Ocean off the coast of Mombasa, Kenya",
+                    emphasis: "standard",
+                },
+                {
+                    src: "/images/hero/IMG_5935-poster.jpg",
+                    alt: "Private boat charter experience in Mombasa - Exclusive coastal adventure",
+                    emphasis: "standard",
+                },
+                {
+                    src: "/images/gallery/hero.jpeg",
+                    alt: "Luxury marine experience on a BluePineapple boat in Mombasa",
+                    emphasis: "standard",
+                },
+                {
+                    // NOTE: IMG_5997-poster.jpg is not present in `public/images/services/`.
+                    // Use an existing, optimized service poster to avoid Next/Image 400s in production.
+                    src: "/images/services/IMG_6078-poster.jpg",
+                    alt: "Mangrove creek safari through Mtwapa and Tudor Creek in Mombasa, Kenya",
+                    emphasis: "standard",
+                },
+            ],
+        },
         services: {
             boatTrips: {
                 video: "/videos/services/IMG_6071.mp4",

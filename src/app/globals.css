@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
-/* Smooth scroll behavior */
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -13,8 +11,8 @@ body {
 
 /* Selection styling */
 ::selection {
-  background-color: #0D9488;
-  /* teal-600 */
+  background-color: #0B3D91;
+  /* brand-blue */
   color: white;
 }
 
@@ -27,14 +25,88 @@ body {
   font-feature-settings: "kern" 1, "liga" 1;
 }
 
+/* Responsive layout primitives */
+.container-responsive {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.section-large {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1rem;
+}
+
+.grid-card {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container-responsive {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .section-large {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .section-large {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .grid-responsive {
+    gap: 1.5rem;
+  }
+
+  .grid-card {
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 1536px) {
+  .section-large {
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container-responsive {
+    max-width: 1440px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
 /* Focus outline for accessibility */
 :focus {
   outline: none;
 }
 
 :focus-visible {
-  outline: 2px solid rgb(20, 184, 166);
-  /* teal-500 */
+  outline: 2px solid #0B3D91;
+  /* brand-blue */
   outline-offset: 2px;
 }
 
@@ -212,8 +284,8 @@ img {
 .route-dash {
   background-image: repeating-linear-gradient(
     90deg,
-    rgba(45, 212, 191, 0.55) 0 10px,
-    rgba(45, 212, 191, 0) 10px 20px
+    rgba(11, 61, 145, 0.55) 0 10px,
+    rgba(11, 61, 145, 0) 10px 20px
   );
   animation: dash-move 2.6s linear infinite;
   opacity: 0.75;
@@ -223,7 +295,6 @@ img {
 
 @theme {
   --color-brand-blue: #0B3D91;
-  --color-brand-teal: #40E0D0;
   --color-brand-sand: #F5F5F0;
   --color-brand-ink: #0F172A;
 }

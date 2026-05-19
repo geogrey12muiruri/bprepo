@@ -39,17 +39,15 @@ export const metadata: Metadata = {
 };
 
 export default function TripsPage() {
-  const featuredTrip = trips.find((t) => t.slug === "fort-jesus-trip") || trips[0];
-
   return (
-    <div className="min-h-screen bg-neutral-900 pt-16 sm:pt-20">
+    <div className="min-h-screen bg-stone-50 text-neutral-950">
       <TripsHeroSection />
 
       <Container className="py-8 sm:py-10 md:py-12">
         <TripsGrid />
       </Container>
 
-      <ReviewsSection />
+      <ReviewsSection variant="light" />
     </div>
   );
 }

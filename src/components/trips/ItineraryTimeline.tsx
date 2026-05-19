@@ -1,7 +1,27 @@
 import { CheckCircle2 } from "lucide-react";
 import type { Trip } from "@/types/trip";
+import { TripJourneyTimeline } from "@/components/sections/TripJourneyTimeline";
 
-export function ItineraryTimeline({ trip }: { trip: Trip }) {
+interface ItineraryTimelineProps {
+  trip: Trip;
+  variant?: "dark" | "light";
+}
+
+export function ItineraryTimeline({ trip, variant = "dark" }: ItineraryTimelineProps) {
+  // ── Route A: rich journey-stop data available ──
+  // Render the full-featured TripJourneyTimeline, offset so it reads
+  // naturally inside the parent page's scroll position.
+  if (trip.journeyStops && trip.journeyStops.length > 0) {
+    return (
+      <TripJourneyTimeline
+        stops={trip.journeyStops}
+        returnNote={trip.returnNote ?? "Return by boat along the same scenic route."}
+        variant={variant}
+      />
+    );
+  }
+
+  // ── Route B: fallback to plain highlights list ──
   const highlights = trip.highlights || [
     "Depart from Mombasa Beach",
     "Cruise past Nyali Beach",
@@ -11,6 +31,10 @@ export function ItineraryTimeline({ trip }: { trip: Trip }) {
     "Explore Old Town",
     "Return journey",
   ];
+
+  /* Section background / text colour ─ inherit from parent via dark paths */
+  const bgCard   = variant === "light" ? "bg-white" : "";
+  const textMain = variant === "light" ? "text-neutral-800" : "";
 
   return (
     <div className="relative">

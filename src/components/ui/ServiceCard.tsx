@@ -14,7 +14,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
     const { id, title, description, href, image, video, poster, isDisabled, statusMessage } = service;
 
     const content = (
-        <article className={`group relative w-full aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/3] overflow-hidden rounded-xl sm:rounded-2xl bg-neutral-900 shadow-md hover:shadow-lg transition-all duration-300 ${!isDisabled && "hover:shadow-teal-500/20 hover:-translate-y-0.5 cursor-pointer"}`}>
+        <article className={`group relative w-full aspect-[3/4] overflow-hidden rounded-xl sm:rounded-2xl bg-neutral-900 shadow-md hover:shadow-lg transition-all duration-300 ${!isDisabled && "hover:shadow-teal-500/20 hover:-translate-y-0.5 cursor-pointer"}`}>
             {/* Background Media */}
             <div className="absolute inset-0">
                 {video ? (

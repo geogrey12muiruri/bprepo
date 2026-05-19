@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/home/Hero";
-// Keeping import for now if needed, but removing from view
+// NOTE: HeroInfoCards.tsx exists in sections/home/ but is not used anywhere — integrate or delete.
 import { Services } from "@/components/sections/home/Services";
 import { PopularTrips } from "@/components/sections/home/PopularTrips";
 import { BoatsPreview } from "@/components/sections/home/BoatsPreview";
@@ -70,13 +70,14 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
       />
-      <Hero />
-      <WhyChooseUs />
-      <Services />
-      <PopularTrips />
-
-      <BoatsPreview />
-      <CoastalLife />
+      <div className="bg-stone-50 text-neutral-950">
+        <Hero />
+        <WhyChooseUs />
+        <Services />
+        <PopularTrips />
+        <BoatsPreview />
+        <CoastalLife />
+      </div>
     </>
   );
 }

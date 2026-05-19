@@ -6,6 +6,7 @@ import type { JourneyStop, JourneyStopIcon } from "@/types/trip";
 interface TripJourneyTimelineProps {
   stops: readonly JourneyStop[];
   returnNote: string;
+  variant?: "dark" | "light";
 }
 
 const STOP_ICONS: Record<JourneyStopIcon, React.ReactNode> = {

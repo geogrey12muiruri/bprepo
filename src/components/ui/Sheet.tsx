@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface SheetProps {
@@ -11,6 +11,15 @@ interface SheetProps {
 }
 
 export function Sheet({ isOpen, onClose, children, side = "right" }: SheetProps) {
+    // Must be false on both server AND client first-render so the tree matches.
+    // createPortal is only safe after hydration, which useEffect guarantees.
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setMounted(true);
+    }, []);
+
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -31,27 +40,30 @@ export function Sheet({ isOpen, onClose, children, side = "right" }: SheetProps)
         return () => window.removeEventListener("keydown", handleEsc);
     }, [onClose]);
 
-    if (typeof document === "undefined") return null;
+    if (!mounted) return null;
 
     const content = (
         <>
             {/* Backdrop */}
             <div
-                className={`fixed inset-0 z-[140] bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                    }`}
+                className={`fixed inset-0 z-[140] bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+                    isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                }`}
                 onClick={onClose}
                 aria-hidden="true"
             />
 
             {/* Drawer Panel */}
             <div
-                className={`fixed top-0 bottom-0 z-[150] w-[85vw] max-w-[400px] bg-white shadow-2xl transition-transform duration-500 cubic-[0.16,1,0.3,1] ${side === "right" ? "right-0" : "left-0"
-                    } ${isOpen
+                className={`fixed top-0 bottom-0 z-[150] w-[85vw] max-w-[400px] bg-white shadow-2xl transition-transform duration-500 cubic-[0.16,1,0.3,1] ${
+                    side === "right" ? "right-0" : "left-0"
+                } ${
+                    isOpen
                         ? "translate-x-0"
                         : side === "right"
-                            ? "translate-x-full"
-                            : "-translate-x-full"
-                    }`}
+                        ? "translate-x-full"
+                        : "-translate-x-full"
+                }`}
                 role="dialog"
                 aria-modal="true"
             >

@@ -30,7 +30,8 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased bg-neutral-950 text-white overflow-x-clip">
         <Header />
-        <main>{children}</main>
+        {/* pt-14 offsets the fixed header (~56px). Full-bleed hero sections use -mt-14 to compensate. */}
+        <main className="pt-14">{children}</main>
         <Footer />
       </body>
     </html>

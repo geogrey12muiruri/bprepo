@@ -31,6 +31,13 @@ export default function GalleryPage() {
   // Get all gallery items (images + videos)
   const galleryItems = getAllGalleryItems();
 
+  const getVideoUploadDate = (date?: string) => {
+    // Prefer an explicit date from content metadata (YYYY-MM-DD).
+    // Fall back to a stable value so Google can validate required fields.
+    const baseDate = date || "2026-03-31";
+    return `${baseDate}T00:00:00+03:00`;
+  };
+
   // Build JSON-LD structured data
   const jsonLd = {
     "@context": "https://schema.org",
@@ -50,6 +57,8 @@ export default function GalleryPage() {
       description: item.description,
       ...(item.type === "video" && {
         thumbnailUrl: getAbsoluteUrl(item.poster || ""),
+        uploadDate: getVideoUploadDate(item.metadata?.date),
+        contentUrl: getAbsoluteUrl(item.src),
       }),
     })),
   };

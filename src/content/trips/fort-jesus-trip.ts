@@ -34,8 +34,10 @@ export const FORT_JESUS_TRIP_CONTENT = {
     pricingNote:
       "4–7 stops: KES 1,400 – 2,600 (add KES 400 per stop after 3)",
     concessions: [
-      { tone: "teal", title: "Children 5–15", detail: "50% off adult fare" },
-      { tone: "amber", title: "Under 5 years", detail: "Travel completely FREE" },
+      { tone: "blue", title: "Couple bookings", detail: "10% off for 2 paying passengers" },
+      { tone: "blue", title: "Group / Family bookings", detail: "20% off for 4 or more paying passengers" },
+      { tone: "blue", title: "Children 5–15", detail: "50% off adult fare" },
+      { tone: "blue", title: "Under 5 years", detail: "Travel completely FREE" },
     ],
     timetable: [
       { label: "Depart Mtwapa Beach", value: "9:30 AM daily" },
@@ -67,10 +69,6 @@ export const FORT_JESUS_TRIP_CONTENT = {
       { title: "Choose your stop", detail: "Board at any of our 9 stops along the coast." },
       { title: "Step aboard", detail: "Our friendly crew welcomes you onto the boat." },
       { title: "Pay on board", detail: "Pay only for the stops you travel." },
-    ],
-    discounts: [
-      { title: "Kenyan resident discount", detail: "25% off (launch phase)" },
-      { title: "Local community discount", detail: "50% off (launch phase)" },
     ],
     footerLine: "Departs daily · Multiple runs until 5:30 PM",
   },

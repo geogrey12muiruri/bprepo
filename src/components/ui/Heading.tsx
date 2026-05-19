@@ -30,7 +30,7 @@ export function Heading({
   id,
 }: HeadingProps) {
   const HeadingTag = level;
-  const baseStyles = "text-neutral-900 leading-tight font-[family:var(--font-display)] tracking-tight";
+  const baseStyles = "leading-tight font-[family:var(--font-display)] tracking-tight";
 
   return (
     <HeadingTag
