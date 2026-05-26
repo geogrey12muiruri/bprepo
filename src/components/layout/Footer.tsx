@@ -22,6 +22,30 @@ const quickLinks = [
   { label: "Contact Us", href: ROUTES.contact },
 ];
 
+const socialLinks = [
+  {
+    platform: "TikTok",
+    url: "https://www.tiktok.com/@bluepineappleboats?is_from_webapp=1&sender_device=pc",
+    icon: "/icons/tik-tok_3046126.png",
+  },
+  {
+    platform: "Instagram",
+    url: "https://www.instagram.com/bluepineappleboats?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    icon: "/icons/instagram.png",
+  },
+  {
+    platform: "Facebook",
+    url: "https://web.facebook.com/profile.php?id=61575471731284",
+    icon: "/icons/facebook.png",
+  },
+  // Twitter is not available yet
+  // {
+  //   platform: "Twitter",
+  //   url: "",
+  //   icon: "/icons/twitter.png",
+  // },
+];
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const whatsAppHref = buildWhatsAppUrl(buildGeneralBookingMessage());
@@ -32,7 +56,7 @@ export function Footer() {
       <div className="h-1 w-full bg-gradient-to-r from-brand-blue via-teal-500 to-transparent" />
 
       <Container className="py-12 sm:py-14 lg:py-16">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-16 lg:gap-10">
 
           {/* Col 1 — Brand */}
           <div className="flex flex-col gap-5 lg:col-span-4">
@@ -124,6 +148,34 @@ export function Footer() {
                 </div>
               </li>
             </ul>
+          </div>
+
+          {/* Col 4 — Follow Us (Social Media) */}
+          <div className="lg:col-span-4">
+            <p className="text-[10px] font-black text-white uppercase tracking-[0.25em] mb-5">
+              Follow Us
+            </p>
+            <div className="flex flex-wrap gap-4">
+              {socialLinks.map((social) => (
+                <Link
+                  key={social.platform}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center w-12 h-12 bg-neutral-800/50 hover:bg-neutral-700/70 transition-colors duration-300 rounded-full"
+                >
+                  {social.url && (
+                    <Image
+                      src={social.icon}
+                      alt={`${social.platform} logo`}
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                    />
+                  )}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
