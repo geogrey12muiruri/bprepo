@@ -58,9 +58,9 @@ export default function HomePage() {
     priceRange: "$$",
     image: "https://bluepineappleholdings.com/images/logo.png",
     sameAs: [
-      // Add social media profiles when available
-      // "https://www.facebook.com/bluepineapple",
-      // "https://www.instagram.com/bluepineapple",
+      "https://www.tiktok.com/@bluepineappleboats?is_from_webapp=1&sender_device=pc",
+      "https://www.instagram.com/bluepineappleboats?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+      "https://web.facebook.com/profile.php?id=61575471731284",
     ],
   });
 
