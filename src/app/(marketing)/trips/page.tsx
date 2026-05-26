@@ -43,9 +43,17 @@ export default function TripsPage() {
     <div className="min-h-screen bg-stone-50 text-neutral-950">
       <TripsHeroSection />
 
-      <Container className="py-8 sm:py-10 md:py-12">
-        <TripsGrid />
-      </Container>
+      <section
+        id="trips"
+        className="relative overflow-hidden border-b border-neutral-200 bg-gradient-to-b from-white via-sky-50/70 to-stone-50 py-10 sm:py-12 md:py-14"
+      >
+        <div className="pointer-events-none absolute left-0 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-brand-blue/10 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 translate-x-1/3 rounded-full bg-sky-200/40 blur-3xl" />
+
+        <Container>
+          <TripsGrid />
+        </Container>
+      </section>
 
       <ReviewsSection variant="light" />
     </div>

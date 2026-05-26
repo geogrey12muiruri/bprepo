@@ -28,6 +28,7 @@ export function Header() {
 
   const pathname = usePathname();
   const isHome = pathname === ROUTES.home;
+  const isHeroOverlayPage = isHome || pathname === ROUTES.trips || pathname.startsWith("/trips/");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,7 +41,7 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const showSolidHeader = !isHome || isScrolled;
+  const showSolidHeader = !isHeroOverlayPage || isScrolled;
 
   const headerBg = showSolidHeader
     ? "bg-neutral-900/95 backdrop-blur-md border-b border-white/5 shadow-lg shadow-black/10"

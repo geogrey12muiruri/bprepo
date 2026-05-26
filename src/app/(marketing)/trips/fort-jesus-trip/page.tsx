@@ -11,7 +11,8 @@ import { ItineraryTimeline } from "@/components/trips/ItineraryTimeline";
 import { SafetyFeatures } from "@/components/trips/SafetyFeatures";
 import { DepartureDetails } from "@/components/trips/DepartureDetails";
 import { FortJesusHero } from "@/components/trips/FortJesusHero";
-import { HopOnHopOffSection } from "@/components/trips/HopOnHopOffSection";
+import { FortJesusRouteBlock } from "@/components/trips/FortJesusRouteBlock";
+import { JourneySection } from "@/components/trips/JourneySection";
 
 const SLUG = "fort-jesus-trip";
 
@@ -155,10 +156,24 @@ export default async function FortJesusTripPage() {
         {/* anchor for time-pill click → scroll target */}
         <div id="plan-trip-anchor" />
 
-        {/* Make Hop-On Hop-Off the primary content block (above the fold after hero) */}
-        <div className="py-8 sm:py-10 md:py-12 lg:py-14 pb-28 lg:pb-14">
+        <FortJesusRouteBlock />
+
+        <div className="py-10 sm:py-12 md:py-14">
           <Container>
-            <HopOnHopOffSection />
+            <div className="mb-6 sm:mb-8">
+              <p className="text-[11px] font-black uppercase tracking-[0.32em] text-brand-blue">
+                Experience
+              </p>
+              <Heading level="h2" size="xl" className="mt-3 !font-bold tracking-tight text-neutral-950">
+                What you’ll feel
+              </Heading>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-700 sm:text-base">
+                A coastal cruise with iconic views, heritage landmarks, and time to explore Old Town — designed to be
+                effortless, safe, and memorable.
+              </p>
+            </div>
+
+            <JourneySection trip={trip} />
           </Container>
         </div>
 
@@ -167,7 +182,8 @@ export default async function FortJesusTripPage() {
           <div className="mb-10 sm:mb-12">
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
               {[
-                { href: "#hop-on-hop-off", label: "Route & Fares" },
+                { href: "#route-fares", label: "Route & Fares" },
+                { href: "#itinerary", label: "Itinerary" },
                 { href: "#safety", label: "Safety & Comfort" },
                 { href: "#departure", label: "Departure" },
               ].map((item) => (
@@ -186,21 +202,18 @@ export default async function FortJesusTripPage() {
             
             {/* Main Content Column */}
             <div className="lg:col-span-8 space-y-12 lg:space-y-16">
+              <section id="itinerary" className="scroll-mt-24 border-t border-neutral-200 pt-8">
+                <Heading level="h2" size="xl" className="mb-5 lg:mb-6 !font-bold tracking-tight text-neutral-950">
+                  Itinerary
+                </Heading>
+                <ItineraryTimeline trip={trip} variant="light" />
+              </section>
+
               {/* Safety Features */}
               <section id="safety" className="scroll-mt-24 border-t border-neutral-200 pt-8">
                 <Heading level="h2" size="xl" className="mb-5 lg:mb-6 !font-bold tracking-tight text-neutral-950">Safety & Comfort</Heading>
                 <SafetyFeatures trip={trip} />
               </section>
-
-              {/* Itinerary fallback (only if no hop-on/off route exists) */}
-              {(!trip.stopOvers || trip.stopOvers.length === 0) && (
-                <section className="pt-8 border-t border-neutral-200">
-                  <Heading level="h2" size="xl" className="mb-6 lg:mb-8 !font-bold tracking-tight text-neutral-950">
-                    Itinerary
-                  </Heading>
-                  <ItineraryTimeline trip={trip} />
-                </section>
-              )}
             </div>
 
             {/* Sidebar Column */}
@@ -218,6 +231,7 @@ export default async function FortJesusTripPage() {
 
           </div>
         </Container>
+
       </div>
     </>
   );

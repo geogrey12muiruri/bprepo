@@ -1,0 +1,92 @@
+[
+  {
+    "id": "review-1779823308095",
+    "author": "Gilman",
+    "initials": "G",
+    "rating": 5,
+    "date": "May 2026",
+    "trip": "Creek Safaris / Mangrove",
+    "text": "Amazing views of the coast, would definitely recommend",
+    "images": [
+      "https://res.cloudinary.com/dwqw73q3t/image/upload/v1779823306/bluepineapple_reviews/plza2vnxhhmpeombihxb.jpg"
+    ]
+  },
+  {
+    "id": "review-1779822323622",
+    "author": "Joe",
+    "initials": "J",
+    "rating": 4,
+    "date": "May 2026",
+    "trip": "Fort Jesus",
+    "text": "The crew was amazing the fleet was modern and safe.",
+    "images": [
+      "https://res.cloudinary.com/dwqw73q3t/image/upload/v1779822322/bluepineapple_reviews/y3edvrqun81noxajulu3.jpg"
+    ]
+  },
+  {
+    "id": "review-1779810327141",
+    "author": "Gregory",
+    "initials": "G",
+    "rating": 4,
+    "date": "May 2026",
+    "trip": "Fort Jesus",
+    "text": "The crew and the fleet all amazing!",
+    "images": [
+      "https://res.cloudinary.com/dwqw73q3t/image/upload/v1779810326/bluepineapple_reviews/h3xzhv2shovbnoeciyjw.jpg"
+    ]
+  },
+  {
+    "id": "r1",
+    "author": "Sarah M.",
+    "initials": "SM",
+    "rating": 5,
+    "date": "April 2026",
+    "trip": "Fort Jesus Tour",
+    "text": "Absolutely breathtaking experience. The captain was knowledgeable and the views of Fort Jesus from the water are something you simply cannot get any other way. Worth every shilling."
+  },
+  {
+    "id": "r2",
+    "author": "James O.",
+    "initials": "JO",
+    "rating": 5,
+    "date": "March 2026",
+    "trip": "Mangrove Creek Safari",
+    "text": "The glass-bottomed boat on the mangrove safari was incredible — we could see everything beneath us. Peaceful, well-guided, and genuinely unlike anything else on the coast."
+  },
+  {
+    "id": "r3",
+    "author": "Amina K.",
+    "initials": "AK",
+    "rating": 5,
+    "date": "February 2026",
+    "trip": "Sunset Sailing",
+    "text": "We booked the sunset sail for our anniversary and it exceeded all expectations. The crew were attentive, the Swahili snacks were wonderful, and the sky was on fire. A memory we'll keep forever."
+  },
+  {
+    "id": "r4",
+    "author": "David R.",
+    "initials": "DR",
+    "rating": 5,
+    "date": "April 2026",
+    "trip": "Snorkelling Reef",
+    "text": "Excellent safety briefing, excellent crew, and the reef was magnificent. We saw parrotfish, turtles, and more. The boat is comfortable and the team made everyone feel at ease, even first-time snorkellers."
+  },
+  {
+    "id": "r5",
+    "author": "Priya S.",
+    "initials": "PS",
+    "rating": 5,
+    "date": "January 2026",
+    "trip": "Fort Jesus Tour",
+    "text": "A truly special way to arrive at Fort Jesus — stepping off a boat at the old harbour feels like arriving as an explorer from another century. The Old Town walk afterwards was the perfect complement."
+  },
+  {
+    "id": "r6",
+    "author": "Tom W.",
+    "initials": "TW",
+    "rating": 5,
+    "date": "March 2026",
+    "trip": "Birthdays & Anniversaries",
+    "text": "Organised a surprise birthday cruise for my partner. The Blue Pineapple team were incredibly helpful with the logistics and the day itself was flawless. The Indian Ocean as a backdrop — hard to top."
+  }
+]

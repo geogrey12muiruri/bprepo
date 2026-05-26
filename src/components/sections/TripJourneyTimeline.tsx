@@ -49,22 +49,33 @@ function StopCard({
   stop,
   index,
   total,
+  variant = "dark",
 }: {
   stop: JourneyStop;
   index: number;
   total: number;
+  variant?: "dark" | "light";
 }) {
   const isFirst = index === 0;
   const isLast = index === total - 1;
   const isFinal = stop.variant === "final";
+  const isLight = variant === "light";
 
-  const accentColor = isFinal
+  const accentColor = isLight
+    ? isFinal
+      ? "text-brand-blue border-brand-blue/25 bg-brand-blue/[0.04]"
+      : "text-brand-blue border-neutral-200 bg-white"
+    : isFinal
     ? "text-amber-400 border-amber-400/40 bg-amber-400/5"
     : isFirst
     ? "text-teal-300 border-teal-400/50 bg-teal-400/5"
     : "text-teal-400 border-teal-400/25 bg-teal-400/[0.03]";
 
-  const numberColor = isFinal
+  const numberColor = isLight
+    ? isFinal
+      ? "bg-brand-blue/10 text-brand-blue ring-1 ring-brand-blue/20"
+      : "bg-brand-blue/10 text-brand-blue ring-1 ring-brand-blue/15"
+    : isFinal
     ? "bg-amber-500/15 text-amber-300 ring-1 ring-amber-400/30"
     : "bg-teal-500/10 text-teal-400 ring-1 ring-teal-400/25";
 
@@ -78,18 +89,26 @@ function StopCard({
           {index + 1}
         </div>
         {!isLast && (
-          <div className="w-px flex-1 mt-2 bg-gradient-to-b from-teal-500/30 to-teal-500/05 min-h-[24px]" />
+          <div
+            className={
+              isLight
+                ? "w-px flex-1 mt-2 bg-gradient-to-b from-brand-blue/25 to-brand-blue/0 min-h-[24px]"
+                : "w-px flex-1 mt-2 bg-gradient-to-b from-teal-500/30 to-teal-500/05 min-h-[24px]"
+            }
+          />
         )}
       </div>
 
       {/* Right: content card */}
       <div
-        className={`flex-1 rounded-xl border px-4 py-3.5 mb-3 transition-colors duration-200 hover:border-teal-400/40 ${accentColor}`}
+        className={`flex-1 rounded-xl border px-4 py-3.5 mb-3 transition-colors duration-200 ${
+          isLight ? "hover:border-brand-blue/30" : "hover:border-teal-400/40"
+        } ${accentColor}`}
       >
         {/* Icon + label row */}
         <div className="flex items-center gap-2 mb-1.5">
-          <span className="opacity-70">{STOP_ICONS[stop.icon]}</span>
-          <span className="text-[13px] sm:text-sm font-semibold tracking-tight text-white">
+          <span className={isLight ? "opacity-70 text-neutral-700" : "opacity-70"}>{STOP_ICONS[stop.icon]}</span>
+          <span className={`text-[13px] sm:text-sm font-semibold tracking-tight ${isLight ? "text-neutral-950" : "text-white"}`}>
             {stop.label}
           </span>
         </div>
@@ -100,7 +119,11 @@ function StopCard({
             {stop.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-0.5 bg-white/5 text-neutral-500 text-[9px] font-medium uppercase tracking-wider rounded-full border border-white/8"
+                className={
+                  isLight
+                    ? "px-2 py-0.5 bg-neutral-100 text-neutral-600 text-[9px] font-medium uppercase tracking-wider rounded-full border border-neutral-200"
+                    : "px-2 py-0.5 bg-white/5 text-neutral-500 text-[9px] font-medium uppercase tracking-wider rounded-full border border-white/8"
+                }
               >
                 {tag}
               </span>
@@ -109,7 +132,7 @@ function StopCard({
         )}
 
         {/* Detail text — always visible, no accordion */}
-        <p className="text-[12px] sm:text-[13px] text-neutral-400 leading-relaxed">
+        <p className={`text-[12px] sm:text-[13px] leading-relaxed ${isLight ? "text-neutral-700" : "text-neutral-400"}`}>
           {stop.detail}
         </p>
       </div>
@@ -117,22 +140,24 @@ function StopCard({
   );
 }
 
-export function TripJourneyTimeline({ stops, returnNote }: TripJourneyTimelineProps) {
+export function TripJourneyTimeline({ stops, returnNote, variant = "dark" }: TripJourneyTimelineProps) {
+  const isLight = variant === "light";
+
   return (
     <section>
       {/* Section label */}
       <div className="mb-1">
-        <span className="text-[10px] font-black text-neutral-500 uppercase tracking-widest">
+        <span className={`text-[10px] font-black uppercase tracking-widest ${isLight ? "text-brand-blue" : "text-neutral-500"}`}>
           Your route
         </span>
       </div>
 
-      <Heading level="h2" size="xl" className="mb-1 !font-bold tracking-tight text-white">
+      <Heading level="h2" size="xl" className={`mb-1 !font-bold tracking-tight ${isLight ? "text-neutral-950" : "text-white"}`}>
         Journey highlights
       </Heading>
 
-      <p className="text-xs text-neutral-500 mb-7 flex items-center gap-1.5">
-        <svg className="w-3.5 h-3.5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <p className={`text-xs mb-7 flex items-center gap-1.5 ${isLight ? "text-neutral-500" : "text-neutral-500"}`}>
+        <svg className={`w-3.5 h-3.5 ${isLight ? "text-brand-blue" : "text-teal-500"}`} viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
@@ -147,14 +172,21 @@ export function TripJourneyTimeline({ stops, returnNote }: TripJourneyTimelinePr
             stop={stop}
             index={index}
             total={stops.length}
+            variant={variant}
           />
         ))}
       </div>
 
       {/* Return note */}
-      <div className="mt-3 flex items-start gap-3 px-4 py-3 bg-white/[0.03] border border-white/8 rounded-xl">
+      <div
+        className={
+          isLight
+            ? "mt-3 flex items-start gap-3 px-4 py-3 bg-white border border-neutral-200 rounded-xl"
+            : "mt-3 flex items-start gap-3 px-4 py-3 bg-white/[0.03] border border-white/8 rounded-xl"
+        }
+      >
         <svg
-          className="w-4 h-4 text-neutral-500 flex-shrink-0 mt-0.5"
+          className={`w-4 h-4 flex-shrink-0 mt-0.5 ${isLight ? "text-neutral-500" : "text-neutral-500"}`}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -165,7 +197,7 @@ export function TripJourneyTimeline({ stops, returnNote }: TripJourneyTimelinePr
           <path d="M1 4v6h6M23 20v-6h-6" />
           <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
         </svg>
-        <p className="text-xs text-neutral-500">{returnNote}</p>
+        <p className={`text-xs ${isLight ? "text-neutral-600" : "text-neutral-500"}`}>{returnNote}</p>
       </div>
     </section>
   );
