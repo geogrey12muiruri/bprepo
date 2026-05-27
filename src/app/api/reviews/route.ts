@@ -3,11 +3,6 @@ import { promises as fs } from "fs";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 
-// Define paths in workspace
-const DATA_DIR = path.join(process.cwd(), "src/data");
-const REVIEWS_FILE = path.join(DATA_DIR, "reviews.json");
-const UPLOADS_DIR = path.join(process.cwd(), "public/uploads");
-
 // Determine if Cloudinary credentials are fully configured in environmental variables
 const isCloudinaryConfigured = !!(
   process.env.CLOUDINARY_CLOUD_NAME &&
@@ -23,17 +18,37 @@ if (isCloudinaryConfigured) {
   });
 }
 
+// In serverless (Vercel/AWS Lambda), /tmp is the only writable directory
+const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+const DATA_DIR = isServerless ? "/tmp/data" : path.join(process.cwd(), "src/data");
+const REVIEWS_FILE = path.join(DATA_DIR, "reviews.json");
+
 /**
- * Ensures required directories and reviews database file exist
+ * Ensures reviews database exists (seeded from bundled file in serverless)
  */
-async function ensureDbAndUploadsDir() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.mkdir(UPLOADS_DIR, { recursive: true });
+async function ensureDb() {
+  if (!isServerless) {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+  }
 
   try {
     await fs.access(REVIEWS_FILE);
   } catch {
-    await fs.writeFile(REVIEWS_FILE, JSON.stringify([], null, 2), "utf8");
+    const seedData = [];
+    try {
+      if (isServerless) {
+        // Try to read from bundled source in serverless
+        const bundledPath = path.join(process.cwd(), "src/data/reviews.json");
+        const bundled = await fs.readFile(bundledPath, "utf8");
+        const parsed = JSON.parse(bundled);
+        if (Array.isArray(parsed)) {
+          seedData.push(...parsed);
+        }
+      }
+    } catch {
+      // No bundled data available
+    }
+    await fs.writeFile(REVIEWS_FILE, JSON.stringify(seedData, null, 2), "utf8");
   }
 }
 
@@ -60,23 +75,11 @@ async function uploadToCloudinary(buffer: Buffer): Promise<string> {
 }
 
 /**
- * Helper to write buffer to public/uploads local directory
- */
-async function saveFileLocally(fileName: string, buffer: Buffer): Promise<string> {
-  const fileExt = path.extname(fileName) || ".jpg";
-  const sanitizedBase = path.basename(fileName, fileExt).replace(/[^a-zA-Z0-9]/g, "_");
-  const uniqueName = `${Date.now()}-${sanitizedBase}${fileExt}`;
-  const filePath = path.join(UPLOADS_DIR, uniqueName);
-  await fs.writeFile(filePath, buffer);
-  return `/uploads/${uniqueName}`;
-}
-
-/**
  * GET Handler - returns list of verified guest reviews
  */
 export async function GET() {
   try {
-    await ensureDbAndUploadsDir();
+    await ensureDb();
     const data = await fs.readFile(REVIEWS_FILE, "utf8");
     const reviews = JSON.parse(data);
     return NextResponse.json(reviews);
@@ -90,16 +93,15 @@ export async function GET() {
 }
 
 /**
- * POST Handler - uploads images (Cloudinary with local disk fallback) and persists a new guest review
+ * POST Handler - uploads images to Cloudinary and persists a new guest review
  */
 export async function POST(req: NextRequest) {
   try {
-    await ensureDbAndUploadsDir();
+    await ensureDb();
 
     // Parse form-data
     const formData = await req.formData();
     const author = formData.get("author") as string;
-    const email = formData.get("email") as string;
     const ratingStr = formData.get("rating") as string;
     const trip = formData.get("trip") as string;
     const text = formData.get("text") as string;
@@ -124,6 +126,14 @@ export async function POST(req: NextRequest) {
     const imageUrls: string[] = [];
     const files = formData.getAll("images") as File[];
 
+    // Check Cloudinary config before processing any images
+    if (files.length > 0 && !isCloudinaryConfigured) {
+      return NextResponse.json(
+        { error: "Image uploads require Cloudinary configuration" },
+        { status: 500 }
+      );
+    }
+
     for (const file of files) {
       // Validate it is an actual file payload
       if (!file || typeof file === "string" || !file.name) {
@@ -134,25 +144,11 @@ export async function POST(req: NextRequest) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      if (isCloudinaryConfigured) {
-        // Upload directly to Cloudinary
-        try {
-          console.info(`Uploading image "${file.name}" directly to Cloudinary...`);
-          const secureUrl = await uploadToCloudinary(buffer);
-          if (secureUrl) {
-            imageUrls.push(secureUrl);
-          }
-        } catch (cloudinaryErr) {
-          console.error("Cloudinary upload failed, attempting local fallback:", cloudinaryErr);
-          // Fallback to local upload so the user experience doesn't break
-          const localUrl = await saveFileLocally(file.name, buffer);
-          imageUrls.push(localUrl);
-        }
-      } else {
-        // Fallback to local upload when credentials are not configured yet
-        console.info(`Cloudinary credentials missing. Saving image "${file.name}" locally to public/uploads/`);
-        const localUrl = await saveFileLocally(file.name, buffer);
-        imageUrls.push(localUrl);
+      // Upload directly to Cloudinary
+      console.info(`Uploading image "${file.name}" directly to Cloudinary...`);
+      const secureUrl = await uploadToCloudinary(buffer);
+      if (secureUrl) {
+        imageUrls.push(secureUrl);
       }
     }
 
