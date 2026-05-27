@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { createClient } from "@supabase/supabase-js";
 import { v2 as cloudinary } from "cloudinary";
 
-// Determine if Cloudinary credentials are fully configured in environmental variables
+// Cloudinary configuration
 const isCloudinaryConfigured = !!(
   process.env.CLOUDINARY_CLOUD_NAME &&
   process.env.CLOUDINARY_API_KEY &&
@@ -18,39 +19,18 @@ if (isCloudinaryConfigured) {
   });
 }
 
-// In serverless (Vercel/AWS Lambda), /tmp is the only writable directory
-const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
-const DATA_DIR = isServerless ? "/tmp/data" : path.join(process.cwd(), "src/data");
-const REVIEWS_FILE = path.join(DATA_DIR, "reviews.json");
+// Supabase configuration
+const isSupabaseConfigured = !!(
+  process.env.NEXT_PUBLIC_SUPABASE_URL &&
+  (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
+);
 
-/**
- * Ensures reviews database exists (seeded from bundled file in serverless)
- */
-async function ensureDb() {
-  if (!isServerless) {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-  }
-
-  try {
-    await fs.access(REVIEWS_FILE);
-  } catch {
-    const seedData = [];
-    try {
-      if (isServerless) {
-        // Try to read from bundled source in serverless
-        const bundledPath = path.join(process.cwd(), "src/data/reviews.json");
-        const bundled = await fs.readFile(bundledPath, "utf8");
-        const parsed = JSON.parse(bundled);
-        if (Array.isArray(parsed)) {
-          seedData.push(...parsed);
-        }
-      }
-    } catch {
-      // No bundled data available
-    }
-    await fs.writeFile(REVIEWS_FILE, JSON.stringify(seedData, null, 2), "utf8");
-  }
-}
+const supabase = isSupabaseConfigured
+  ? createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)!
+    )
+  : null;
 
 /**
  * Streams image buffer upload directly to Cloudinary folder
@@ -75,14 +55,56 @@ async function uploadToCloudinary(buffer: Buffer): Promise<string> {
 }
 
 /**
+ * Compute author initials
+ */
+function computeInitials(author: string): string {
+  return (
+    author
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2) || "G"
+  );
+}
+
+/**
+ * Format current date (e.g., "May 2026")
+ */
+function formatDate(): string {
+  return new Date().toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+}
+
+/**
  * GET Handler - returns list of verified guest reviews
  */
 export async function GET() {
   try {
-    await ensureDb();
-    const data = await fs.readFile(REVIEWS_FILE, "utf8");
-    const reviews = JSON.parse(data);
-    return NextResponse.json(reviews);
+    if (supabase) {
+      // Use Supabase database
+      const { data: reviews, error } = await supabase
+        .from("reviews")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      return NextResponse.json(reviews || []);
+    }
+
+    // Fallback to JSON file (local dev only)
+    const DATA_DIR = path.join(process.cwd(), "src/data");
+    const REVIEWS_FILE = path.join(DATA_DIR, "reviews.json");
+
+    try {
+      const data = await fs.readFile(REVIEWS_FILE, "utf8");
+      const reviews = JSON.parse(data);
+      return NextResponse.json(reviews);
+    } catch {
+      return NextResponse.json([]);
+    }
   } catch (error) {
     console.error("GET /api/reviews failed:", error);
     return NextResponse.json(
@@ -93,12 +115,10 @@ export async function GET() {
 }
 
 /**
- * POST Handler - uploads images to Cloudinary and persists a new guest review
+ * POST Handler - uploads images to Cloudinary and persists to Supabase
  */
 export async function POST(req: NextRequest) {
   try {
-    await ensureDb();
-
     // Parse form-data
     const formData = await req.formData();
     const author = formData.get("author") as string;
@@ -122,11 +142,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Process image uploads
+    // Process image uploads - Cloudinary required for image uploads
     const imageUrls: string[] = [];
     const files = formData.getAll("images") as File[];
 
-    // Check Cloudinary config before processing any images
     if (files.length > 0 && !isCloudinaryConfigured) {
       return NextResponse.json(
         { error: "Image uploads require Cloudinary configuration" },
@@ -135,16 +154,13 @@ export async function POST(req: NextRequest) {
     }
 
     for (const file of files) {
-      // Validate it is an actual file payload
       if (!file || typeof file === "string" || !file.name) {
         continue;
       }
 
-      // Read file buffer
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      // Upload directly to Cloudinary
       console.info(`Uploading image "${file.name}" directly to Cloudinary...`);
       const secureUrl = await uploadToCloudinary(buffer);
       if (secureUrl) {
@@ -152,25 +168,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Load existing reviews database
-    const dbData = await fs.readFile(REVIEWS_FILE, "utf8");
-    const reviews = JSON.parse(dbData);
+    const initials = computeInitials(author);
+    const dateFormatted = formatDate();
 
-    // Compute author initials
-    const initials = author
-      .split(" ")
-      .map((part) => part[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2) || "G";
-
-    // Format current date (e.g., "May 2026")
-    const dateFormatted = new Date().toLocaleDateString("en-US", {
-      month: "long",
-      year: "numeric",
-    });
-
-    // Create persistent Review object matching the frontend interface specs
     const newReview = {
       id: `review-${Date.now()}`,
       author,
@@ -180,13 +180,42 @@ export async function POST(req: NextRequest) {
       trip,
       text,
       images: imageUrls,
+      created_at: new Date().toISOString(),
     };
 
-    // Prepend to array so it appears first
-    reviews.unshift(newReview);
+    // Save to database
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("reviews")
+        .insert([newReview])
+        .select()
+        .single();
 
-    // Write back to database
-    await fs.writeFile(REVIEWS_FILE, JSON.stringify(reviews, null, 2), "utf8");
+      if (error) {
+        console.error("Supabase insert failed:", error);
+        throw error;
+      }
+      return NextResponse.json(data);
+    }
+
+    // Fallback to JSON file (local dev only)
+    const DATA_DIR = path.join(process.cwd(), "src/data");
+    const REVIEWS_FILE = path.join(DATA_DIR, "reviews.json");
+
+    try {
+      await fs.mkdir(DATA_DIR, { recursive: true });
+      let reviews: unknown[] = [];
+      try {
+        const data = await fs.readFile(REVIEWS_FILE, "utf8");
+        reviews = JSON.parse(data);
+      } catch {
+        reviews = [];
+      }
+      reviews.unshift(newReview);
+      await fs.writeFile(REVIEWS_FILE, JSON.stringify(reviews, null, 2), "utf8");
+    } catch (err) {
+      console.error("Local file save failed:", err);
+    }
 
     return NextResponse.json(newReview);
   } catch (error) {
