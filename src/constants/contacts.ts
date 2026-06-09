@@ -8,6 +8,7 @@ export const ADDRESS_LINE_2 = "Mombasa, Kenya"
 export const ADDRESS_FULL = "Mombasa Marina, Mombasa, Kenya"
 export const BUSINESS_NAME = "Blue Pineapple"
 export const BUSINESS_NAME_FULL = "Blue Pineapple Coastal Services"
+export const ADMIN_NAME = "Blue Pineapple Admin"
 export const SITE_URL = "https://www.bluepineappleholdings.com"
 export const MIN_TRIP_PASSENGERS = 6
 export const MIN_CHARTER_HOURS = 2

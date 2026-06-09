@@ -1,5 +1,5 @@
 -- Create reviews table for guest reviews with Cloudinary image URLs
-create table reviews (
+create table if not exists reviews (
   id text primary key,
   author text not null,
   initials text,
@@ -12,15 +12,17 @@ create table reviews (
 );
 
 -- Enable Row Level Security (optional - for authenticated writes)
-alter table reviews enable row level security;
+alter table if exists reviews enable row level security;
 
 -- Policy: Allow read access to everyone
+drop policy if exists "reviews are readable by everyone" on reviews;
 create policy "reviews are readable by everyone"
   on reviews for select
   using (true);
 
 -- Policy: Allow insert (for anonymous submissions)
 -- In production, you may want to restrict this with rate limiting or auth
+drop policy if exists "reviews can be inserted by anyone" on reviews;
 create policy "reviews can be inserted by anyone"
   on reviews for insert
   with check (true);
